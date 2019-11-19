@@ -14,8 +14,6 @@ CSV files
 
 Reading csv with column headers and separated by ",". These parameters are also the default values for the :code:`read.csv` function.
 
-.. literalinclude:: https://github.com/rajaoberison/edsy/blob/master/codes/readcsv.r
-
 .. code-block:: r
 
    data <- read.csv(file = '/path/to/csv', header = TRUE, sep = ','
