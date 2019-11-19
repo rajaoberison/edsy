@@ -55,7 +55,7 @@ If the data is stored in a Google spreadsheet, we can use the :code:`googledrive
 In the example below, I used a spreadsheet named :code:`eds.sample.googlesheets` which contains the same tables in the previous Excel example (heatwave and hurricane). You can clone the spreadsheet via this `link <https://drive.google.com/open?id=1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc>`_ if you'd like to repeat the steps below using your Google account.
 
 
-.. codeblock:: r
+.. code-block:: r
 
   # Logging into Google Drive
   # Loading the library
@@ -74,7 +74,7 @@ In the example below, I used a spreadsheet named :code:`eds.sample.googlesheets`
 
 Because of Google authentification system, you may run into an error like below when re-running the previous code.
 
-.. codeblock:: rout
+.. code-block:: rout
 
    Error in add_id_path(nodes, root_id = root_id, leaf = leaf) : !anyDuplicated(nodes$id) is not TRUE
 
