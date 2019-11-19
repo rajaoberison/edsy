@@ -21,7 +21,7 @@ Reading csv with column headers and separated by ",". These parameters are also 
    data <- read.csv(file = 'eds.data.hurricane.csv', header = TRUE)
    head(data)
    
-.. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/csvsample.png
+.. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/csv.png
    :height: 100
    :alt: csvsample
    
