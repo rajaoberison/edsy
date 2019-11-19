@@ -17,7 +17,7 @@ Reading csv with column headers and separated by :code:`,`. These parameters are
 
 .. code-block:: r
 
-   data <- read.csv(file = '/path/to/csv', header = TRUE, sep = ','
+   data <- read.csv(file = '/path/to/csv', header = TRUE, sep = ',')
    
    # Example
    data <- read.csv(file = 'eds.data.hurricane.csv', header = TRUE)
