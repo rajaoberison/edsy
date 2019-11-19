@@ -13,7 +13,7 @@ Contents:
     :caption: Basics
     :maxdepth: 1
 
-    imporing_and_scraping_data
+    importing_and_scraping_data
 
 
 Indices and tables
