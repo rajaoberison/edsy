@@ -22,6 +22,6 @@ Reading csv with column headers and separated by ",". These parameters are also 
    head(data)
    
 .. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/csvsample.png
-   :width: 400
+   :height: 100
    :alt: csvsample
    
