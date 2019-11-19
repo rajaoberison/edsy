@@ -1,4 +1,4 @@
-Welcome to Read the Docs Template's documentation!
+EDS Resources for FES Students
 ==================================================
 
 Contents:
