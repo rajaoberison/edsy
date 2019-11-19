@@ -9,6 +9,11 @@ Contents:
 
    *
 
+.. toctree::
+    :caption: Basics
+    :maxdepth: 1
+
+    imporing_and_scraping_data
 
 
 Indices and tables
