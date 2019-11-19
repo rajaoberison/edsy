@@ -129,7 +129,7 @@ html_theme = 'default'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 html_css_files = [
-    'styles.css',
+    'css/styles.css',
 ]
 
 # Add any extra paths that contain custom files (such as robots.txt or
