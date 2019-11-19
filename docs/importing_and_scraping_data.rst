@@ -112,6 +112,34 @@ To avoid this, you can use the folder url instead of the folder name. The folder
   drive_ls(folder_url, type="spreadsheet")
 
 
+Then you can load the spreadsheet by using its :code:`id`
+
+
+.. code-block:: r
+
+ eds.sample.spreadsheet <- drive_get(id = '1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc')
+
+
+It also possible to read the spreadsheet right way by using its link (without using :code:`drive_ls()`)
+
+
+.. code-block:: r
+
+  eds.sample.spreadsheet <- drive_get(path = 'https://drive.google.com/open?id=1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc')
+
+
+Once the spreadsheet is loaded, we run a similar code used for the Excel files to read tables within the spreadsheet. But for Google Sheets, function is called :code:`read_sheet`
+
+
+.. code-block:: r
+
+  # Loading the library
+  library(googlesheets4)
+  # Authorizing the googlesheets4 package
+  sheets_auth(token=drive_token())
+  # Readind the tables
+  heatwave <- read_sheet(eds.sample.spreadsheet, sheet = 'heatwave')
+  hurricane <- read_sheet(eds.sample.spreadsheet, sheet = 'hurricane')
 
 
 
