@@ -42,6 +42,7 @@ Reading csv with column headers and separated by :code:`,`. These parameters are
 
 Excel Files
 ===========
+
 The main advantage of Excel files is that they can store multiple tables. But reading these tables at once is different from a CSV. For this example, we're going to use the :code:`readxl` package from the :code:`tidyverse` collection. Please visit this `website <https://www.tidyverse.org/>`_ to learn more about :code:`tidyverse`.
 
 To read an excel file, you can use the :code:`read_excel` function and specify at least the :code:`path/to/the/file` and :code:`sheet` you want to open. If you don't specify the :code:`sheet`, :code:`read_excel` will automatically open the first table in the spreadsheet.
@@ -63,6 +64,7 @@ To read an excel file, you can use the :code:`read_excel` function and specify a
 
 Google Spreadsheets
 ====================
+
 If the data is stored in a Google spreadsheet, we can read it using the :code:`googledrive` and :code:`googlesheet4` packages from the :code:`tidyverse` collection. We use the :code:`googledrive` package to log into our Google Drive account and :code:`googlesheets4` to read the speadsheets in our drive.
 
 In the example below, I used a spreadsheet named :code:`eds.sample.googlesheets` which contains the same tables in the previous Excel example (heatwave and hurricane). You can clone the spreadsheet via this `link <https://drive.google.com/open?id=1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc>`_ if you'd like to repeat the steps below using your Google account.
@@ -141,5 +143,16 @@ Once the spreadsheet is loaded, we run a similar code used for the Excel files t
   heatwave <- read_sheet(eds.sample.spreadsheet, sheet = 'heatwave')
   hurricane <- read_sheet(eds.sample.spreadsheet, sheet = 'hurricane')
 
+
+Web Scraping
+=============
+
+Web scraping is the process of fteching a webpage and extracting information / data from it. It is very useful if you want to create a dynamic database that updates based on the content of a specific website.
+
+To scrap a webpage, we first need to know how to get to the webpage, a url that you can use to directly access the content that you're using. For example, to obtain a the Google search results for "data science", you can simply copy and paste this url to your browser: <https://www.google.com/search?q=data+science>, without having to type "data science" on Google search web page.
+
+
+
+https://weather.com/weather/tenday/l/90224:4:US
 
 
