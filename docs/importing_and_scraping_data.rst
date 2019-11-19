@@ -26,9 +26,11 @@ Reading csv with column headers and separated by :code:`,`. These parameters are
    :height: 100px
    :alt: csvsample
 
+
 Excel Files
 ===========
 The main advantage of Excel files is that they can store multiple tables. But reading these tables at once is different from a CSV. For this example, we're going to use the :code:`readxl` package from the `tidyverse` collection. Please visit this `website <https://www.tidyverse.org/>`_ to learn more about `tidyverse`.
+
 To read an excel file, you can use the `read_excel` function and specify at least the `path/to/the/file` and `sheet` you want to open. If you don't specify the `sheet`, `read_excel` will automatically open the first table in the spreadsheet.
 
 .. code-block:: r
