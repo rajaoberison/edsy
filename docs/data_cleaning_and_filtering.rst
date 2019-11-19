@@ -1,7 +1,7 @@
 .. _data_cleaning_and_filtering:
 
-===========
-Tidyverse
-===========
+============================
+Data Cleaning and Filtering
+============================
 
 Cleaning data with :code:`tidyverse`
