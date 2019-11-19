@@ -120,7 +120,7 @@ Then you can load the spreadsheet by using its :code:`id`
  eds.sample.spreadsheet <- drive_get(id = '1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc')
 
 
-It also possible to read the spreadsheet right way by using its link (without using :code:`drive_ls()`)
+It also possible to read the spreadsheet right way by using its link / :code:`path` (without using :code:`drive_ls()`)
 
 
 .. code-block:: r
