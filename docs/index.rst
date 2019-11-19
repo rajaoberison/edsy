@@ -1,4 +1,4 @@
-EDS Resources for FES Students
+EDS Tutorials
 ==================================================
 
 Contents:
