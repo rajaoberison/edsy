@@ -63,7 +63,7 @@ To read an excel file, you can use the :code:`read_excel` function and specify a
 
 Google Spreadsheets
 ====================
-If the data is stored in a Google spreadsheet, we can use the :code:`googledrive` and :code:`googlesheet4` packages from the :code:`tidyverse` collection. We use the :code:`googledrive` package to log into our Google Drive account and :code:`googlesheets4` to read the speadsheets in our drive.
+If the data is stored in a Google spreadsheet, we can read it using the :code:`googledrive` and :code:`googlesheet4` packages from the :code:`tidyverse` collection. We use the :code:`googledrive` package to log into our Google Drive account and :code:`googlesheets4` to read the speadsheets in our drive.
 
 In the example below, I used a spreadsheet named :code:`eds.sample.googlesheets` which contains the same tables in the previous Excel example (heatwave and hurricane). You can clone the spreadsheet via this `link <https://drive.google.com/open?id=1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc>`_ if you'd like to repeat the steps below using your Google account.
 
