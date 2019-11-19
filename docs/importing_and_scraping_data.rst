@@ -16,11 +16,12 @@ Reading csv with column headers and separated by :code:`,`. These parameters are
 
 .. code-block:: r
 
-  data <- read.csv(file = '/path/to/csv', header = TRUE, sep = ','
+   data <- read.csv(file = '/path/to/csv', header = TRUE, sep = ','
    
-  # Example
-  data <- read.csv(file = 'eds.data.hurricane.csv', header = TRUE)
-  head(data)
+   # Example
+   data <- read.csv(file = 'eds.data.hurricane.csv', header = TRUE)
+   head(data)
+
 
 .. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/csv.png
    :height: 100px
@@ -33,12 +34,12 @@ The main advantage of Excel files is that they can store multiple tables. But re
 
 To read an excel file, you can use the :code:`read_excel` function and specify at least the :code:`path/to/the/file` and :code:`sheet` you want to open. If you don't specify the :code:`sheet`, :code:`read_excel` will automatically open the first table in the spreadsheet.
 
-.. codeblock:: r
+.. code-block:: r
 
   # In the 'eds.excel.sample.xlsx' file, there are 2 tables: heatwave and hurricane
   # Here's how we read both tables into r
 
-  # Loading the library   
+  # Loading the library
   library(readxl)
 
   # Reading the tables
@@ -71,14 +72,35 @@ In the example below, I used a spreadsheet named :code:`eds.sample.googlesheets`
   # To view the list of spreadsheets within a folder
   drive_ls("EDS", type="spreadsheet")
 
-
-Because of Google authentification system, you may run into an error like below when re-running the previous code.
+The last line will output the following where you can have the name and id of the Google Sheet you want to open in R:
 
 .. code-block:: rout
 
-   Error in add_id_path(nodes, root_id = root_id, leaf = leaf) : !anyDuplicated(nodes$id) is not TRUE
+  # A tibble: 1 x 3
+    name                    id                                           drive_resource   
+  * <chr>                   <chr>                                        <list>           
+  1 eds.sample.googlesheets 1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc <named list [35]>
+
+Because of Google authentification system, you may run into an error like below when re-running the previous code (using :code:`drive_ls()`).
 
 
-To avoid this, you can use the folder url instead of the folder name. The folder url can be obtained by right-clicking on the folder and click :code:`Get shareable link`. Then run the code below
+.. code-block:: rout
+
+  Error in add_id_path(nodes, root_id = root_id, leaf = leaf) : !anyDuplicated(nodes$id) is not TRUE
+
+
+To avoid this, you can use the folder url instead of the folder name. The folder url can be obtained by right-clicking on the folder and click :code:`Get shareable link`. Then run the following code:
+
+.. code-block:: r
+
+  # If using folder name doesn't work
+  folder_url = 'https://drive.google.com/open?id=1e0uJ9dwFcL34JA61F0tGSoaiMZ_xio_4'
+  drive_ls(folder_url, type="spreadsheet")
+
+
+
+
+
+
 
 
