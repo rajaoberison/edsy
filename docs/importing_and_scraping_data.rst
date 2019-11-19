@@ -149,10 +149,14 @@ Web Scraping
 
 Web scraping is the process of fteching a webpage and extracting information / data from it. It is very useful if you want to create a dynamic database that updates based on the content of a specific website.
 
-To scrap a webpage, we first need to know how to get to the webpage, a url that you can use to directly access the content that you're using. For example, to obtain a the Google search results for "data science", you can simply copy and paste this url to your browser: <https://www.google.com/search?q=data+science>, without having to type "data science" on Google search web page.
+To scrap a webpage, we first need to know how to get to the webpage, a url that you can use to directly access the content. For example, to obtain the Google search results for "data science", you can simply copy and paste this url to your browser: <https://www.google.com/search?q=data+science>, without having to type "data science" on Google search web page. Some website like Twitter or Facebook will require to you to use an API and authenticate in order to access some of their data. 
 
+For this example, we're going to use The Weather Channel website which do not require autentification. We'll to extract the 10-day forecast for a specific location and store the data in a dataframe.
 
+After inspecting the website and it's url, I have noticed that you can get the weather data by zip code using this url pattern:
 
-https://weather.com/weather/tenday/l/90224:4:US
+:code:`https://weather.com/weather/` + `forecast type` + `/l/` + `zip_code` + `:4:US`
+
+For example, if we want to view the 10-day forecast for New Haven, we can go to: https://weather.com/weather/tenday/l/06511:4:US. And for today's forecast: https://weather.com/weather/today/l/06511:4:US
 
 
