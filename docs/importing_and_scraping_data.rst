@@ -14,6 +14,7 @@ CSV files
 
 Reading csv with column headers and separated by :code:`,`. These parameters are also the default values for the :code:`read.csv` function.
 
+
 .. code-block:: r
 
    data <- read.csv(file = '/path/to/csv', header = TRUE, sep = ','
@@ -23,7 +24,18 @@ Reading csv with column headers and separated by :code:`,`. These parameters are
    head(data)
 
 
-.. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/csv.png
+.. code-block:: rout
+
+    nstorm worry nevac prepared homeloc nyear gender income politics age zone      lat      long
+  1      2     3     0        3       2    86      1      4        3  86    A 41.26324 -72.84297
+  2      1     4     0        3       3    25      1     NA       NA  52    A 41.31061 -72.09882
+  3      3     4     0        3       3    19      2      6        2  83    A 41.26523 -72.82523
+  4      3     6     1        1       1    52      1      5        3  64    A 41.15419 -73.11342
+  5      2     1     0        2       3    15      1      5        3  66    A 41.26944 -72.89225
+  6      5     4     0        2       1    23      2     NA        3  76    A 41.27140 -72.59094
+
+
+.. .. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/csv.png
    :height: 100px
    :alt: csvsample
 
@@ -74,6 +86,7 @@ In the example below, I used a spreadsheet named :code:`eds.sample.googlesheets`
 
 The last line will output the following where you can have the name and id of the Google Sheet you want to open in R:
 
+
 .. code-block:: rout
 
   # A tibble: 1 x 3
@@ -91,14 +104,12 @@ Because of Google authentification system, you may run into an error like below 
 
 To avoid this, you can use the folder url instead of the folder name. The folder url can be obtained by right-clicking on the folder and click :code:`Get shareable link`. Then run the following code:
 
+
 .. code-block:: r
 
   # If using folder name doesn't work
   folder_url = 'https://drive.google.com/open?id=1e0uJ9dwFcL34JA61F0tGSoaiMZ_xio_4'
   drive_ls(folder_url, type="spreadsheet")
-
-
-
 
 
 
