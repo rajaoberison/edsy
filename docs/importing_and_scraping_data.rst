@@ -161,4 +161,20 @@ For example, if we want to view the 10-day forecast for New Haven, we can go to:
 
 Once we have the webpage url, we can read it into R and extract the data using :code:`rvest` from the :code:`tidyverse` collection.
 
+The New Haven 10-forecast webpage looks like this:
+
+.. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/weatherpage.png
+   :height: 300px
+   :align: center
+   :alt: weatherpage
+
+Basically, what we want is the table that have the weather information. In order to extract the values that we want, we have to know where in the source code are they located. For example, in the "DAY" column, we want to extract the `exact date` instead of the `days of the week`. And we can do that by:
+
+* inspecting the tag or class of exact date from the website. Move the cursor to the exact date, right-click, then choose :code:`Inspect`
+* then, a window will open, which will point directly to location of the `exact date` in the source code. Take notes of the tag or class name, and use it to get the `exact date` value using the :code:`html_nodes()` function.
+
+.. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/webscrapingcss.png
+   :height: 300px
+   :align: center
+   :alt: webscrapingcss
 
