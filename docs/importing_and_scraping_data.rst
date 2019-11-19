@@ -33,7 +33,7 @@ The main advantage of Excel files is that they can store multiple tables. But re
 
 To read an excel file, you can use the :code:`read_excel` function and specify at least the :code:`path/to/the/file` and :code:`sheet` you want to open. If you don't specify the :code:`sheet`, :code:`read_excel` will automatically open the first table in the spreadsheet.
 
-.. code-block:: r
+.. codeblock:: r
 
    # In the 'eds.excel.sample.xlsx' file, there are 2 tables: heatwave and hurricane
    # Here's how we read both tables into r
@@ -55,7 +55,7 @@ If the data is stored in a Google spreadsheet, we can use the :code:`googledrive
 In the example below, I used a spreadsheet named :code:`eds.sample.googlesheets` which contains the same tables in the previous Excel example (heatwave and hurricane). You can clone the spreadsheet via this `link <https://drive.google.com/open?id=1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc>`_ if you'd like to repeat the steps below using your Google account.
 
 
-.. code-block:: r
+.. codeblock:: r
    # Logging into Google Drive
    # Loading the library
    library(googledrive)
@@ -74,7 +74,7 @@ In the example below, I used a spreadsheet named :code:`eds.sample.googlesheets`
 
 Because of Google authentification system, you may run into an error like below when re-running the previous code.
 
-.. code-block:: rout
+.. codeblock:: rout
    Error in add_id_path(nodes, root_id = root_id, leaf = leaf) : !anyDuplicated(nodes$id) is not TRUE
 ..
 
