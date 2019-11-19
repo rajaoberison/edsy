@@ -155,7 +155,7 @@ For this example, we're going to use The Weather Channel website which do not re
 
 After inspecting the website and it's url, I have noticed that you can get the weather data by zip code using this url pattern:
 
-:code:`https://weather.com/weather/` + `forecast type` + `/l/` + `zip_code` + `:4:US`
+:code:`https://weather.com/weather/` + :code:`forecast type` + :code:`/l/` + :code:`zip_code` + :code:`:4:US`
 
 For example, if we want to view the 10-day forecast for New Haven, we can go to: https://weather.com/weather/tenday/l/06511:4:US. And for today's forecast: https://weather.com/weather/today/l/06511:4:US
 
