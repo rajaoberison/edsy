@@ -68,11 +68,13 @@ In the example below, I used a spreadsheet named `eds.sample.googlesheets` which
    drive_ls("EDS", recursive = TRUE)
    # To view the list of spreadsheets within a folder
    drive_ls("EDS", type="spreadsheet")
+..
 
 Because of Google authentification system, you may run into an error like below when re-running the previous code.
 
 .. code-block:: rout
    Error in add_id_path(nodes, root_id = root_id, leaf = leaf) : !anyDuplicated(nodes$id) is not TRUE
+..
 
 To avoid this, you can use the folder url instead of the folder name. The folder url can be obtained by right-clicking on the folder and click :code:`Get shareable link`. Then run the code below
 
