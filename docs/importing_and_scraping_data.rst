@@ -159,6 +159,6 @@ After inspecting the website and it's url, I have noticed that you can view the 
 
 For example, if we want to view the 10-day forecast for New Haven, we can go to: https://weather.com/weather/tenday/l/06511:4:US. And for today's forecast: https://weather.com/weather/today/l/06511:4:US
 
-Once we have the webpage url, we can read it into R and extract the data using the :code:`rvest` package.
+Once we have the webpage url, we can read it into R and extract the data using :code:`rvest` from the :code:`tidyverse` collection.
 
 
