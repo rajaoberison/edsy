@@ -12,7 +12,7 @@ Importing and Scraping data
 CSV files
 ==========
 
-Reading csv with column headers and separated by ","
+Reading csv with column headers and separated by ",". These parameters are also the default values for the :code:`read.csv` function.
 
 .. code-block:: r
 
