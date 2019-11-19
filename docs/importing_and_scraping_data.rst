@@ -56,8 +56,8 @@ To read an excel file, you can use the :code:`read_excel` function and specify a
   library(readxl)
 
   # Reading the tables
-  heatwave <-  read_excel(path='eds.excel.sample.xlsx', 'heatwave')
-  hurricane <-  read_excel(path='eds.excel.sample.xlsx', 'hurricane')
+  heatwave <-  read_excel(path='eds.excel.sample.xlsx', sheet = 'heatwave')
+  hurricane <-  read_excel(path='eds.excel.sample.xlsx', sheet = 'hurricane')
 
   # Once the tables are stored into individual r variable, you can perform exploration and analysis with them.
 
