@@ -168,13 +168,48 @@ The New Haven 10-forecast webpage looks like this:
    :align: center
    :alt: weatherpage
 
-Basically, what we want is the table that have the weather information. In order to extract the values that we want, we have to know where in the source code are they located. For example, in the "DAY" column, we want to extract the `exact date` instead of the `days of the week`. And we can do that by:
+Basically, what we want is the table that have the weather information. In order to extract the values that we want, we have to know where in the source code they are located. For example, in the "DAY" column, we want to extract the `exact date` instead of the `days of the week`. And we can do that by:
 
 * inspecting the tag or class of exact date from the website. Move the cursor to the exact date, right-click, then choose :code:`Inspect`
-* then, a window will open, which will point directly to location of the `exact date` in the source code. Take notes of the tag or class name, and use it to get the `exact date` value using the :code:`html_nodes()` function.
+* then, a window will open, which will point directly to location of the `exact date` in the source code. Take notes of the css (tag or class name), and use it to get the `exact date` value using the :code:`html_nodes()` function.
 
 .. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/webcss.png
    :height: 100px
    :align: center
    :alt: webcss
 
+Here is how we extract the dates:
+
+
+.. code-block:: r
+
+  # Loading library
+  library(rvest)
+
+  # Get the webpage url
+  url = 'https://weather.com/weather/tenday/l/06511:4:US'
+  # Load the webpage using the url
+  webpage <- read_html(url)
+
+  # Getting the exact date
+  # Filtering the relevant css / location
+  date_locations <- html_nodes(webpage, "span.day-detail.clearfix")
+  # Extracting the exact value
+  raw_date <- html_text(date_locations)
+  # Because the value are formatted like "Nov 21" we have to convert to a date format
+  exact_date <- as.Date(raw_date, format="%b %d") # b = month, d = day
+
+
+.. code-block:: rout
+
+  # raw date
+   [1] "NOV 19" "NOV 20" "NOV 21" "NOV 22" "NOV 23" "NOV 24" "NOV 25" "NOV 26" "NOV 27" "NOV 28"
+  [11] "NOV 29" "NOV 30" "DEC 1"  "DEC 2"  "DEC 3" 
+
+  # exact_date
+   [1] "2019-11-19" "2019-11-20" "2019-11-21" "2019-11-22" "2019-11-23" "2019-11-24" "2019-11-25"
+   [8] "2019-11-26" "2019-11-27" "2019-11-28" "2019-11-29" "2019-11-30" "2019-12-01" "2019-12-02"
+  [15] "2019-12-03"
+
+
+And here is the full code that extract the complete table:
