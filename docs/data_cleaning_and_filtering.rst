@@ -98,23 +98,47 @@ As we can see, there might be some anomalies with variables:
 * :code:`zone`: as most of the respondents are from Zone A. But this is basically related to the survey method which would later require that some weighting of the variables would be applied.
 
 
-For :code:`nstorm` and :code:`nevac`, we can better investigate what's going on by actually visualizing them in a histogram using the :code:`hist()`.
+For :code:`nstorm` and :code:`nevac`, we can better investigate what's going on by actually visualizing them in a histogram using the :code:`hist()` or :code:`boxplot()`.
 
 
 .. code-block:: r
 
     hist(hurricane$nstorm, breaks=10, main="How many storms have you experienced?", xlab="Number of storms")
+    boxplot(hurricane$nstorm)
+
     hist(hurricane$nevac, breaks=10, main="How many storms have you evacuated?", xlab="Number of evacuations")
+    boxplot(hurricane$nevac)
 
 
-.. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/nstorm.png
-   :align: left
-   :alt: nstorm
-
-.. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/nevac.png
-   :align: right
-   :alt: nevac
+.. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/histbox.png
+   :align: center
+   :alt: histbox
 
 
+As we can see, both variables are not normally distributed but skewed. And there are several method of treating such variables based on the objective of the analysis: log-transformation, conversion to categorical variables, or simply removing the outliers, etc.
+
+We can also notice from the summary above that the there are missing values (:code:`NA`) as well. They can also be detected using :code:`anyNA()`. And the best way to treat them is by removing all of the corresponding observations using :code:`drop_na()` from the :code:`tidyr` package. Or, in some cases, removing the variable itself.
+
+
+.. code-block:: rout
+
+    > drop_na(hurricane)
+    # A tibble: 818 x 13
+       nstorm worry nevac prepared homeloc nyear gender income politics   age zone    lat  long
+        <int> <fct> <int> <fct>    <fct>   <int> <fct>  <fct>  <fct>    <int> <fct> <dbl> <dbl>
+     1      2 3         0 3        2          86 1      4      3           86 A      41.3 -72.8
+     2      3 4         0 3        3          19 2      6      2           83 A      41.3 -72.8
+     3      3 6         1 1        1          52 1      5      3           64 A      41.2 -73.1
+     4      2 1         0 2        3          15 1      5      3           66 A      41.3 -72.9
+     5      1 3         0 3        3           4 1      3      1           38 A      41.1 -73.4
+     6      2 6         0 2        2          17 2      6      2           50 A      41.1 -73.4
+     7      3 5         0 2        3          70 1      4      4           71 A      41.3 -72.9
+     8      2 7         0 2        1          24 2      5      2           60 A      41.3 -72.9
+     9      2 5         0 2        2          18 2      5      2           55 A      41.3 -72.8
+    10      1 3         1 3        2           2 1      6      4           51 A      41.0 -73.6
+    # … with 808 more rows
+
+
+However, if the dropping all of the rows with missing values affect the quality of the data, then another option is to predict the missing values using the mean/median/mode of the variable or an appropriate algorithm that predict the values based on the other variables. There are several packages out there that are solely dedicated to treating missing values including :code:`VIM` and :code:`MICE`.
 
 
