@@ -169,7 +169,6 @@ Basically, what we want is the table that have the weather information. In order
 * then, a window will open, which will point directly to location of the `exact date` in the source code. Take notes of the css (tag or class name), and use it to get the `exact date` value using the :code:`html_nodes()` function.
 
 .. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/webcss.png
-   :height: 320px
    :align: center
    :alt: webcss
 
