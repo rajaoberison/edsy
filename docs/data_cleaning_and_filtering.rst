@@ -48,3 +48,55 @@ We also summarize all of the variables at once but first we have to set them to 
 
 Variables like :code:`worry`, :code:`prepared`, :code:`homeloc`, :code:`gender`, :code:`income`, :code:`politics` are supposed to be categorical and not numeric. We can easily convert them using :code:`mutate_at()` function from the :code:`dplyr` package (also :code:`tidyverse`)
 
+
+.. code-block:: r
+
+    # Converting data types
+    library(dplyr)
+    library(magrittr) # for %>%
+    hurricane %>% mutate_at(c("worry", "prepared", "homeloc", "gender", "income", "politics"), as.factor)
+
+
+.. code-block:: rout
+
+    # A tibble: 996 x 13
+       nstorm worry nevac prepared homeloc nyear gender income politics   age zone    lat  long
+        <int> <fct> <int> <fct>    <fct>   <int> <fct>  <fct>  <fct>    <int> <fct> <dbl> <dbl>
+     1      2 3         0 3        2          86 1      4      3           86 A      41.3 -72.8
+     2      1 4         0 3        3          25 1      NA     NA          52 A      41.3 -72.1
+     3      3 4         0 3        3          19 2      6      2           83 A      41.3 -72.8
+     4      3 6         1 1        1          52 1      5      3           64 A      41.2 -73.1
+     5      2 1         0 2        3          15 1      5      3           66 A      41.3 -72.9
+     6      5 4         0 2        1          23 2      NA     3           76 A      41.3 -72.6
+     7      3 6         1 3        3          36 2      NA     3           37 A      41.3 -72.9
+     8      5 4         0 3        3          50 2      NA     3           50 A      41.2 -73.2
+     9      1 3         0 3        3           4 1      3      1           38 A      41.1 -73.4
+    10      2 6         0 2        2          17 2      6      2           50 A      41.1 -73.4
+    # … with 986 more rows
+
+
+And now we can get the full summary statistics that we want:
+
+
+
+.. code-block:: rout
+
+    > summary(hurricane)
+         nstorm           worry         nevac        prepared   homeloc        nyear       gender     income    politics        age         zone         lat             long
+     Min.   : 0.000   5      :240   Min.   :0.0000   1   : 92   1   :282   Min.   : 0.0   1   :439   1   : 59   1   : 60   Min.   : 19.00   A:622   Min.   :41.00   Min.   :-73.66
+     1st Qu.: 2.000   4      :207   1st Qu.:0.0000   2   :322   2   :242   1st Qu.:12.0   2   :525   2   :154   2   :200   1st Qu.: 49.00   B:374   1st Qu.:41.16   1st Qu.:-73.22
+     Median : 2.000   3      :159   Median :0.0000   3   :428   3   :461   Median :25.0   NA's: 32   3   :189   3   :463   Median : 60.00           Median :41.26   Median :-72.95
+     Mean   : 2.584   6      :128   Mean   :0.4257   4   :130   NA's: 11   Mean   :28.8              4   :171   4   :166   Mean   : 58.69           Mean   :41.22   Mean   :-72.91
+     3rd Qu.: 3.000   2      :103   3rd Qu.:1.0000   5   : 17              3rd Qu.:43.0              5   :195   5   : 26   3rd Qu.: 69.00           3rd Qu.:41.29   3rd Qu.:-72.67
+     Max.   :20.000   (Other):154   Max.   :4.0000   NA's:  7              Max.   :92.0              6   :128   NA's: 81   Max.   :106.00           Max.   :41.45   Max.   :-71.83
+     NA's   :28       NA's   :  5   NA's   :7                              NA's   :15                NA's:100              NA's   :40
+
+
+As we can see, there might be some anomalies with variables:
+
+* :code:`nstorm`: where the mean value is 2.5 but some response have the value of 20. Same for :code:`nevac`
+* :code:`zone` as most of the respondents are from Zone A. But this is basically related to the survey method which would later require that some weighting of the variables would be applied.
+
+
+For :code:`nstorm` and :code:`nevac`, we can better investigate what's going on by actually visualizing the them in a histogram using the :code:`hist()`.
+
