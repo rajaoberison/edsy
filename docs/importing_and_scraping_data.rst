@@ -213,3 +213,71 @@ Here is how we extract the dates:
 
 
 And here is the full code that extract the complete table:
+
+.. code-block:: r
+
+# Loading library
+library(rvest)
+
+# Get the webpage url
+url = 'https://weather.com/weather/tenday/l/06511:4:US'
+# Load the webpage using the url
+webpage <- read_html(url)
+
+# Getting the exact date
+# Filtering the relevant css / location
+date_locations <- html_nodes(webpage, "span.day-detail.clearfix")
+# Extracting the exact value
+raw_date <- html_text(date_locations)
+# Because the value are formatted like "Nov 21" we have to convert to a date format
+exact_date <- as.Date(raw_date, format="%b %d") # b = month, d = day
+
+# Getting the weather description
+desc_loc <- html_nodes(webpage, "td.description")
+desc <- html_text(desc_loc)
+
+# Getting the temperature
+temp_loc <- html_nodes(webpage, "td.temp")
+temp <- html_text(temp_loc)
+# High and Low temperature values
+high_temp <- rep(NA, length(temp))
+low_temp <- rep(NA, length(temp))
+for (i in 1:length(temp)){
+  all <- unlist(strsplit(temp[i], "°"))
+  if (length(all) > 1){
+    high_temp[i] <- all[1]
+    low_temp[i] <- all[2]
+  } else {
+    low_temp[i] <- 38
+  }
+}
+
+# Getting the precipitation
+precip_loc <- html_nodes(webpage, "td.precip")
+precip <- as.numeric(sub("%", "", html_text(precip_loc))) / 100
+
+# Getting the wind
+wind_loc <- html_nodes(webpage, "td.wind")
+wind <- html_text(wind_loc)
+# Wind direction and speed
+wind_dir <- rep(NA, length(wind))
+wind_speed <- rep(NA, length(wind))
+for (i in 1:length(wind)){
+  all <- unlist(strsplit(wind[i], " "))
+  wind_dir[i] <- all[1]
+  wind_speed[i] <- all[2]
+}
+
+# Getting the humidity
+humidity_loc <- html_nodes(webpage, "td.humidity")
+humidity <- as.numeric(sub("%", "", html_text(humidity_loc))) / 100
+
+# Save the data in tibble
+library(tibble)
+new_haven_forecast <- tibble('day' = exact_date, 'description' = desc,
+                             'high_temp' = high_temp, 'low_temp' = low_temp,
+                             'precip' = precip, 'wind_dir' = wind_dir,
+                             'wind_speed' = wind_speed, 'himidity' = humidity)
+                             
+                             
+                             
