@@ -142,9 +142,9 @@ Once the spreadsheet is loaded, we run a similar code used for the Excel files t
 Web Scraping
 =============
 
-Web scraping is the process of fteching a webpage and extracting information / data from it. It is very useful if you want to create a dynamic database that updates based on the content of a specific website.
+Web scraping is the process of fetching and extracting information / data from a webpage. It is very useful if you want to create a dynamic database that updates based on the content of a specific website.
 
-To scrap a webpage, we first need to know how to get to the webpage, a url that you can use to directly access the content. For example, to obtain the Google search results for "data science", you can simply copy and paste this url to your browser: https://www.google.com/search?q=data+science, without having to type "data science" on Google search web page. Some website like Twitter or Facebook will require to you to use an API and authenticate in order to access some of their data. 
+To scrap a webpage, we first need to know how to get to the webpage, a url that you can use to directly access the content. For example, to obtain the Google search results for "data science", you can simply copy and paste this url to your browser: https://www.google.com/search?q=data+science, without having to type "data science" on a Google search web page. Some websites like Twitter or Facebook will require to you to use an API and authenticate in order to access some of their data. 
 
 For this example, we're going to use The Weather Channel website which do not require autentification. We'll to extract the 10-day forecast for a specific location and store the data in a dataframe.
 
@@ -162,10 +162,10 @@ The New Haven 10-day forecast webpage looks like this:
    :align: center
    :alt: weatherpage
 
-Basically, what we want is the table that have the weather information. In order to extract the values that we want, we have to know where in the source code they are located. For example, in the "DAY" column, we want to extract the `exact date` instead of the `days of the week`. And we can do that by:
+Basically, what we want is the table that has the weather information. In order to extract the values that we want, we have to know where in the source code they are located. For example, in the "DAY" column, we want to extract the `exact date` instead of the `days of the week`. And we can do that by:
 
 * inspecting the tag or class of exact date from the website. Move the cursor to the exact date, right-click, then choose :code:`Inspect`
-* then, a window will open, which will point directly to location of the `exact date` in the source code. Take notes of the css (tag or class name), and use it to get the `exact date` value using the :code:`html_nodes()` function.
+* then, a window will open, which will point directly to the location of the `exact date` in the source code. Take notes of the css (tag or class name), and use it to get the `exact date` value using the :code:`html_nodes()` function.
 
 .. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/webcss.png
    :align: center
@@ -189,7 +189,7 @@ Here is how we extract the dates:
    date_locations <- html_nodes(webpage, "span.day-detail.clearfix")
    # Extracting the exact value
    raw_date <- html_text(date_locations)
-   # Because the value are formatted like "Nov 21" we have to convert to a date format
+   # Because the value are formatted like "NOV 21" we have to convert to a date format
    exact_date <- as.Date(raw_date, format="%b %d") # b = month, d = day
 
 
