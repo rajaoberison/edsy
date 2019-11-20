@@ -95,8 +95,26 @@ And now we can get the full summary statistics that we want:
 As we can see, there might be some anomalies with variables:
 
 * :code:`nstorm`: where the mean value is 2.5 but some response have the value of 20. Same for :code:`nevac`
-* :code:`zone` as most of the respondents are from Zone A. But this is basically related to the survey method which would later require that some weighting of the variables would be applied.
+* :code:`zone`: as most of the respondents are from Zone A. But this is basically related to the survey method which would later require that some weighting of the variables would be applied.
 
 
-For :code:`nstorm` and :code:`nevac`, we can better investigate what's going on by actually visualizing the them in a histogram using the :code:`hist()`.
+For :code:`nstorm` and :code:`nevac`, we can better investigate what's going on by actually visualizing them in a histogram using the :code:`hist()`.
+
+
+.. code-block:: r
+
+    hist(hurricane$nstorm, breaks=10, main="How many storms have you experienced?", xlab="Number of storms")
+    hist(hurricane$nevac, breaks=10, main="How many storms have you evacuated?", xlab="Number of evacuations")
+
+
+.. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/nstorm.png
+   :align: left
+   :alt: nstorm
+
+.. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/nevac.png
+   :align: right
+   :alt: nevac
+
+
+
 
