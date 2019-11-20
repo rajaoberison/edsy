@@ -18,7 +18,7 @@ Reading csv with column headers and separated by :code:`,`. These parameters are
 .. code-block:: r
 
    data <- read.csv(file = '/path/to/csv', header = TRUE, sep = ',')
-   
+
    # Example
    data <- read.csv(file = 'eds.data.hurricane.csv', header = TRUE)
    head(data)
@@ -27,17 +27,12 @@ Reading csv with column headers and separated by :code:`,`. These parameters are
 .. code-block:: rout
 
     nstorm worry nevac prepared homeloc nyear gender income politics age zone      lat      long
-  1      2     3     0        3       2    86      1      4        3  86    A 41.26324 -72.84297
-  2      1     4     0        3       3    25      1     NA       NA  52    A 41.31061 -72.09882
-  3      3     4     0        3       3    19      2      6        2  83    A 41.26523 -72.82523
-  4      3     6     1        1       1    52      1      5        3  64    A 41.15419 -73.11342
-  5      2     1     0        2       3    15      1      5        3  66    A 41.26944 -72.89225
-  6      5     4     0        2       1    23      2     NA        3  76    A 41.27140 -72.59094
-
-
-.. .. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/csv.png
-   :height: 100px
-   :alt: csvsample
+   1      2     3     0        3       2    86      1      4        3  86    A 41.26324 -72.84297
+   2      1     4     0        3       3    25      1     NA       NA  52    A 41.31061 -72.09882
+   3      3     4     0        3       3    19      2      6        2  83    A 41.26523 -72.82523
+   4      3     6     1        1       1    52      1      5        3  64    A 41.15419 -73.11342
+   5      2     1     0        2       3    15      1      5        3  66    A 41.26944 -72.89225
+   6      5     4     0        2       1    23      2     NA        3  76    A 41.27140 -72.59094
 
 
 Excel Files
@@ -49,17 +44,17 @@ To read an excel file, you can use the :code:`read_excel` function and specify a
 
 .. code-block:: r
 
-  # In the 'eds.excel.sample.xlsx' file, there are 2 tables: heatwave and hurricane
-  # Here's how we read both tables into r
+   # In the 'eds.excel.sample.xlsx' file, there are 2 tables: heatwave and hurricane
+   # Here's how we read both tables into r
 
-  # Loading the library
-  library(readxl)
+   # Loading the library
+   library(readxl)
 
-  # Reading the tables
-  heatwave <-  read_excel(path='eds.excel.sample.xlsx', sheet = 'heatwave')
-  hurricane <-  read_excel(path='eds.excel.sample.xlsx', sheet = 'hurricane')
+   # Reading the tables
+   heatwave <-  read_excel(path='eds.excel.sample.xlsx', sheet = 'heatwave')
+   hurricane <-  read_excel(path='eds.excel.sample.xlsx', sheet = 'hurricane')
 
-  # Once the tables are stored into individual r variable, you can perform exploration and analysis with them.
+   # Once the tables are stored into individual r variable, you can perform exploration and analysis with them.
 
 
 Google Spreadsheets
@@ -72,36 +67,36 @@ In the example below, I used a spreadsheet named :code:`eds.sample.googlesheets`
 
 .. code-block:: r
 
-  # Logging into Google Drive
-  # Loading the library
-  library(googledrive)
+   # Logging into Google Drive
+   # Loading the library
+   library(googledrive)
 
-  # To authenticate and authorize googledrive package
-  # When prompted: log in, authorized googledrive, and use the authorization code provided
-  drive_auth()
-  # Then, to view the list of files in a folder
-  drive_ls("EDS") # where "EDS" is the folder name
-  # To also get the files within the subfolders
-  drive_ls("EDS", recursive = TRUE)
-  # To view the list of spreadsheets within a folder
-  drive_ls("EDS", type="spreadsheet")
+   # To authenticate and authorize googledrive package
+   # When prompted: log in, authorized googledrive, and use the authorization code provided
+   drive_auth()
+   # Then, to view the list of files in a folder
+   drive_ls("EDS") # where "EDS" is the folder name
+   # To also get the files within the subfolders
+   drive_ls("EDS", recursive = TRUE)
+   # To view the list of spreadsheets within a folder
+   drive_ls("EDS", type="spreadsheet")
 
 The last line will output the following where you can have the name and id of the Google Sheet you want to open in R:
 
 
 .. code-block:: rout
 
-  # A tibble: 1 x 3
+   # A tibble: 1 x 3
     name                    id                                           drive_resource   
-  * <chr>                   <chr>                                        <list>           
-  1 eds.sample.googlesheets 1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc <named list [35]>
+   * <chr>                   <chr>                                        <list>           
+   1 eds.sample.googlesheets 1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc <named list [35]>
 
 Because of Google authentification system, you may run into an error like below when re-running the previous code (using :code:`drive_ls()`).
 
 
 .. code-block:: rout
 
-  Error in add_id_path(nodes, root_id = root_id, leaf = leaf) : !anyDuplicated(nodes$id) is not TRUE
+   Error in add_id_path(nodes, root_id = root_id, leaf = leaf) : !anyDuplicated(nodes$id) is not TRUE
 
 
 To avoid this, you can use the folder url instead of the folder name. The folder url can be obtained by right-clicking on the folder and click :code:`Get shareable link`. Then run the following code:
@@ -109,9 +104,9 @@ To avoid this, you can use the folder url instead of the folder name. The folder
 
 .. code-block:: r
 
-  # If using folder name doesn't work
-  folder_url = 'https://drive.google.com/open?id=1e0uJ9dwFcL34JA61F0tGSoaiMZ_xio_4'
-  drive_ls(folder_url, type="spreadsheet")
+   # If using folder name doesn't work
+   folder_url = 'https://drive.google.com/open?id=1e0uJ9dwFcL34JA61F0tGSoaiMZ_xio_4'
+   drive_ls(folder_url, type="spreadsheet")
 
 
 Then you can load the spreadsheet by using its :code:`id`
@@ -119,7 +114,7 @@ Then you can load the spreadsheet by using its :code:`id`
 
 .. code-block:: r
 
- eds.sample.spreadsheet <- drive_get(id = '1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc')
+   eds.sample.spreadsheet <- drive_get(id = '1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc')
 
 
 It also possible to read the spreadsheet right way by using its link / :code:`path` (without using :code:`drive_ls()`)
@@ -127,7 +122,7 @@ It also possible to read the spreadsheet right way by using its link / :code:`pa
 
 .. code-block:: r
 
-  eds.sample.spreadsheet <- drive_get(path = 'https://drive.google.com/open?id=1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc')
+   eds.sample.spreadsheet <- drive_get(path = 'https://drive.google.com/open?id=1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc')
 
 
 Once the spreadsheet is loaded, we run a similar code used for the Excel files to read tables within the spreadsheet. But for Google Sheets, function is called :code:`read_sheet`
@@ -135,13 +130,13 @@ Once the spreadsheet is loaded, we run a similar code used for the Excel files t
 
 .. code-block:: r
 
-  # Loading the library
-  library(googlesheets4)
-  # Authorizing the googlesheets4 package
-  sheets_auth(token=drive_token())
-  # Readind the tables
-  heatwave <- read_sheet(eds.sample.spreadsheet, sheet = 'heatwave')
-  hurricane <- read_sheet(eds.sample.spreadsheet, sheet = 'hurricane')
+   # Loading the library
+   library(googlesheets4)
+   # Authorizing the googlesheets4 package
+   sheets_auth(token=drive_token())
+   # Readind the tables
+   heatwave <- read_sheet(eds.sample.spreadsheet, sheet = 'heatwave')
+   hurricane <- read_sheet(eds.sample.spreadsheet, sheet = 'hurricane')
 
 
 Web Scraping
@@ -183,33 +178,33 @@ Here is how we extract the dates:
 
 .. code-block:: r
 
-  # Loading library
-  library(rvest)
+   # Loading library
+   library(rvest)
 
-  # Get the webpage url
-  url = 'https://weather.com/weather/tenday/l/06511:4:US'
-  # Load the webpage using the url
-  webpage <- read_html(url)
+   # Get the webpage url
+   url = 'https://weather.com/weather/tenday/l/06511:4:US'
+   # Load the webpage using the url
+   webpage <- read_html(url)
 
-  # Getting the exact date
-  # Filtering the relevant css / location
-  date_locations <- html_nodes(webpage, "span.day-detail.clearfix")
-  # Extracting the exact value
-  raw_date <- html_text(date_locations)
-  # Because the value are formatted like "Nov 21" we have to convert to a date format
-  exact_date <- as.Date(raw_date, format="%b %d") # b = month, d = day
+   # Getting the exact date
+   # Filtering the relevant css / location
+   date_locations <- html_nodes(webpage, "span.day-detail.clearfix")
+   # Extracting the exact value
+   raw_date <- html_text(date_locations)
+   # Because the value are formatted like "Nov 21" we have to convert to a date format
+   exact_date <- as.Date(raw_date, format="%b %d") # b = month, d = day
 
 
 .. code-block:: rout
 
-  # raw date
+   # raw date
    [1] "NOV 19" "NOV 20" "NOV 21" "NOV 22" "NOV 23" "NOV 24" "NOV 25" "NOV 26" "NOV 27" "NOV 28"
-  [11] "NOV 29" "NOV 30" "DEC 1"  "DEC 2"  "DEC 3" 
+   [11] "NOV 29" "NOV 30" "DEC 1"  "DEC 2"  "DEC 3" 
 
-  # exact_date
+   # exact_date
    [1] "2019-11-19" "2019-11-20" "2019-11-21" "2019-11-22" "2019-11-23" "2019-11-24" "2019-11-25"
    [8] "2019-11-26" "2019-11-27" "2019-11-28" "2019-11-29" "2019-11-30" "2019-12-01" "2019-12-02"
-  [15] "2019-12-03"
+   [15] "2019-12-03"
 
 
 And here is the full code that extract the complete table:
