@@ -280,4 +280,24 @@ And here is the full code that extract the complete table:
                                 'wind_speed' = wind_speed, 'himidity' = humidity)
                              
                              
-                             
+.. code-block:: rout
+
+   # A tibble: 15 x 8
+      day        description       high_temp low_temp precip wind_dir wind_speed himidity
+      <date>     <chr>             <chr>     <chr>     <dbl> <chr>    <chr>         <dbl>
+    1 2019-11-19 Cloudy            NA        38          0.1 N        5             0.78 
+    2 2019-11-20 Cloudy            44        35          0.1 NNW      11            0.7  
+    3 2019-11-21 Mostly Sunny      52        41          0   NW       9             0.55 
+    4 2019-11-22 PM Showers        57        31          0.4 WSW      14            0.68 
+    5 2019-11-23 Partly Cloudy     46        35          0.1 W        8             0.5  
+    6 2019-11-24 AM Showers        44        32          0.4 NNW      11            0.69 
+    7 2019-11-25 Mostly Sunny      49        33          0.1 WNW      9             0.6  
+    8 2019-11-26 Mostly Sunny      53        41          0.1 W        6             0.62 
+    9 2019-11-27 Showers           56        41          0.5 SSE      12            0.76 
+   10 2019-11-28 AM Showers        49        36          0.4 WNW      13            0.59 
+   11 2019-11-29 PM Showers        47        37          0.4 WNW      11            0.580
+   12 2019-11-30 Partly Cloudy     48        40          0.2 NW       10            0.65 
+   13 2019-12-01 Showers           46        34          0.4 NW       13            0.59 
+   14 2019-12-02 Rain/Snow Showers 44        33          0.3 WNW      13            0.55 
+   15 2019-12-03 Partly Cloudy     43        33          0.2 WNW      12            0.570
+
