@@ -156,7 +156,7 @@ For example, if we want to view the 10-day forecast for New Haven, we can go to:
 
 Once we have the webpage url, we can read it into R and extract the data using :code:`rvest` from the :code:`tidyverse` collection.
 
-The New Haven 10-forecast webpage looks like this:
+The New Haven 10-day forecast webpage looks like this:
 
 .. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/weatherpage.png
    :align: center
