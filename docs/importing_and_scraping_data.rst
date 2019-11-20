@@ -159,7 +159,6 @@ Once we have the webpage url, we can read it into R and extract the data using :
 The New Haven 10-forecast webpage looks like this:
 
 .. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/weatherpage.png
-   :height: 812px
    :align: center
    :alt: weatherpage
 
