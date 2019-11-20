@@ -2,6 +2,6 @@ pre {
     white-space: pre-wrap !important;
 }
 
-o, p {
+.o, .p {
     color: #D33682 !important;
 }
