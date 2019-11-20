@@ -5,3 +5,7 @@ pre {
 .o, .p {
     color: #D33682 !important;
 }
+
+.nf {
+    font-weight: 600 !important;
+}
