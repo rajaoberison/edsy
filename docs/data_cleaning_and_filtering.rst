@@ -179,8 +179,10 @@ Then we can visualize the data to see how well the imputation has performed. How
 
 .. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/miceimputation.png
    :align: center
-   :alt: mice
+   :alt: miceimputation
 
 
+Data Filtering
+================
 
-
+Using :code:`select()`, :code:`mutate()`, :code:`filter()`, etc.
