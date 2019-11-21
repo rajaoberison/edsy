@@ -177,7 +177,7 @@ Then we can visualize the data to see how well the imputation has performed. How
     legend("topright", c("Existing values", "Predicted missing values"), col=c("grey", "red"), pch="•", cex=1.5)
 
 
-.. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/mice.png
+.. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/miceimputation.png
    :align: center
    :alt: mice
 
