@@ -5,6 +5,11 @@ Data Cleaning and Filtering
 ============================
 
 
+.. contents::
+   :local:
+   :depth: 2
+
+
 Data Cleaning
 ==============
 
@@ -139,6 +144,43 @@ We can also notice from the summary above that the there are missing values (:co
     # … with 808 more rows
 
 
-However, if the dropping all of the rows with missing values affect the quality of the data, then another option is to predict the missing values using the mean/median/mode of the variable or an appropriate algorithm that predict the values based on the other variables. There are several packages out there that are solely dedicated to treating missing values including :code:`VIM` and :code:`MICE`.
+However, if dropping all of the rows with missing values affect the quality of the data, then another option is to replace the missing values with the mean/median/mode of the variable or predict using an appropriate algorithm. There are several packages out there that are solely dedicated to treating missing values including :code:`VIM` and :code:`MICE`.
+
+In this next example, we'll try to predict the 15 missing values in the variable :code:`nstorm` (number of storms the survey respondents have experienced) using the variables that has no missing values: :code:`zone`, :code:`lat`, and :code:`long`.
+
+
+.. code-block:: r
+
+    # Imputation using MICE
+    library(mice)
+
+    # Building the mice model
+    mice_model <- mice(select(hurricane, zone, lat, long, nstorm), method="rf") # select() is from the dplyr package
+    # Predicting the missing values
+    mice_prediction <- complete(mice_model)  # generate the completed data.
+    anyNA(mice_prediction)
+    #> FALSE
+
+
+Then we can visualize the data to see how well the imputation has performed. However, the best way to assess the accuracy is to compare actual values with predicted values using measures such as: :code:`MSE`, :code:`MAE`, :code:`MAPE`, etc.
+
+
+.. code-block:: r
+
+    # Visualizing the prediction
+    non_na_latitude <- hurricane$lat[!is.na(hurricane$nstorm)]
+    non_na_nstorm <- hurricane$nstorm[!is.na(hurricane$nstorm)]
+    na_latitude <- mice_prediction$lat[is.na(hurricane$nstorm)]
+    na_nstorm <- mice_prediction$nstorm[is.na(hurricane$nstorm)]
+    plot(non_na_nstorm, non_na_latitude, col="grey", pch="•", ylab="Latitude", xlab="Number of Storms Experienced")
+    points(na_nstorm, na_latitude, col="red", pch="•", cex=2)
+    legend("topright", c("Existing values", "Predicted missing values"), col=c("grey", "red"), pch="•", cex=1.5)
+
+
+.. image:: https://raw.githubusercontent.com/rajaoberison/edsy/master/images/mice.png
+   :align: center
+   :alt: mice
+
+
 
 
