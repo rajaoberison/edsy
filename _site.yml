@@ -1,0 +1,16 @@
+name: "environmental-data-science"
+output_dir: "."
+navbar:
+  title: "EDS"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Reading data"
+      href: importing_and_scraping_data.html
+    - text: "Cleaning data"
+      href: data_cleaning_and_filtering.html
+
+output:
+  html_document:
+    theme: flatly
+    css: style.css
