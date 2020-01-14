@@ -1,0 +1,12 @@
+---  
+title: EDS Tutorials
+output: 
+  pdf_document:
+    toc: yes
+---
+
+```{r child = 'reading-data.Rmd'}
+```
+
+```{r child = 'wrangling-data.Rmd'}
+```
