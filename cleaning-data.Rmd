@@ -1,0 +1,69 @@
+---
+title: "Cleaning data"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+
+# Data Cleaning
+
+
+For `nstorm` and `nevac`, we can better investigate what's going on by actually visualizing them in a histogram using the `hist()` or `boxplot()`.
+
+```{r echo=F}
+hurricane$nstorm <- as.numeric(hurricane$nstorm)
+hurricane$nevac <- as.numeric(hurricane$nevac)
+```
+
+
+```{r}
+par(mfrow=c(2,2)) # 4 figures arranged in 2 rows and 2 columns
+hist(hurricane$nstorm, breaks=10, xlab="Number of storms", main=NA)
+boxplot(hurricane$nstorm)
+hist(hurricane$nevac, breaks=10, xlab="Number of evacuations", main=NA)
+boxplot(hurricane$nevac)
+mtext("How many storms have you experienced?", side=3, outer=TRUE, line=-2)
+mtext("How many times have you evacuated?", side=3, outer=TRUE, line=-16)
+```
+
+
+Using `select()`, `mutate()`, `filter()`, etc.
+
+As we can see, both variables are not normally distributed but skewed. And there are several method of treating such variables based on the objective of the analysis: log-transformation, conversion to categorical variables, or simply removing the outliers, etc.
+
+We can also notice from the summary above that the there are missing values (`NA`) as well. They can also be detected using `anyNA()`. And the best way to treat them is by removing all of the corresponding observations using `drop_na()` from the `tidyr` package. Or, in some cases, removing the variable itself.
+
+```{r}
+tidyr::drop_na(hurricane)
+```
+
+However, if dropping all of the rows with missing values affect the quality of the data, then another option is to replace the missing values with the mean/median/mode of the variable or predict using an appropriate algorithm. There are several packages out there that are solely dedicated to treating missing values including `VIM` and `MICE`.
+
+In this next example, we'll try to predict the 15 missing values in the variable `nstorm` (number of storms the survey respondents have experienced) using the variables that has no missing values: `zone`, `lat`, and `long`.
+
+```{r}
+# Imputation using MICE
+library(mice)
+
+# Building the mice model
+mice_model <- mice(select(hurricane, zone, lat, long, nstorm), method="rf") # select() is from the dplyr package
+# Predicting the missing values
+mice_prediction <- complete(mice_model)  # generate the completed data.
+anyNA(mice_prediction)
+```
+
+Then we can visualize the data to see how well the imputation has performed. However, the best way to assess the accuracy is to compare actual values with predicted values using measures such as: `MSE`, `MAE`, `MAPE`, etc.
+
+```{r}
+# Visualizing the prediction
+non_na_latitude <- hurricane$lat[!is.na(hurricane$nstorm)]
+non_na_nstorm <- hurricane$nstorm[!is.na(hurricane$nstorm)]
+na_latitude <- mice_prediction$lat[is.na(hurricane$nstorm)]
+na_nstorm <- mice_prediction$nstorm[is.na(hurricane$nstorm)]
+plot(non_na_nstorm, non_na_latitude, col="grey", pch="•", ylab="Latitude", xlab="Number of Storms Experienced")
+points(na_nstorm, na_latitude, col="red", pch="•", cex=2)
+legend("topright", c("Existing values", "Predicted missing values"), col=c("grey", "red"), pch="•", cex=1.5)
+```

@@ -1,0 +1,126 @@
+---
+title: "Web scraping"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+
+# Web Scraping
+
+
+Web scraping is the process of fetching and extracting information / data from a webpage. It is very useful if you want to create a dynamic database that updates based on the content of a specific website.
+
+To scrap a webpage, we first need to know how to get to the webpage, a url that you can use to directly access the content. For example, to obtain the Google search results for "data science", you can simply copy and paste this url to your browser: https://www.google.com/search?q=data+science, without having to type "data science" on a Google search web page. Some websites like Twitter or Facebook will require to you to use an API and authenticate in order to access some of their data. 
+
+For this example, we're going to use The Weather Channel website which do not require autentification. We'll to extract the 10-day forecast for a specific location and store the data in a dataframe.
+
+After inspecting the website and it's url, I have noticed that you can view the weather data by zip code using this url pattern:
+
+`https://weather.com/weather/` + `forecast type` + `/l/` + `zip_code` + `:4:US`
+
+For example, if we want to view the 10-day forecast for New Haven, we can go to: https://weather.com/weather/tenday/l/06511:4:US. And for today's forecast: https://weather.com/weather/today/l/06511:4:US
+
+Once we have the webpage url, we can read it into R and extract the data using `rvest` from the `tidyverse` collection.
+
+The New Haven 10-day forecast webpage looks like this:
+
+![](https://raw.githubusercontent.com/rajaoberison/edsy/master/images/weatherpage.png)
+
+Basically, what we want is the table that has the weather information. In order to extract the values that we want, we have to know where in the source code they are located. For example, in the "DAY" column, we want to extract the `exact date` instead of the `days of the week`. And we can do that by:
+
+* inspecting the tag or class of exact date from the website. Move the cursor to the exact date, right-click, then choose `Inspect`
+* then, a window will open, which will point directly to the location of the `exact date` in the source code. Take notes of the css (tag or class name), and use it to get the `exact date` value using the `html_nodes()` function.
+
+![](https://raw.githubusercontent.com/rajaoberison/edsy/master/images/webcss.png)
+
+Here is how we extract the dates:
+
+```{r}
+# Loading library
+library(rvest)
+
+# Get the webpage url
+url = 'https://weather.com/weather/tenday/l/06511:4:US'
+# Load the webpage using the url
+webpage <- read_html(url)
+
+# Getting the exact date
+# Filtering the relevant css / location
+date_locations <- html_nodes(webpage, "span.day-detail.clearfix")
+# Extracting the exact value
+raw_date <- html_text(date_locations)
+raw_date
+# Because the value are formatted like "NOV 21" we have to convert to a date format
+exact_date <- as.Date(raw_date, format="%b %d") # b = month, d = day
+exact_date
+```
+
+And here is the full code that extract the complete table:
+
+```{r}
+# Loading library
+library(rvest)
+
+# Get the webpage url
+url = 'https://weather.com/weather/tenday/l/06511:4:US'
+# Load the webpage using the url
+webpage <- read_html(url)
+
+# Getting the exact date
+# Filtering the relevant css / location
+date_locations <- html_nodes(webpage, "span.day-detail.clearfix")
+# Extracting the exact value
+raw_date <- html_text(date_locations)
+# Because the value are formatted like "Nov 21" we have to convert to a date format
+exact_date <- as.Date(raw_date, format="%b %d") # b = month, d = day
+
+# Getting the weather description
+desc_loc <- html_nodes(webpage, "td.description")
+desc <- html_text(desc_loc)
+
+# Getting the temperature
+temp_loc <- html_nodes(webpage, "td.temp")
+temp <- html_text(temp_loc)
+# High and Low temperature values
+high_temp <- rep(NA, length(temp))
+low_temp <- rep(NA, length(temp))
+for (i in 1:length(temp)){
+all <- unlist(strsplit(temp[i], "°"))
+if (length(all) > 1){
+high_temp[i] <- all[1]
+low_temp[i] <- all[2]
+} else {
+low_temp[i] <- 38
+}
+}
+
+# Getting the precipitation
+precip_loc <- html_nodes(webpage, "td.precip")
+precip <- as.numeric(sub("%", "", html_text(precip_loc))) / 100
+
+# Getting the wind
+wind_loc <- html_nodes(webpage, "td.wind")
+wind <- html_text(wind_loc)
+# Wind direction and speed
+wind_dir <- rep(NA, length(wind))
+wind_speed <- rep(NA, length(wind))
+for (i in 1:length(wind)){
+all <- unlist(strsplit(wind[i], " "))
+wind_dir[i] <- all[1]
+wind_speed[i] <- all[2]
+}
+
+# Getting the humidity
+humidity_loc <- html_nodes(webpage, "td.humidity")
+humidity <- as.numeric(sub("%", "", html_text(humidity_loc))) / 100
+
+# Save the data in tibble
+library(tibble)
+new_haven_forecast <- tibble('day' = exact_date, 'description' = desc,
+                        'high_temp' = high_temp, 'low_temp' = low_temp,
+                        'precip' = precip, 'wind_dir' = wind_dir,
+                        'wind_speed' = wind_speed, 'himidity' = humidity)
+```

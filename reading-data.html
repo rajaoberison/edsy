@@ -11,11 +11,11 @@
 
 
 
-<title>Importing and Scraping data</title>
+<title>Reading data</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -106,33 +106,33 @@ summary {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 60px;
+  padding-top: 64px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 69px;
+  margin-top: -69px;
 }
 .section h2 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 69px;
+  margin-top: -69px;
 }
 .section h3 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 69px;
+  margin-top: -69px;
 }
 .section h4 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 69px;
+  margin-top: -69px;
 }
 .section h5 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 69px;
+  margin-top: -69px;
 }
 .section h6 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 69px;
+  margin-top: -69px;
 }
 .dropdown-submenu {
   position: relative;
@@ -352,10 +352,10 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="importing_and_scraping_data.html">Reading data</a>
+  <a href="reading-data.html">Reading data</a>
 </li>
 <li>
-  <a href="data_cleaning_and_filtering.html">Cleaning data</a>
+  <a href="wrangling-data.html">Wrangling data</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -369,35 +369,31 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Importing and Scraping data</h1>
+<h1 class="title toc-ignore">Reading data</h1>
 
 </div>
 
 
-<div id="csv-files" class="section level1">
-<h1><span class="header-section-number">1</span> CSV Files</h1>
+<p>In this section, we learn how to read data from different file format using packages from <code>tidyverse</code>. We will also learn how to read and extract data from a webpage.</p>
+<div id="reading-data-from-different-file-format" class="section level1">
+<h1><span class="header-section-number">1</span> Reading data from different file format</h1>
+<div id="csv-files" class="section level2">
+<h2><span class="header-section-number">1.1</span> CSV Files</h2>
 <p>Reading csv with column headers and separated by <code>,</code>. These parameters are also the default values for the <code>read.csv</code> function.</p>
 <p><code>data &lt;- read.csv(file = '/path/to/csv', header = TRUE, sep = ',')</code></p>
 <pre class="r"><code># Example
 data &lt;- read.csv(file = &#39;data/eds.data.hurricane.csv&#39;, header = TRUE)
 head(data)</code></pre>
-<pre><code>##   nstorm worry nevac prepared homeloc nyear gender income politics age zone      lat
-## 1      2     3     0        3       2    86      1      4        3  86    A 41.26324
-## 2      1     4     0        3       3    25      1     NA       NA  52    A 41.31061
-## 3      3     4     0        3       3    19      2      6        2  83    A 41.26523
-## 4      3     6     1        1       1    52      1      5        3  64    A 41.15419
-## 5      2     1     0        2       3    15      1      5        3  66    A 41.26944
-## 6      5     4     0        2       1    23      2     NA        3  76    A 41.27140
-##        long
-## 1 -72.84297
-## 2 -72.09882
-## 3 -72.82523
-## 4 -73.11342
-## 5 -72.89225
-## 6 -72.59094</code></pre>
+<pre><code>##   nstorm worry nevac prepared homeloc nyear gender income politics age zone      lat      long
+## 1      2     3     0        3       2    86      1      4        3  86    A 41.26324 -72.84297
+## 2      1     4     0        3       3    25      1     NA       NA  52    A 41.31061 -72.09882
+## 3      3     4     0        3       3    19      2      6        2  83    A 41.26523 -72.82523
+## 4      3     6     1        1       1    52      1      5        3  64    A 41.15419 -73.11342
+## 5      2     1     0        2       3    15      1      5        3  66    A 41.26944 -72.89225
+## 6      5     4     0        2       1    23      2     NA        3  76    A 41.27140 -72.59094</code></pre>
 </div>
-<div id="excel-files" class="section level1">
-<h1><span class="header-section-number">2</span> Excel Files</h1>
+<div id="excel-files" class="section level2">
+<h2><span class="header-section-number">1.2</span> Excel Files</h2>
 <p>The main advantage of Excel files is that they can store multiple tables. But reading these tables at once is different from a CSV. For this example, we’re going to use the <code>readxl</code> package from the <code>tidyverse</code> collection. Please visit this <code>website &lt;https://www.tidyverse.org/&gt;</code>_ to learn more about <code>tidyverse</code>.</p>
 <p>To read an excel file, you can use the <code>read_excel</code> function and specify at least the <code>path/to/the/file</code> and <code>sheet</code> you want to open. If you don’t specify the <code>sheet</code>, <code>read_excel</code> will automatically open the first table in the spreadsheet.</p>
 <pre class="r"><code># In the &#39;eds.excel.sample.xlsx&#39; file, there are 2 tables: heatwave and hurricane
@@ -408,24 +404,20 @@ library(readxl)
 
 # Reading the tables
 heatwave &lt;-  read_excel(path=&#39;data/eds.excel.sample.xlsx&#39;, sheet = &#39;heatwave&#39;)
-hurricane &lt;-  read_excel(path=&#39;data/eds.excel.sample.xlsx&#39;, sheet = &#39;hurricane&#39;)
-
-# Once the tables are stored into individual r variable, you can perform exploration and analysis with them.</code></pre>
+hurricane &lt;-  read_excel(path=&#39;data/eds.excel.sample.xlsx&#39;, sheet = &#39;hurricane&#39;)</code></pre>
+<p>Once the tables are stored into individual r variable, you can perform exploration and analysis with them.</p>
 </div>
-<div id="google-spreadsheets" class="section level1">
-<h1><span class="header-section-number">3</span> Google Spreadsheets</h1>
+<div id="google-spreadsheets" class="section level2">
+<h2><span class="header-section-number">1.3</span> Google Spreadsheets</h2>
 <p>If the data is stored in a Google spreadsheet, we can read it using the <code>googledrive</code> and <code>googlesheet4</code> packages from the <code>tidyverse</code> collection. We use the <code>googledrive</code> package to log into our Google Drive account and <code>googlesheets4</code> to read the speadsheets in our drive.</p>
 <p>In the example below, I used a spreadsheet named <code>eds.sample.googlesheets</code> which contains the same tables in the previous Excel example (heatwave and hurricane). You can clone the spreadsheet via this <code>link &lt;https://drive.google.com/open?id=1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc&gt;</code>_ if you’d like to repeat the steps below using your Google account.</p>
 <pre class="r"><code># Logging into Google Drive
 # Loading the library
-library(googledrive)
-
-# To authenticate and authorize googledrive package
-# When prompted: log in, authorized googledrive, and use the authorization code provided
-drive_auth()</code></pre>
-<pre><code>## Waiting for authentication in browser...</code></pre>
-<pre><code>## Press Esc/Ctrl + C to abort</code></pre>
-<pre><code>## Authentication complete.</code></pre>
+library(googledrive)</code></pre>
+<pre><code># To authenticate and authorize googledrive package, run
+drive_auth()
+# When prompted: log in, authorized googledrive, and use the authorization code provided</code></pre>
+<p>You only need to run <code>drive_auth()</code> once.</p>
 <pre><code>NOT recommended
 # Then, to view the list of files in a folder
 drive_ls(&quot;EDS&quot;) # where &quot;EDS&quot; is the folder name
@@ -440,9 +432,9 @@ drive_ls(&quot;EDS&quot;, type=&quot;spreadsheet&quot;)</code></pre>
 folder_url = &#39;https://drive.google.com/open?id=1e0uJ9dwFcL34JA61F0tGSoaiMZ_xio_4&#39;
 drive_ls(folder_url, type=&quot;spreadsheet&quot;)</code></pre>
 <pre><code>## # A tibble: 1 x 3
-##   name                    id                                         drive_resource  
-## * &lt;chr&gt;                   &lt;chr&gt;                                      &lt;list&gt;          
-## 1 eds.sample.googlesheets 1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTc… &lt;named list [35…</code></pre>
+##   name                    id                                           drive_resource   
+## * &lt;chr&gt;                   &lt;chr&gt;                                        &lt;list&gt;           
+## 1 eds.sample.googlesheets 1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc &lt;named list [35]&gt;</code></pre>
 <p>Then you can load the spreadsheet by using its <code>id</code></p>
 <pre class="r"><code>eds.sample.spreadsheet &lt;- drive_get(id = &#39;1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc&#39;)</code></pre>
 <p>It also possible to read the spreadsheet right way by using its link / <code>path</code> (without using <code>drive_ls()</code>)</p>
@@ -453,15 +445,61 @@ library(googlesheets4)
 # Authorizing the googlesheets4 package
 sheets_auth(token=drive_token())
 # Readind the tables
-heatwave &lt;- read_sheet(eds.sample.spreadsheet, sheet = &#39;heatwave&#39;)</code></pre>
-<pre><code>## Reading from &#39;eds.sample.googlesheets&#39;</code></pre>
-<pre><code>## Range &quot;&#39;heatwave&#39;&quot;</code></pre>
-<pre class="r"><code>hurricane &lt;- read_sheet(eds.sample.spreadsheet, sheet = &#39;hurricane&#39;)</code></pre>
-<pre><code>## Reading from &#39;eds.sample.googlesheets&#39;</code></pre>
-<pre><code>## Range &quot;&#39;hurricane&#39;&quot;</code></pre>
+heatwave &lt;- read_sheet(eds.sample.spreadsheet, sheet = &#39;heatwave&#39;)
+hurricane &lt;- read_sheet(eds.sample.spreadsheet, sheet = &#39;hurricane&#39;)</code></pre>
+</div>
+<div id="spss-files" class="section level2">
+<h2><span class="header-section-number">1.4</span> SPSS Files</h2>
+<pre class="r"><code># Loading the library
+library(haven)
+# Reading data
+data &lt;- read_sav(&#39;data/eds.spss.sample.sav&#39;)
+head(data)</code></pre>
+<pre><code>## # A tibble: 6 x 9
+##   Zone     Q4                     Q5    Q6                      Q7       Q10   Q50        Q51                    Q59
+##   &lt;chr&gt; &lt;dbl&gt;              &lt;dbl+lbl&gt; &lt;dbl&gt;               &lt;dbl+lbl&gt; &lt;dbl+lbl&gt; &lt;dbl&gt;  &lt;dbl+lbl&gt;              &lt;dbl+lbl&gt;
+## 1 A         2 3                          0 3 [Moderately Prepared]    2 [No]  1928 1 [Male]    4 [$70,000-$99,999]  
+## 2 A         1 4                          0 3 [Moderately Prepared]    2 [No]  1962 1 [Male]   NA                    
+## 3 A         3 4                          0 3 [Moderately Prepared]    2 [No]  1931 2 [Female]  6 [Over $200,000]    
+## 4 A         3 6                          1 1 [Fully Prepared]         2 [No]  1950 1 [Male]    5 [$100,000-$199,999]
+## 5 A         2 1 [Not Worried At All]     0 2 [Very Prepared]          2 [No]  1948 1 [Male]    5 [$100,000-$199,999]
+## 6 A         5 4                          0 2 [Very Prepared]          2 [No]  1938 2 [Female] NA</code></pre>
+<p>By default, the <code>read_sav()</code> will read the factor levels of non-numeric and non-character variables. If, instead, we want the labels, we can run the following code:</p>
+<pre class="r"><code>library(magrittr)
+library(dplyr)
+# Applying haven::as_factor() to labelled columns
+# Here, we already know that variables Zone, Q4 and Q50 are not factor variables.
+data %&gt;% mutate_at(vars(-Zone, -Q4, -Q50), as_factor)</code></pre>
+<pre><code>## # A tibble: 1,130 x 9
+##    Zone     Q4 Q5                 Q6    Q7                  Q10     Q50 Q51    Q59              
+##    &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt;              &lt;fct&gt; &lt;fct&gt;               &lt;fct&gt; &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt;            
+##  1 A         2 3                  0     Moderately Prepared No     1928 Male   $70,000-$99,999  
+##  2 A         1 4                  0     Moderately Prepared No     1962 Male   &lt;NA&gt;             
+##  3 A         3 4                  0     Moderately Prepared No     1931 Female Over $200,000    
+##  4 A         3 6                  1     Fully Prepared      No     1950 Male   $100,000-$199,999
+##  5 A         2 Not Worried At All 0     Very Prepared       No     1948 Male   $100,000-$199,999
+##  6 A         5 4                  0     Very Prepared       No     1938 Female &lt;NA&gt;             
+##  7 A         3 6                  1     Moderately Prepared No     1977 Female &lt;NA&gt;             
+##  8 A         5 4                  0     Moderately Prepared No     1964 Female &lt;NA&gt;             
+##  9 A         1 3                  0     Moderately Prepared No     1976 Male   $40,000-$69,999  
+## 10 A         2 6                  0     Very Prepared       No     1964 Female Over $200,000    
+## # … with 1,120 more rows</code></pre>
+<p>Because variables can be labelled in SPSS, we can use them as well to find out what each column represents.</p>
+<pre class="r"><code># To get the labels of the variables / columns
+as.vector(unlist(lapply(data, function(x) attributes(x)$label)))</code></pre>
+<pre><code>## [1] &quot;Q4. Since the beginning of 2009, how many hurricanes and tropical storms, if any, hit your city or town on or near the Connecticut coast while you were at home; that is, not out of town?&quot;                                         
+## [2] &quot;Q5. Generally speaking, when a hurricane or tropical storm is approaching your city or town, how worried do you feel? Please answer using the following scale ranging from 1 (not at all worried) to 7 (extremely worried).&quot;        
+## [3] &quot;Q6. Since the beginning of 2009, how many times, if ever, did you leave your home for someplace safer to avoid a hurricane or tropical storm; that is, how many times did you evacuate? Please enter the number in the boxes below.&quot;
+## [4] &quot;Q7. Generally speaking, how prepared were you for the storm(s) you experienced?&quot;                                                                                                                                                    
+## [5] &quot;Q10. Before Superstorm Sandy hit your area, did you leave your home to go someplace safer; that is, did you evacuate?&quot;                                                                                                              
+## [6] &quot;Q50. In what year were you born?&quot;                                                                                                                                                                                                   
+## [7] &quot;Q51. Are you...?&quot;                                                                                                                                                                                                                   
+## [8] &quot;Q59. Last year (in 2013), what was your total HOUSEHOLD income from all sources?&quot;</code></pre>
+<p>To learn more about the <code>haven</code> package and how the variables are stored, please visit: <a href="https://haven.tidyverse.org/" class="uri">https://haven.tidyverse.org/</a></p>
+</div>
 </div>
 <div id="web-scraping" class="section level1">
-<h1><span class="header-section-number">4</span> Web Scraping</h1>
+<h1><span class="header-section-number">2</span> Web Scraping</h1>
 <p>Web scraping is the process of fetching and extracting information / data from a webpage. It is very useful if you want to create a dynamic database that updates based on the content of a specific website.</p>
 <p>To scrap a webpage, we first need to know how to get to the webpage, a url that you can use to directly access the content. For example, to obtain the Google search results for “data science”, you can simply copy and paste this url to your browser: <a href="https://www.google.com/search?q=data+science" class="uri">https://www.google.com/search?q=data+science</a>, without having to type “data science” on a Google search web page. Some websites like Twitter or Facebook will require to you to use an API and authenticate in order to access some of their data.</p>
 <p>For this example, we’re going to use The Weather Channel website which do not require autentification. We’ll to extract the 10-day forecast for a specific location and store the data in a dataframe.</p>
@@ -492,14 +530,12 @@ date_locations &lt;- html_nodes(webpage, &quot;span.day-detail.clearfix&quot;)
 # Extracting the exact value
 raw_date &lt;- html_text(date_locations)
 raw_date</code></pre>
-<pre><code>##  [1] &quot;JAN 13&quot; &quot;JAN 14&quot; &quot;JAN 15&quot; &quot;JAN 16&quot; &quot;JAN 17&quot; &quot;JAN 18&quot; &quot;JAN 19&quot; &quot;JAN 20&quot; &quot;JAN 21&quot;
-## [10] &quot;JAN 22&quot; &quot;JAN 23&quot; &quot;JAN 24&quot; &quot;JAN 25&quot; &quot;JAN 26&quot; &quot;JAN 27&quot;</code></pre>
+<pre><code>##  [1] &quot;JAN 16&quot; &quot;JAN 17&quot; &quot;JAN 18&quot; &quot;JAN 19&quot; &quot;JAN 20&quot; &quot;JAN 21&quot; &quot;JAN 22&quot; &quot;JAN 23&quot; &quot;JAN 24&quot; &quot;JAN 25&quot; &quot;JAN 26&quot; &quot;JAN 27&quot; &quot;JAN 28&quot; &quot;JAN 29&quot; &quot;JAN 30&quot;</code></pre>
 <pre class="r"><code># Because the value are formatted like &quot;NOV 21&quot; we have to convert to a date format
 exact_date &lt;- as.Date(raw_date, format=&quot;%b %d&quot;) # b = month, d = day
 exact_date</code></pre>
-<pre><code>##  [1] &quot;2020-01-13&quot; &quot;2020-01-14&quot; &quot;2020-01-15&quot; &quot;2020-01-16&quot; &quot;2020-01-17&quot; &quot;2020-01-18&quot;
-##  [7] &quot;2020-01-19&quot; &quot;2020-01-20&quot; &quot;2020-01-21&quot; &quot;2020-01-22&quot; &quot;2020-01-23&quot; &quot;2020-01-24&quot;
-## [13] &quot;2020-01-25&quot; &quot;2020-01-26&quot; &quot;2020-01-27&quot;</code></pre>
+<pre><code>##  [1] &quot;2020-01-16&quot; &quot;2020-01-17&quot; &quot;2020-01-18&quot; &quot;2020-01-19&quot; &quot;2020-01-20&quot; &quot;2020-01-21&quot; &quot;2020-01-22&quot; &quot;2020-01-23&quot; &quot;2020-01-24&quot; &quot;2020-01-25&quot; &quot;2020-01-26&quot; &quot;2020-01-27&quot;
+## [13] &quot;2020-01-28&quot; &quot;2020-01-29&quot; &quot;2020-01-30&quot;</code></pre>
 <p>And here is the full code that extract the complete table:</p>
 <pre class="r"><code># Loading library
 library(rvest)

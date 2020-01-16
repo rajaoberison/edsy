@@ -7,7 +7,7 @@ navbar:
       href: index.html
     - text: "Reading data"
       href: reading-data.html
-    - text: "Cleaning data"
+    - text: "Wrangling data"
       href: wrangling-data.html
 
 output:

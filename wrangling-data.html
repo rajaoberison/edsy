@@ -11,11 +11,11 @@
 
 
 
-<title>Data Cleaning and Filtering</title>
+<title>Wrangling data</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -106,33 +106,33 @@ summary {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 60px;
+  padding-top: 64px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 69px;
+  margin-top: -69px;
 }
 .section h2 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 69px;
+  margin-top: -69px;
 }
 .section h3 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 69px;
+  margin-top: -69px;
 }
 .section h4 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 69px;
+  margin-top: -69px;
 }
 .section h5 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 69px;
+  margin-top: -69px;
 }
 .section h6 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 69px;
+  margin-top: -69px;
 }
 .dropdown-submenu {
   position: relative;
@@ -352,10 +352,10 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="importing_and_scraping_data.html">Reading data</a>
+  <a href="reading-data.html">Reading data</a>
 </li>
 <li>
-  <a href="data_cleaning_and_filtering.html">Cleaning data</a>
+  <a href="wrangling-data.html">Wrangling data</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -369,125 +369,423 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Data Cleaning and Filtering</h1>
+<h1 class="title toc-ignore">Wrangling data</h1>
 
 </div>
 
 
-<div id="data-cleaning" class="section level1">
-<h1><span class="header-section-number">1</span> Data Cleaning</h1>
-<p>Data cleaning is the process of correcting or removing inaccurate records of a “raw data” so that, after the treatment, the transformed data will have the quality necessary for statistical analysis or be consistent with an existing database. More explicitly, the variable names, types, and values will be consistent and uniform.</p>
-<p>In order to clean a dataset, first, we need to be able to detect the anomalies within the data. Types of anomalies include the values that are stored in the wrong format (ex: a number stored as a string), the values that fall outside of the expected range (ex: outliers), values with inconsistent patterns (ex: dates stored as mm/dd/year vs dd/mm/year), trailing spaces in strings (ex: “data” vs “data”), etc.</p>
+<div id="structuring-data" class="section level1">
+<h1><span class="header-section-number">1</span> Structuring data</h1>
+<p>Data structuring is the process of correcting or removing inaccurate records of a “raw data” so that, after the treatment, the transformed data will be easy to analyze and/or consistent with an existing dataset. More explicitly, the variable names, types, and values will be consistent and uniform.</p>
+<div id="exploring-the-data" class="section level2">
+<h2><span class="header-section-number">1.1</span> Exploring the data</h2>
+<p>In order to structure a dataset, first, we need to be able to detect the anomalies within the data. Types of anomalies include the values that are stored in the wrong format (ex: a number stored as a string), the values that fall outside of the expected range (ex: outliers), values with inconsistent patterns (ex: dates stored as mm/dd/year vs dd/mm/year), trailing spaces in strings (ex: “data” vs “data”), etc.</p>
 <p>One method of detecting these anomalies is the summary statistics of the variables, which can be obtained by using <code>summary()</code>. Here is an example using the hurricane data:</p>
 <pre class="r"><code># Summary for a numerical variables
-summary(hurricane$age)</code></pre>
+summary(data$Q4)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-##   19.00   49.00   60.00   58.69   69.00  106.00      40</code></pre>
+##   0.000   2.000   2.000   2.537   3.000  20.000     134</code></pre>
 <pre class="r"><code># Summary for a categorical variable
-summary(factor(hurricane$prepared))</code></pre>
-<pre><code>##    1    2    3    4    5 NA&#39;s 
-##   92  322  428  130   17    7</code></pre>
-<p>We also summarize all of the variables at once but first we have to set them to match their exact data types. If we run <code>summary(hurricane)</code> right away then we’ll get this unintended result:</p>
-<pre><code>##      nstorm           worry           nevac           prepared        homeloc     
-##  Min.   : 0.000   Min.   :1.000   Min.   :0.0000   Min.   :1.000   Min.   :1.000  
-##  1st Qu.: 2.000   1st Qu.:3.000   1st Qu.:0.0000   1st Qu.:2.000   1st Qu.:1.000  
-##  Median : 2.000   Median :4.000   Median :0.0000   Median :3.000   Median :2.000  
-##  Mean   : 2.584   Mean   :4.235   Mean   :0.4257   Mean   :2.654   Mean   :2.182  
-##  3rd Qu.: 3.000   3rd Qu.:5.000   3rd Qu.:1.0000   3rd Qu.:3.000   3rd Qu.:3.000  
-##  Max.   :20.000   Max.   :7.000   Max.   :4.0000   Max.   :5.000   Max.   :3.000  
-##  NA&#39;s   :28       NA&#39;s   :5       NA&#39;s   :7        NA&#39;s   :7       NA&#39;s   :11     
-##      nyear          gender          income         politics          age        
-##  Min.   : 0.0   Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   : 19.00  
-##  1st Qu.:12.0   1st Qu.:1.000   1st Qu.:3.000   1st Qu.:2.000   1st Qu.: 49.00  
-##  Median :25.0   Median :2.000   Median :4.000   Median :3.000   Median : 60.00  
-##  Mean   :28.8   Mean   :1.545   Mean   :3.751   Mean   :2.889   Mean   : 58.69  
-##  3rd Qu.:43.0   3rd Qu.:2.000   3rd Qu.:5.000   3rd Qu.:3.000   3rd Qu.: 69.00  
-##  Max.   :92.0   Max.   :2.000   Max.   :6.000   Max.   :5.000   Max.   :106.00  
-##  NA&#39;s   :15     NA&#39;s   :32      NA&#39;s   :100     NA&#39;s   :81      NA&#39;s   :40      
-##  zone         lat             long       
-##  A:622   Min.   :41.00   Min.   :-73.66  
-##  B:374   1st Qu.:41.16   1st Qu.:-73.22  
-##          Median :41.26   Median :-72.95  
-##          Mean   :41.22   Mean   :-72.91  
-##          3rd Qu.:41.29   3rd Qu.:-72.67  
-##          Max.   :41.45   Max.   :-71.83  
-## </code></pre>
-<p>Variables like <code>worry</code>, <code>prepared</code>, <code>homeloc</code>, <code>gender</code>, <code>income</code>, <code>politics</code> are supposed to be categorical and not numeric. We can easily convert them using <code>mutate_at()</code> function from the <code>dplyr</code> package (also <code>tidyverse</code>)</p>
+summary(factor(data$Q1))</code></pre>
+<pre><code>## Warning: Unknown or uninitialised column: &#39;Q1&#39;.</code></pre>
+<pre><code>## integer(0)</code></pre>
+<p>Other ways of exploring the data include:</p>
+<pre class="r"><code># First 10 rows
+head(data, 10)</code></pre>
+<pre><code>## # A tibble: 10 x 9
+##    Zone     Q4                     Q5    Q6                      Q7       Q10   Q50        Q51                    Q59
+##    &lt;chr&gt; &lt;dbl&gt;              &lt;dbl+lbl&gt; &lt;dbl&gt;               &lt;dbl+lbl&gt; &lt;dbl+lbl&gt; &lt;dbl&gt;  &lt;dbl+lbl&gt;              &lt;dbl+lbl&gt;
+##  1 A         2 3                          0 3 [Moderately Prepared]    2 [No]  1928 1 [Male]    4 [$70,000-$99,999]  
+##  2 A         1 4                          0 3 [Moderately Prepared]    2 [No]  1962 1 [Male]   NA                    
+##  3 A         3 4                          0 3 [Moderately Prepared]    2 [No]  1931 2 [Female]  6 [Over $200,000]    
+##  4 A         3 6                          1 1 [Fully Prepared]         2 [No]  1950 1 [Male]    5 [$100,000-$199,999]
+##  5 A         2 1 [Not Worried At All]     0 2 [Very Prepared]          2 [No]  1948 1 [Male]    5 [$100,000-$199,999]
+##  6 A         5 4                          0 2 [Very Prepared]          2 [No]  1938 2 [Female] NA                    
+##  7 A         3 6                          1 3 [Moderately Prepared]    2 [No]  1977 2 [Female] NA                    
+##  8 A         5 4                          0 3 [Moderately Prepared]    2 [No]  1964 2 [Female] NA                    
+##  9 A         1 3                          0 3 [Moderately Prepared]    2 [No]  1976 1 [Male]    3 [$40,000-$69,999]  
+## 10 A         2 6                          0 2 [Very Prepared]          2 [No]  1964 2 [Female]  6 [Over $200,000]</code></pre>
+<pre class="r"><code># Last 10 rows
+tail(data, 10)</code></pre>
+<pre><code>## # A tibble: 10 x 9
+##    Zone     Q4        Q5    Q6                      Q7       Q10   Q50        Q51                   Q59
+##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl+lbl&gt; &lt;dbl&gt;               &lt;dbl+lbl&gt; &lt;dbl+lbl&gt; &lt;dbl&gt;  &lt;dbl+lbl&gt;             &lt;dbl+lbl&gt;
+##  1 B         1         2     0 4 [A Little Prepared]     2 [No]   1980 1 [Male]   3 [$40,000-$69,999]  
+##  2 B         2         2     0 3 [Moderately Prepared]   2 [No]   1977 2 [Female] 4 [$70,000-$99,999]  
+##  3 B         4         4     1 2 [Very Prepared]         1 [Yes]  1962 2 [Female] 2 [$15,000-$39,999]  
+##  4 B         2         5     0 1 [Fully Prepared]        2 [No]   1946 1 [Male]   5 [$100,000-$199,999]
+##  5 B        NA         4    NA 1 [Fully Prepared]        1 [Yes]  1957 2 [Female] 1 [Less than $15,000]
+##  6 B         1         4     1 4 [A Little Prepared]     1 [Yes]  1987 2 [Female] 6 [Over $200,000]    
+##  7 B         2         5     0 3 [Moderately Prepared]   2 [No]   1953 1 [Male]   4 [$70,000-$99,999]  
+##  8 B        NA         4     4 2 [Very Prepared]         2 [No]   1973 2 [Female] 1 [Less than $15,000]
+##  9 B         2         5     0 3 [Moderately Prepared]   2 [No]   1980 1 [Male]   5 [$100,000-$199,999]
+## 10 B         2         2     0 4 [A Little Prepared]     2 [No]     NA 2 [Female] 3 [$40,000-$69,999]</code></pre>
+<pre class="r"><code># Total number of rows
+nrow(data)</code></pre>
+<pre><code>## [1] 1130</code></pre>
+<pre class="r"><code># Total number of columns
+ncol(data)</code></pre>
+<pre><code>## [1] 9</code></pre>
+<pre class="r"><code># Column names
+names(data) # also colnames(data)</code></pre>
+<pre><code>## [1] &quot;Zone&quot; &quot;Q4&quot;   &quot;Q5&quot;   &quot;Q6&quot;   &quot;Q7&quot;   &quot;Q10&quot;  &quot;Q50&quot;  &quot;Q51&quot;  &quot;Q59&quot;</code></pre>
+<p>We can also plot the data to visualize the variables</p>
+<pre class="r"><code># Plotting the first 5 columns
+plot(data[,1:5])</code></pre>
+<p><img src="wrangling-data_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>While these plots could help in understanding the dataset, they could be misleading if the variables are not set their correct data type.</p>
+</div>
+<div id="data-types" class="section level2">
+<h2><span class="header-section-number">1.2</span> Data types</h2>
+<p>One type of anomaly that we may encounter is the coercion of irrelevant data types on a variables. This is very common for coded variables or variables that has levels.</p>
+<p>For example, if we read in the same SPSS data from the Reading data section, we get the coded values instead of the labels.</p>
+<pre><code>## # A tibble: 6 x 9
+##   Zone     Q4                     Q5    Q6                      Q7       Q10   Q50        Q51                    Q59
+##   &lt;chr&gt; &lt;dbl&gt;              &lt;dbl+lbl&gt; &lt;dbl&gt;               &lt;dbl+lbl&gt; &lt;dbl+lbl&gt; &lt;dbl&gt;  &lt;dbl+lbl&gt;              &lt;dbl+lbl&gt;
+## 1 A         2 3                          0 3 [Moderately Prepared]    2 [No]  1928 1 [Male]    4 [$70,000-$99,999]  
+## 2 A         1 4                          0 3 [Moderately Prepared]    2 [No]  1962 1 [Male]   NA                    
+## 3 A         3 4                          0 3 [Moderately Prepared]    2 [No]  1931 2 [Female]  6 [Over $200,000]    
+## 4 A         3 6                          1 1 [Fully Prepared]         2 [No]  1950 1 [Male]    5 [$100,000-$199,999]
+## 5 A         2 1 [Not Worried At All]     0 2 [Very Prepared]          2 [No]  1948 1 [Male]    5 [$100,000-$199,999]
+## 6 A         5 4                          0 2 [Very Prepared]          2 [No]  1938 2 [Female] NA</code></pre>
+<p>So if we run <code>summary(data)</code> right away then we’ll get this unintended result:</p>
+<pre><code>##      Zone                 Q4               Q5              Q6               Q7             Q10             Q50            Q51            Q59       
+##  Length:1130        Min.   : 0.000   Min.   :1.000   Min.   :0.0000   Min.   :1.000   Min.   :1.000   Min.   :  19   Min.   :1.00   Min.   :1.000  
+##  Class :character   1st Qu.: 2.000   1st Qu.:3.000   1st Qu.:0.0000   1st Qu.:2.000   1st Qu.:2.000   1st Qu.:1944   1st Qu.:1.00   1st Qu.:3.000  
+##  Mode  :character   Median : 2.000   Median :4.000   Median :0.0000   Median :3.000   Median :2.000   Median :1955   Median :2.00   Median :4.000  
+##                     Mean   : 2.537   Mean   :4.235   Mean   :0.4191   Mean   :2.674   Mean   :1.796   Mean   :1944   Mean   :1.55   Mean   :3.715  
+##                     3rd Qu.: 3.000   3rd Qu.:5.000   3rd Qu.:1.0000   3rd Qu.:3.000   3rd Qu.:2.000   3rd Qu.:1966   3rd Qu.:2.00   3rd Qu.:5.000  
+##                     Max.   :20.000   Max.   :7.000   Max.   :4.0000   Max.   :5.000   Max.   :2.000   Max.   :1992   Max.   :2.00   Max.   :6.000  
+##                     NA&#39;s   :134      NA&#39;s   :111     NA&#39;s   :116      NA&#39;s   :114     NA&#39;s   :123     NA&#39;s   :47     NA&#39;s   :38     NA&#39;s   :112</code></pre>
+<p><code>Q4</code> and <code>Q50</code> are the only variables that are supposed to be numeric. But here everything is treated as numeric which is incorrect. Also, it is best if we read <code>Zone</code> as factor as well so that we find out the possible values.</p>
+<p>We can easily convert data types into factor using <code>dplyr::mutate_at()</code> and applying <code>as.factor</code> function to the variables.</p>
 <pre class="r"><code># Converting data types
-library(dplyr)
-library(magrittr) # for %&gt;%
-hurricane %&gt;% mutate_at(c(&quot;worry&quot;, &quot;prepared&quot;, &quot;homeloc&quot;, &quot;gender&quot;, &quot;income&quot;, &quot;politics&quot;), as.factor)</code></pre>
-<pre><code>## # A tibble: 996 x 13
-##    nstorm worry nevac prepared homeloc nyear gender income politics   age zone    lat
-##     &lt;int&gt; &lt;fct&gt; &lt;int&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;int&gt; &lt;fct&gt;  &lt;fct&gt;  &lt;fct&gt;    &lt;int&gt; &lt;fct&gt; &lt;dbl&gt;
-##  1      2 3         0 3        2          86 1      4      3           86 A      41.3
-##  2      1 4         0 3        3          25 1      &lt;NA&gt;   &lt;NA&gt;        52 A      41.3
-##  3      3 4         0 3        3          19 2      6      2           83 A      41.3
-##  4      3 6         1 1        1          52 1      5      3           64 A      41.2
-##  5      2 1         0 2        3          15 1      5      3           66 A      41.3
-##  6      5 4         0 2        1          23 2      &lt;NA&gt;   3           76 A      41.3
-##  7      3 6         1 3        3          36 2      &lt;NA&gt;   3           37 A      41.3
-##  8      5 4         0 3        3          50 2      &lt;NA&gt;   3           50 A      41.2
-##  9      1 3         0 3        3           4 1      3      1           38 A      41.1
-## 10      2 6         0 2        2          17 2      6      2           50 A      41.1
-## # … with 986 more rows, and 1 more variable: long &lt;dbl&gt;</code></pre>
+updated_data &lt;- data %&gt;% mutate_at(vars(-Q4, -Q6, -Q50), as_factor)</code></pre>
 <p>And now we can get the full summary statistics that we want:</p>
-<pre class="r"><code>summary(hurricane)</code></pre>
-<pre><code>##      nstorm           worry           nevac           prepared        homeloc     
-##  Min.   : 0.000   Min.   :1.000   Min.   :0.0000   Min.   :1.000   Min.   :1.000  
-##  1st Qu.: 2.000   1st Qu.:3.000   1st Qu.:0.0000   1st Qu.:2.000   1st Qu.:1.000  
-##  Median : 2.000   Median :4.000   Median :0.0000   Median :3.000   Median :2.000  
-##  Mean   : 2.584   Mean   :4.235   Mean   :0.4257   Mean   :2.654   Mean   :2.182  
-##  3rd Qu.: 3.000   3rd Qu.:5.000   3rd Qu.:1.0000   3rd Qu.:3.000   3rd Qu.:3.000  
-##  Max.   :20.000   Max.   :7.000   Max.   :4.0000   Max.   :5.000   Max.   :3.000  
-##  NA&#39;s   :28       NA&#39;s   :5       NA&#39;s   :7        NA&#39;s   :7       NA&#39;s   :11     
-##      nyear          gender          income         politics          age        
-##  Min.   : 0.0   Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   : 19.00  
-##  1st Qu.:12.0   1st Qu.:1.000   1st Qu.:3.000   1st Qu.:2.000   1st Qu.: 49.00  
-##  Median :25.0   Median :2.000   Median :4.000   Median :3.000   Median : 60.00  
-##  Mean   :28.8   Mean   :1.545   Mean   :3.751   Mean   :2.889   Mean   : 58.69  
-##  3rd Qu.:43.0   3rd Qu.:2.000   3rd Qu.:5.000   3rd Qu.:3.000   3rd Qu.: 69.00  
-##  Max.   :92.0   Max.   :2.000   Max.   :6.000   Max.   :5.000   Max.   :106.00  
-##  NA&#39;s   :15     NA&#39;s   :32      NA&#39;s   :100     NA&#39;s   :81      NA&#39;s   :40      
-##  zone         lat             long       
-##  A:622   Min.   :41.00   Min.   :-73.66  
-##  B:374   1st Qu.:41.16   1st Qu.:-73.22  
-##          Median :41.26   Median :-72.95  
-##          Mean   :41.22   Mean   :-72.91  
-##          3rd Qu.:41.29   3rd Qu.:-72.67  
-##          Max.   :41.45   Max.   :-71.83  
-## </code></pre>
-<p>As we can see, there might be some anomalies with variables:</p>
+<pre><code>##  Zone          Q4               Q5            Q6                           Q7        Q10           Q50           Q51                     Q59     
+##  A:684   Min.   : 0.000   5      :244   Min.   :0.0000   Fully Prepared     : 93   Yes :205   Min.   :  19   Male  :491   Less than $15,000: 81  
+##  B:446   1st Qu.: 2.000   4      :211   1st Qu.:0.0000   Very Prepared      :326   No  :802   1st Qu.:1944   Female:601   $15,000-$39,999  :169  
+##          Median : 2.000   3      :169   Median :0.0000   Moderately Prepared:438   NA&#39;s:123   Median :1955   NA&#39;s  : 38   $40,000-$69,999  :215  
+##          Mean   : 2.537   6      :129   Mean   :0.4191   A Little Prepared  :137              Mean   :1944                $70,000-$99,999  :190  
+##          3rd Qu.: 3.000   2      :104   3rd Qu.:1.0000   Not at all Prepared: 22              3rd Qu.:1966                $100,000-$199,999:220  
+##          Max.   :20.000   (Other):162   Max.   :4.0000   NA&#39;s               :114              Max.   :1992                Over $200,000    :143  
+##          NA&#39;s   :134      NA&#39;s   :111   NA&#39;s   :116                                           NA&#39;s   :47                  NA&#39;s             :112</code></pre>
+<p>As we can see from the summary, there might be some anomalies with the variables:</p>
 <ul>
-<li><code>nstorm</code>: where the mean value is 2.5 but some response have the value of 20. Same for <code>nevac</code></li>
-<li><code>zone</code>: as most of the respondents are from Zone A. But this is basically related to the survey method which would later require that some weighting of the variables would be applied.</li>
+<li><code>Zone</code>: as most of the respondents are from Zone A. But this is basically related to the survey method which would later require that some weighting of the variables would be applied.</li>
+<li><code>Q4: Number of storms experienced</code>: where the mean value is 2.5 but some response have the value of 20.</li>
+<li><code>Q50: Birth year</code>: where some respondent answered 19 which is incorrect. Also this column is probably better if it’s in age instead of birth year.</li>
 </ul>
+<p>We can also notice some missing values.</p>
+</div>
+<div id="subsetting-and-filtering" class="section level2">
+<h2><span class="header-section-number">1.3</span> Subsetting and filtering</h2>
+<p>We can remove these incorrect or missing row values by using <code>dplyr::filter</code> and <code>dplyr::filter</code>.</p>
+<pre class="r"><code># Removing rows where birth year is irrelevant
+# Here we decided that all birth year must be greater 1900
+updated_data &lt;- data %&gt;% filter(Q50 &gt; 1900)
+# Now if we re-run its summary
+summary(updated_data$Q50)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    1908    1945    1955    1956    1966    1992</code></pre>
+<pre class="r"><code># Removing rows with birth year greater than 1900 and missing responses for Q4
+updated_data &lt;- data %&gt;% filter(Q50 &gt; 1900, !is.na(Q4))
+summary(updated_data$Q50)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    1908    1944    1954    1955    1965    1990</code></pre>
+<pre class="r"><code>summary(updated_data$Q4)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.000   2.000   2.000   2.522   3.000  20.000</code></pre>
+<p>We can also select only the variables that we are interested in:</p>
+<pre class="r"><code># Creating a new dataframe with only zone, gender, and income column
+updated_data &lt;- data %&gt;% select(Zone, Q59, Q51)
+head(updated_data, 10)</code></pre>
+<pre><code>## # A tibble: 10 x 3
+##    Zone  Q59               Q51   
+##    &lt;fct&gt; &lt;fct&gt;             &lt;fct&gt; 
+##  1 A     $70,000-$99,999   Male  
+##  2 A     &lt;NA&gt;              Male  
+##  3 A     Over $200,000     Female
+##  4 A     $100,000-$199,999 Male  
+##  5 A     $100,000-$199,999 Male  
+##  6 A     &lt;NA&gt;              Female
+##  7 A     &lt;NA&gt;              Female
+##  8 A     &lt;NA&gt;              Female
+##  9 A     $40,000-$69,999   Male  
+## 10 A     Over $200,000     Female</code></pre>
+<pre class="r"><code>plot(table(updated_data), las=1)</code></pre>
+<p><img src="wrangling-data_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>It is also possible to split the dataset into multiple dataframe by number of rows using <code>split()</code>.</p>
+<pre class="r"><code># To split the dataset into multiple dataframe of 10 rows each
+max_number_of_rows_per_dataframe &lt;- 10
+total_number_rows_in_the_current_dataset &lt;- nrow(data)
+sets_of_10rows_dataframes &lt;- split(data, 
+                                   rep(1:ceiling(total_number_rows_in_the_current_dataset/max_number_of_rows_per_dataframe), 
+                                       each=max_number_of_rows_per_dataframe, 
+                                       length.out=total_number_rows_in_the_current_dataset)
+                                   )
+# Here are the first 2 dataframes
+sets_of_10rows_dataframes[[1]] # or sets_of_10rows_dataframes$`1`</code></pre>
+<pre><code>## # A tibble: 10 x 9
+##    Zone     Q4 Q5                    Q6 Q7                  Q10     Q50 Q51    Q59              
+##    &lt;fct&gt; &lt;dbl&gt; &lt;fct&gt;              &lt;dbl&gt; &lt;fct&gt;               &lt;fct&gt; &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt;            
+##  1 A         2 3                      0 Moderately Prepared No     1928 Male   $70,000-$99,999  
+##  2 A         1 4                      0 Moderately Prepared No     1962 Male   &lt;NA&gt;             
+##  3 A         3 4                      0 Moderately Prepared No     1931 Female Over $200,000    
+##  4 A         3 6                      1 Fully Prepared      No     1950 Male   $100,000-$199,999
+##  5 A         2 Not Worried At All     0 Very Prepared       No     1948 Male   $100,000-$199,999
+##  6 A         5 4                      0 Very Prepared       No     1938 Female &lt;NA&gt;             
+##  7 A         3 6                      1 Moderately Prepared No     1977 Female &lt;NA&gt;             
+##  8 A         5 4                      0 Moderately Prepared No     1964 Female &lt;NA&gt;             
+##  9 A         1 3                      0 Moderately Prepared No     1976 Male   $40,000-$69,999  
+## 10 A         2 6                      0 Very Prepared       No     1964 Female Over $200,000</code></pre>
+<pre class="r"><code>sets_of_10rows_dataframes[[2]]</code></pre>
+<pre><code>## # A tibble: 10 x 9
+##    Zone     Q4 Q5                    Q6 Q7                  Q10     Q50 Q51    Q59              
+##    &lt;fct&gt; &lt;dbl&gt; &lt;fct&gt;              &lt;dbl&gt; &lt;fct&gt;               &lt;fct&gt; &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt;            
+##  1 A         2 Extremely Worried      2 Fully Prepared      Yes    1937 Female &lt;NA&gt;             
+##  2 A         3 5                      0 Very Prepared       No     1943 Male   $70,000-$99,999  
+##  3 A         2 Extremely Worried      0 Very Prepared       No     1954 Female $100,000-$199,999
+##  4 A         2 5                      0 Very Prepared       No     1959 Female $100,000-$199,999
+##  5 A         4 Not Worried At All    NA Very Prepared       No     1936 Female Over $200,000    
+##  6 A         1 3                      1 Moderately Prepared Yes    1963 Male   Over $200,000    
+##  7 A         2 3                      1 Very Prepared       Yes    1950 Female $100,000-$199,999
+##  8 A         4 6                      0 Moderately Prepared No       NA &lt;NA&gt;   &lt;NA&gt;             
+##  9 A         0 4                      0 Very Prepared       No     1941 Male   $100,000-$199,999
+## 10 A        NA &lt;NA&gt;                  NA &lt;NA&gt;                &lt;NA&gt;   1952 Female $100,000-$199,999</code></pre>
+</div>
+<div id="changing-cell-values" class="section level2">
+<h2><span class="header-section-number">1.4</span> Changing cell values</h2>
+<p>As we mentionned earlier, it is best if Q50 is stored as an age variable instead of the default birth year. <code>Q50</code> is a numeric variable and we can simply change it by using <code>dplyr::mutate()</code></p>
+<pre class="r"><code># Replacing Q50 values to their age in 2020
+updated_data &lt;- data %&gt;% mutate(Q50 = 2020 - Q50)
+head(updated_data, 10)</code></pre>
+<pre><code>## # A tibble: 10 x 9
+##    Zone     Q4 Q5                    Q6 Q7                  Q10     Q50 Q51    Q59              
+##    &lt;fct&gt; &lt;dbl&gt; &lt;fct&gt;              &lt;dbl&gt; &lt;fct&gt;               &lt;fct&gt; &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt;            
+##  1 A         2 3                      0 Moderately Prepared No       92 Male   $70,000-$99,999  
+##  2 A         1 4                      0 Moderately Prepared No       58 Male   &lt;NA&gt;             
+##  3 A         3 4                      0 Moderately Prepared No       89 Female Over $200,000    
+##  4 A         3 6                      1 Fully Prepared      No       70 Male   $100,000-$199,999
+##  5 A         2 Not Worried At All     0 Very Prepared       No       72 Male   $100,000-$199,999
+##  6 A         5 4                      0 Very Prepared       No       82 Female &lt;NA&gt;             
+##  7 A         3 6                      1 Moderately Prepared No       43 Female &lt;NA&gt;             
+##  8 A         5 4                      0 Moderately Prepared No       56 Female &lt;NA&gt;             
+##  9 A         1 3                      0 Moderately Prepared No       44 Male   $40,000-$69,999  
+## 10 A         2 6                      0 Very Prepared       No       56 Female Over $200,000</code></pre>
+<pre class="r"><code># It is also possible to leave Q50 untouched and store the results into a new column
+updated_data &lt;- data %&gt;% mutate(age = 2020 - Q50)
+head(updated_data, 10)</code></pre>
+<pre><code>## # A tibble: 10 x 10
+##    Zone     Q4 Q5                    Q6 Q7                  Q10     Q50 Q51    Q59                 age
+##    &lt;fct&gt; &lt;dbl&gt; &lt;fct&gt;              &lt;dbl&gt; &lt;fct&gt;               &lt;fct&gt; &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt;             &lt;dbl&gt;
+##  1 A         2 3                      0 Moderately Prepared No     1928 Male   $70,000-$99,999      92
+##  2 A         1 4                      0 Moderately Prepared No     1962 Male   &lt;NA&gt;                 58
+##  3 A         3 4                      0 Moderately Prepared No     1931 Female Over $200,000        89
+##  4 A         3 6                      1 Fully Prepared      No     1950 Male   $100,000-$199,999    70
+##  5 A         2 Not Worried At All     0 Very Prepared       No     1948 Male   $100,000-$199,999    72
+##  6 A         5 4                      0 Very Prepared       No     1938 Female &lt;NA&gt;                 82
+##  7 A         3 6                      1 Moderately Prepared No     1977 Female &lt;NA&gt;                 43
+##  8 A         5 4                      0 Moderately Prepared No     1964 Female &lt;NA&gt;                 56
+##  9 A         1 3                      0 Moderately Prepared No     1976 Male   $40,000-$69,999      44
+## 10 A         2 6                      0 Very Prepared       No     1964 Female Over $200,000        56</code></pre>
+<pre class="r"><code>summary(updated_data$age)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   28.00   54.00   65.00   64.14   75.00  112.00</code></pre>
+<p>For a categorical variable, we use a different function <code>dplyr::recode_factor()</code> or <code>dplyr::recode()</code>. We will apply this to <code>Q5</code> as we have noticed in the previous section that not all of its values were labelled from SPSS. Here is its summary:</p>
+<pre><code>## Not Worried At All                  2                  3                  4                  5                  6  Extremely Worried               NA&#39;s 
+##                 58                101                164                197                232                123                 97                104</code></pre>
+<p>Looking back at the questionnare, here is how it was phrased: <img src="https://raw.githubusercontent.com/rajaoberison/edsy/master/images/q5.png" /></p>
+<p>Because the survey itself doesn’t have labels, the recoding will be up to the user. Here we chose to remove replace the extreme values with 1 and 7. As mentionned in the documentation: <code>dplyr::recode()</code> will preserve the existing order of levels while changing the values, and <code>dplyr::recode_factor()</code> will change the order of levels to match the order of replacements.</p>
+<pre class="r"><code># Recoding Q5
+recoded.with.recode &lt;- recode(data$Q5, `Not Worried At All`=&quot;1&quot;, `Extremely Worried`=&quot;7&quot;)
+summary(recoded.with.recode)</code></pre>
+<pre><code>##    1    2    3    4    5    6    7 NA&#39;s 
+##   58  101  164  197  232  123   97  104</code></pre>
+<pre class="r"><code>recoded.with.recode_factor &lt;- recode_factor(data$Q5, `Not Worried At All`=&quot;1&quot;, `Extremely Worried`=&quot;7&quot;)
+summary(recoded.with.recode_factor)</code></pre>
+<pre><code>##    1    7    2    3    4    5    6 NA&#39;s 
+##   58   97  101  164  197  232  123  104</code></pre>
+</div>
+<div id="pivoting-the-dataset" class="section level2">
+<h2><span class="header-section-number">1.5</span> Pivoting the dataset</h2>
+<p>In some cases, we may want to split a column based on values, or merge multiple columns into fewer columns. These process can be done using <code>tidyr</code> package. For example, to convert the dataframe into long-format with only <code>Zone</code>, <code>question</code>, and <code>value</code> as columns:</p>
+<pre class="r"><code>library(tidyr)
+# We have to pivot by variable type
+# Pivot longer for factor variables
+pivoted.longer &lt;- data %&gt;% 
+  select_if(is.factor) %&gt;% 
+  pivot_longer(-Zone, names_to = &quot;question&quot;, values_to = &quot;value&quot;)
+pivoted.longer</code></pre>
+<pre><code>## # A tibble: 5,380 x 3
+##    Zone  question value              
+##    &lt;fct&gt; &lt;chr&gt;    &lt;fct&gt;              
+##  1 A     Q5       3                  
+##  2 A     Q7       Moderately Prepared
+##  3 A     Q10      No                 
+##  4 A     Q51      Male               
+##  5 A     Q59      $70,000-$99,999    
+##  6 A     Q5       4                  
+##  7 A     Q7       Moderately Prepared
+##  8 A     Q10      No                 
+##  9 A     Q51      Male               
+## 10 A     Q59      &lt;NA&gt;               
+## # … with 5,370 more rows</code></pre>
+<pre class="r"><code># Then we can reshape it back to the original
+pivoted.wider &lt;- pivoted.longer %&gt;%
+  group_by(question) %&gt;% mutate(row = row_number()) %&gt;% 
+  pivot_wider(names_from = question, values_from = value) %&gt;% 
+  select(-row)
+pivoted.wider</code></pre>
+<pre><code>## # A tibble: 1,076 x 6
+##    Zone  Q5                 Q7                  Q10   Q51    Q59              
+##    &lt;fct&gt; &lt;fct&gt;              &lt;fct&gt;               &lt;fct&gt; &lt;fct&gt;  &lt;fct&gt;            
+##  1 A     3                  Moderately Prepared No    Male   $70,000-$99,999  
+##  2 A     4                  Moderately Prepared No    Male   &lt;NA&gt;             
+##  3 A     4                  Moderately Prepared No    Female Over $200,000    
+##  4 A     6                  Fully Prepared      No    Male   $100,000-$199,999
+##  5 A     Not Worried At All Very Prepared       No    Male   $100,000-$199,999
+##  6 A     4                  Very Prepared       No    Female &lt;NA&gt;             
+##  7 A     6                  Moderately Prepared No    Female &lt;NA&gt;             
+##  8 A     4                  Moderately Prepared No    Female &lt;NA&gt;             
+##  9 A     3                  Moderately Prepared No    Male   $40,000-$69,999  
+## 10 A     6                  Very Prepared       No    Female Over $200,000    
+## # … with 1,066 more rows</code></pre>
+<p><code>tidyr::spread()</code> and <code>tidyr::gather()</code> are the outdated equivalent of <code>tidyr::pivot_wider()</code> and <code>tidyr::pivot_longer()</code>.</p>
+<p>To merge or split columns, we can use <code>tidyr::unite()</code> or <code>tidyr::separate()</code>. For example, to merge <code>Q7</code> and <code>Q10</code>:</p>
+<pre class="r"><code># Creating a new column with responses from both Q7 and Q10
+merged &lt;- data %&gt;% unite(&quot;Q7_Q10&quot;, Q7:Q10, sep = &quot;__&quot;, remove = TRUE, na.rm = FALSE)
+merged</code></pre>
+<pre><code>## # A tibble: 1,076 x 8
+##    Zone     Q4 Q5                    Q6 Q7_Q10                    Q50 Q51    Q59              
+##    &lt;fct&gt; &lt;dbl&gt; &lt;fct&gt;              &lt;dbl&gt; &lt;chr&gt;                   &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt;            
+##  1 A         2 3                      0 Moderately Prepared__No  1928 Male   $70,000-$99,999  
+##  2 A         1 4                      0 Moderately Prepared__No  1962 Male   &lt;NA&gt;             
+##  3 A         3 4                      0 Moderately Prepared__No  1931 Female Over $200,000    
+##  4 A         3 6                      1 Fully Prepared__No       1950 Male   $100,000-$199,999
+##  5 A         2 Not Worried At All     0 Very Prepared__No        1948 Male   $100,000-$199,999
+##  6 A         5 4                      0 Very Prepared__No        1938 Female &lt;NA&gt;             
+##  7 A         3 6                      1 Moderately Prepared__No  1977 Female &lt;NA&gt;             
+##  8 A         5 4                      0 Moderately Prepared__No  1964 Female &lt;NA&gt;             
+##  9 A         1 3                      0 Moderately Prepared__No  1976 Male   $40,000-$69,999  
+## 10 A         2 6                      0 Very Prepared__No        1964 Female Over $200,000    
+## # … with 1,066 more rows</code></pre>
+<pre class="r"><code># To split it back
+merged %&gt;% separate(Q7_Q10, c(&quot;Q7&quot;, &quot;Q10&quot;), sep = &quot;__&quot;, remove = TRUE)</code></pre>
+<pre><code>## # A tibble: 1,076 x 9
+##    Zone     Q4 Q5                    Q6 Q7                  Q10     Q50 Q51    Q59              
+##    &lt;fct&gt; &lt;dbl&gt; &lt;fct&gt;              &lt;dbl&gt; &lt;chr&gt;               &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt;            
+##  1 A         2 3                      0 Moderately Prepared No     1928 Male   $70,000-$99,999  
+##  2 A         1 4                      0 Moderately Prepared No     1962 Male   &lt;NA&gt;             
+##  3 A         3 4                      0 Moderately Prepared No     1931 Female Over $200,000    
+##  4 A         3 6                      1 Fully Prepared      No     1950 Male   $100,000-$199,999
+##  5 A         2 Not Worried At All     0 Very Prepared       No     1948 Male   $100,000-$199,999
+##  6 A         5 4                      0 Very Prepared       No     1938 Female &lt;NA&gt;             
+##  7 A         3 6                      1 Moderately Prepared No     1977 Female &lt;NA&gt;             
+##  8 A         5 4                      0 Moderately Prepared No     1964 Female &lt;NA&gt;             
+##  9 A         1 3                      0 Moderately Prepared No     1976 Male   $40,000-$69,999  
+## 10 A         2 6                      0 Very Prepared       No     1964 Female Over $200,000    
+## # … with 1,066 more rows</code></pre>
+</div>
+</div>
+<div id="data-cleaning" class="section level1">
+<h1><span class="header-section-number">2</span> Data Cleaning</h1>
 <p>For <code>nstorm</code> and <code>nevac</code>, we can better investigate what’s going on by actually visualizing them in a histogram using the <code>hist()</code> or <code>boxplot()</code>.</p>
+<pre><code>## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion
+
+## Warning: NAs introduced by coercion</code></pre>
 <pre class="r"><code>par(mfrow=c(2,2)) # 4 figures arranged in 2 rows and 2 columns
 hist(hurricane$nstorm, breaks=10, xlab=&quot;Number of storms&quot;, main=NA)
 boxplot(hurricane$nstorm)
 hist(hurricane$nevac, breaks=10, xlab=&quot;Number of evacuations&quot;, main=NA)
 boxplot(hurricane$nevac)
-mtext(&quot;How many storms have you experienced?&quot;, side=3, outer=TRUE, line=-1.5)
-mtext(&quot;How many times have you evacuated?&quot;, side=3, outer=TRUE, line=-15.5)</code></pre>
-<p><img src="data_cleaning_and_filtering_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+mtext(&quot;How many storms have you experienced?&quot;, side=3, outer=TRUE, line=-2)
+mtext(&quot;How many times have you evacuated?&quot;, side=3, outer=TRUE, line=-16)</code></pre>
+<p><img src="wrangling-data_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>Using <code>select()</code>, <code>mutate()</code>, <code>filter()</code>, etc.</p>
 <p>As we can see, both variables are not normally distributed but skewed. And there are several method of treating such variables based on the objective of the analysis: log-transformation, conversion to categorical variables, or simply removing the outliers, etc.</p>
 <p>We can also notice from the summary above that the there are missing values (<code>NA</code>) as well. They can also be detected using <code>anyNA()</code>. And the best way to treat them is by removing all of the corresponding observations using <code>drop_na()</code> from the <code>tidyr</code> package. Or, in some cases, removing the variable itself.</p>
 <pre class="r"><code>tidyr::drop_na(hurricane)</code></pre>
-<pre><code>## # A tibble: 818 x 13
-##    nstorm worry nevac prepared homeloc nyear gender income politics   age zone    lat
-##     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt;  &lt;int&gt;    &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;dbl&gt;
-##  1      2     3     0        3       2    86      1      4        3    86 A      41.3
-##  2      3     4     0        3       3    19      2      6        2    83 A      41.3
-##  3      3     6     1        1       1    52      1      5        3    64 A      41.2
-##  4      2     1     0        2       3    15      1      5        3    66 A      41.3
-##  5      1     3     0        3       3     4      1      3        1    38 A      41.1
-##  6      2     6     0        2       2    17      2      6        2    50 A      41.1
-##  7      3     5     0        2       3    70      1      4        4    71 A      41.3
-##  8      2     7     0        2       1    24      2      5        2    60 A      41.3
-##  9      2     5     0        2       2    18      2      5        2    55 A      41.3
-## 10      1     3     1        3       2     2      1      6        4    51 A      41.0
-## # … with 808 more rows, and 1 more variable: long &lt;dbl&gt;</code></pre>
+<pre><code>## # A tibble: 964 x 13
+##    nstorm worry     nevac prepared  homeloc   nyear     gender    income    politics  age       zone    lat  long
+##     &lt;dbl&gt; &lt;list&gt;    &lt;dbl&gt; &lt;list&gt;    &lt;list&gt;    &lt;list&gt;    &lt;list&gt;    &lt;list&gt;    &lt;list&gt;    &lt;list&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1      2 &lt;dbl [1]&gt;     0 &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; A      41.3 -72.8
+##  2      1 &lt;dbl [1]&gt;     0 &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;chr [1]&gt; &lt;chr [1]&gt; &lt;dbl [1]&gt; A      41.3 -72.1
+##  3      3 &lt;dbl [1]&gt;     0 &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; A      41.3 -72.8
+##  4      3 &lt;dbl [1]&gt;     1 &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; A      41.2 -73.1
+##  5      2 &lt;dbl [1]&gt;     0 &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; A      41.3 -72.9
+##  6      5 &lt;dbl [1]&gt;     0 &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;chr [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; A      41.3 -72.6
+##  7      3 &lt;dbl [1]&gt;     1 &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;chr [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; A      41.3 -72.9
+##  8      5 &lt;dbl [1]&gt;     0 &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;chr [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; A      41.2 -73.2
+##  9      1 &lt;dbl [1]&gt;     0 &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; A      41.1 -73.4
+## 10      2 &lt;dbl [1]&gt;     0 &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; &lt;dbl [1]&gt; A      41.1 -73.4
+## # … with 954 more rows</code></pre>
 <p>However, if dropping all of the rows with missing values affect the quality of the data, then another option is to replace the missing values with the mean/median/mode of the variable or predict using an appropriate algorithm. There are several packages out there that are solely dedicated to treating missing values including <code>VIM</code> and <code>MICE</code>.</p>
 <p>In this next example, we’ll try to predict the 15 missing values in the variable <code>nstorm</code> (number of storms the survey respondents have experienced) using the variables that has no missing values: <code>zone</code>, <code>lat</code>, and <code>long</code>.</p>
 <pre class="r"><code># Imputation using MICE
@@ -522,6 +820,7 @@ mice_model &lt;- mice(select(hurricane, zone, lat, long, nstorm), method=&quot;r
 ##   5   3  nstorm
 ##   5   4  nstorm
 ##   5   5  nstorm</code></pre>
+<pre><code>## Warning: Number of logged events: 1</code></pre>
 <pre class="r"><code># Predicting the missing values
 mice_prediction &lt;- complete(mice_model)  # generate the completed data.
 anyNA(mice_prediction)</code></pre>
@@ -535,12 +834,7 @@ na_nstorm &lt;- mice_prediction$nstorm[is.na(hurricane$nstorm)]
 plot(non_na_nstorm, non_na_latitude, col=&quot;grey&quot;, pch=&quot;•&quot;, ylab=&quot;Latitude&quot;, xlab=&quot;Number of Storms Experienced&quot;)
 points(na_nstorm, na_latitude, col=&quot;red&quot;, pch=&quot;•&quot;, cex=2)
 legend(&quot;topright&quot;, c(&quot;Existing values&quot;, &quot;Predicted missing values&quot;), col=c(&quot;grey&quot;, &quot;red&quot;), pch=&quot;•&quot;, cex=1.5)</code></pre>
-<p><img src="data_cleaning_and_filtering_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<p><img src="https://raw.githubusercontent.com/rajaoberison/edsy/master/images/miceimputation.png" /></p>
-</div>
-<div id="data-filtering" class="section level1">
-<h1><span class="header-section-number">2</span> Data Filtering</h1>
-<p>Using <code>select()</code>, <code>mutate()</code>, <code>filter()</code>, etc.</p>
+<p><img src="wrangling-data_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 </div>
 
 
