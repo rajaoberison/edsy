@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Section 1 Reading | EDS Vignettes</title>
+  <meta name="description" content="Data science resources for FES Students" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Section 1 Reading | EDS Vignettes" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Data science resources for FES Students" />
+  <meta name="github-repo" content="rajaoberison/edsy" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Section 1 Reading | EDS Vignettes" />
+  
+  <meta name="twitter:description" content="Data science resources for FES Students" />
+  
+
+<meta name="author" content="Andry Rajaoberison" />
+
+
+<meta name="date" content="2020-04-07" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="extraction.html"/>
+<script src="libs/header-attrs-2.1/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">FES EDS Tutorials</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="1" data-path="reading.html"><a href="reading.html"><i class="fa fa-check"></i><b>1</b> Reading</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="reading.html"><a href="reading.html#csv"><i class="fa fa-check"></i><b>1.1</b> CSV</a></li>
+<li class="chapter" data-level="1.2" data-path="reading.html"><a href="reading.html#excel"><i class="fa fa-check"></i><b>1.2</b> Excel</a></li>
+<li class="chapter" data-level="1.3" data-path="reading.html"><a href="reading.html#google-spreadsheets"><i class="fa fa-check"></i><b>1.3</b> Google Spreadsheets</a></li>
+<li class="chapter" data-level="1.4" data-path="reading.html"><a href="reading.html#spss"><i class="fa fa-check"></i><b>1.4</b> SPSS</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="extraction.html"><a href="extraction.html"><i class="fa fa-check"></i><b>2</b> Extraction</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="extraction.html"><a href="extraction.html#web-scraping"><i class="fa fa-check"></i><b>2.1</b> Web Scraping</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="structuring.html"><a href="structuring.html"><i class="fa fa-check"></i><b>3</b> Structuring</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="structuring.html"><a href="structuring.html#inspecting-the-data"><i class="fa fa-check"></i><b>3.1</b> Inspecting the data</a></li>
+<li class="chapter" data-level="3.2" data-path="structuring.html"><a href="structuring.html#data-types"><i class="fa fa-check"></i><b>3.2</b> Data types</a></li>
+<li class="chapter" data-level="3.3" data-path="structuring.html"><a href="structuring.html#subsetting-and-filtering"><i class="fa fa-check"></i><b>3.3</b> Subsetting and Filtering</a></li>
+<li class="chapter" data-level="3.4" data-path="structuring.html"><a href="structuring.html#changing-cell-values"><i class="fa fa-check"></i><b>3.4</b> Changing cell values</a></li>
+<li class="chapter" data-level="3.5" data-path="structuring.html"><a href="structuring.html#pivoting-the-dataset"><i class="fa fa-check"></i><b>3.5</b> Pivoting the dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cleaning.html"><a href="cleaning.html"><i class="fa fa-check"></i><b>4</b> Cleaning</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="cleaning.html"><a href="cleaning.html#fixing-skewed-distribution"><i class="fa fa-check"></i><b>4.1</b> Fixing skewed distribution</a></li>
+<li class="chapter" data-level="4.2" data-path="cleaning.html"><a href="cleaning.html#fixing-outliers"><i class="fa fa-check"></i><b>4.2</b> Fixing outliers</a></li>
+<li class="chapter" data-level="4.3" data-path="cleaning.html"><a href="cleaning.html#fixing-missing-values"><i class="fa fa-check"></i><b>4.3</b> Fixing missing values</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>5</b> Final Words</a></li>
+<li class="chapter" data-level="6" data-path="analysis.html"><a href="analysis.html"><i class="fa fa-check"></i><b>6</b> Analysis</a></li>
+<li class="chapter" data-level="7" data-path="resources.html"><a href="resources.html"><i class="fa fa-check"></i><b>7</b> Resources</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">EDS Vignettes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="reading" class="section level1" number="1">
+<h1><span class="header-section-number">Section 1</span> Reading</h1>
+<p>In this section, we learn how to read data from different file format.</p>
+<div id="csv" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> CSV</h2>
+<p>Reading csv with column headers and separated by <code>,</code>. These parameters are also the default values for the <code>read.csv</code> function.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="reading.html#cb2-1"></a>data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="dt">file =</span> <span class="st">&#39;/path/to/csv&#39;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">sep =</span> <span class="st">&#39;,&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="reading.html#cb3-1"></a><span class="co"># Example</span></span>
+<span id="cb3-2"><a href="reading.html#cb3-2"></a>data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="dt">file =</span> <span class="st">&#39;data/eds.data.hurricane.csv&#39;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+</div>
+<div id="excel" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Excel</h2>
+<p>The main advantage of Excel files is that they can store multiple tables. But reading these tables at once is different from a CSV. For this example, we’re going to use the <code>readxl</code> package from the <code>tidyverse</code> collection. Please visit this [website] (<a href="https://www.tidyverse.org/" class="uri">https://www.tidyverse.org/</a>) to learn more about <code>tidyverse</code>.</p>
+<p>To read an excel file, you can use the <code>read_excel</code> function and specify at least the <code>path/to/the/file</code> and <code>sheet</code> you want to open. If you don’t specify the <code>sheet</code>, <code>read_excel</code> will automatically open the first table in the spreadsheet.
+In the ‘eds.excel.sample.xlsx’ file, there are 2 tables: heatwave and hurricane. Here’s how we load both tables into R:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="reading.html#cb4-1"></a><span class="kw">library</span>(readxl)</span>
+<span id="cb4-2"><a href="reading.html#cb4-2"></a>heatwave &lt;-<span class="st">  </span><span class="kw">read_excel</span>(<span class="dt">path=</span><span class="st">&#39;data/eds.excel.sample.xlsx&#39;</span>, <span class="dt">sheet =</span> <span class="st">&#39;heatwave&#39;</span>)</span>
+<span id="cb4-3"><a href="reading.html#cb4-3"></a>hurricane &lt;-<span class="st">  </span><span class="kw">read_excel</span>(<span class="dt">path=</span><span class="st">&#39;data/eds.excel.sample.xlsx&#39;</span>, <span class="dt">sheet =</span> <span class="st">&#39;hurricane&#39;</span>)</span></code></pre></div>
+<p>Once the tables are stored into individual R variable, you can perform exploration and analysis with them.</p>
+</div>
+<div id="google-spreadsheets" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Google Spreadsheets</h2>
+<p>If the data is stored in a Google spreadsheet, we can read it using the <code>googledrive</code> and <code>googlesheet4</code> packages. We use the <code>googledrive</code> package to log into our Google Drive account and <code>googlesheets4</code> to read the speadsheets in our drive.</p>
+<p>In the example below, I used a spreadsheet named <code>eds.sample.googlesheets</code> which contains the same tables in the previous Excel example (heatwave and hurricane). You can clone the spreadsheet via this [link] (<a href="https://drive.google.com/open?id=1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc" class="uri">https://drive.google.com/open?id=1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc</a> if you’d like to repeat the steps below using your Google account.</p>
+<p>Then authenticate to your drive using <code>drive_auth()</code>. When prompted: log in, authorized googledrive, and use the authorization code if provided. You only need to run <code>drive_auth()</code> once.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="reading.html#cb5-1"></a><span class="kw">library</span>(googledrive)</span>
+<span id="cb5-2"><a href="reading.html#cb5-2"></a><span class="co"># To authenticate and authorize googledrive package</span></span>
+<span id="cb5-3"><a href="reading.html#cb5-3"></a><span class="kw">drive_auth</span>()</span></code></pre></div>
+<p>The following scripts show how to explore a Google Drive folder. Though this is not recommended as you might encounter performance issues.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="reading.html#cb6-1"></a><span class="co"># NOT recommended</span></span>
+<span id="cb6-2"><a href="reading.html#cb6-2"></a><span class="co"># Then, to view the list of files in a folder</span></span>
+<span id="cb6-3"><a href="reading.html#cb6-3"></a><span class="kw">drive_ls</span>(<span class="st">&quot;EDS&quot;</span>) <span class="co"># where &quot;EDS&quot; is the folder name</span></span>
+<span id="cb6-4"><a href="reading.html#cb6-4"></a><span class="co"># To also get the files within the subfolders</span></span>
+<span id="cb6-5"><a href="reading.html#cb6-5"></a><span class="kw">drive_ls</span>(<span class="st">&quot;EDS&quot;</span>, <span class="dt">recursive =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb6-6"><a href="reading.html#cb6-6"></a><span class="co"># To view the list of spreadsheets within a folder</span></span>
+<span id="cb6-7"><a href="reading.html#cb6-7"></a><span class="kw">drive_ls</span>(<span class="st">&quot;EDS&quot;</span>, <span class="dt">type=</span><span class="st">&quot;spreadsheet&quot;</span>)</span></code></pre></div>
+<p>Also, because of Google authentification system, you may run into an error like below when running the previous code (using <code>drive_ls()</code>). Which is why it’s not recommended.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="reading.html#cb7-1"></a><span class="co">#&gt; Error in add_id_path(nodes, root_id = root_id, leaf = leaf) : !anyDuplicated(nodes$id) is not TRUE</span></span></code></pre></div>
+<p>To avoid this, you can use the folder url instead of the folder name. The folder url can be obtained by right-clicking on the folder and click <code>Get shareable link</code>. Then run the following code:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="reading.html#cb8-1"></a><span class="co"># If using folder name doesn&#39;t work</span></span>
+<span id="cb8-2"><a href="reading.html#cb8-2"></a>folder_url =<span class="st"> &#39;https://drive.google.com/open?id=1e0uJ9dwFcL34JA61F0tGSoaiMZ_xio_4&#39;</span></span>
+<span id="cb8-3"><a href="reading.html#cb8-3"></a><span class="kw">drive_ls</span>(folder_url, <span class="dt">type=</span><span class="st">&quot;spreadsheet&quot;</span>)</span></code></pre></div>
+<p>Then you can load the spreadsheet by using its <code>id</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="reading.html#cb9-1"></a>eds.sample.spreadsheet &lt;-<span class="st"> </span><span class="kw">drive_get</span>(<span class="dt">id =</span> <span class="st">&#39;1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc&#39;</span>)</span></code></pre></div>
+<p>It also possible to read the spreadsheet right way by using its link / <code>path</code> (without using <code>drive_ls()</code>). I recommend using this to read any Google Drive files.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="reading.html#cb10-1"></a>eds.sample.spreadsheet &lt;-<span class="st"> </span><span class="kw">drive_get</span>(<span class="dt">path =</span> <span class="st">&#39;https://drive.google.com/open?id=1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc&#39;</span>)</span></code></pre></div>
+<p>Once the spreadsheet is loaded, we run a similar code used for the Excel files to read tables within the spreadsheet. But for Google Sheets, function is called <code>read_sheet</code></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="reading.html#cb11-1"></a><span class="kw">library</span>(googlesheets4)</span>
+<span id="cb11-2"><a href="reading.html#cb11-2"></a><span class="co"># Authorizing the googlesheets4 package</span></span>
+<span id="cb11-3"><a href="reading.html#cb11-3"></a><span class="kw">sheets_auth</span>(<span class="dt">token=</span><span class="kw">drive_token</span>())</span>
+<span id="cb11-4"><a href="reading.html#cb11-4"></a><span class="co"># Reading the tables</span></span>
+<span id="cb11-5"><a href="reading.html#cb11-5"></a>heatwave &lt;-<span class="st"> </span><span class="kw">read_sheet</span>(eds.sample.spreadsheet, <span class="dt">sheet =</span> <span class="st">&#39;heatwave&#39;</span>)</span>
+<span id="cb11-6"><a href="reading.html#cb11-6"></a>hurricane &lt;-<span class="st"> </span><span class="kw">read_sheet</span>(eds.sample.spreadsheet, <span class="dt">sheet =</span> <span class="st">&#39;hurricane&#39;</span>)</span></code></pre></div>
+</div>
+<div id="spss" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> SPSS</h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="reading.html#cb12-1"></a><span class="kw">library</span>(haven)</span>
+<span id="cb12-2"><a href="reading.html#cb12-2"></a>data &lt;-<span class="st"> </span><span class="kw">read_sav</span>(<span class="st">&quot;data/eds.spss.sample.sav&quot;</span>)</span></code></pre></div>
+<p>By default, the <code>read_sav()</code> will read the factor levels of non-numeric and non-character variables. If, instead, we want the labels, we can run the following code:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="reading.html#cb13-1"></a><span class="kw">library</span>(magrittr)</span>
+<span id="cb13-2"><a href="reading.html#cb13-2"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb13-3"><a href="reading.html#cb13-3"></a><span class="co"># Applying haven::as_factor() to labelled columns Here, we already know that</span></span>
+<span id="cb13-4"><a href="reading.html#cb13-4"></a><span class="co"># variables Zone, Q4 and Q50 are not factor variables.</span></span>
+<span id="cb13-5"><a href="reading.html#cb13-5"></a>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(<span class="op">-</span>Zone, <span class="op">-</span>Q4, <span class="op">-</span>Q50), as_factor)</span></code></pre></div>
+<pre><code>## # A tibble: 1,130 x 9
+##    Zone     Q4 Q5            Q6    Q7             Q10     Q50 Q51   Q59         
+##    &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt;         &lt;fct&gt; &lt;fct&gt;          &lt;fct&gt; &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;       
+##  1 A         2 3             0     Moderately Pr… No     1928 Male  $70,000-$99…
+##  2 A         1 4             0     Moderately Pr… No     1962 Male  &lt;NA&gt;        
+##  3 A         3 4             0     Moderately Pr… No     1931 Fema… Over $200,0…
+##  4 A         3 6             1     Fully Prepared No     1950 Male  $100,000-$1…
+##  5 A         2 Not Worried … 0     Very Prepared  No     1948 Male  $100,000-$1…
+##  6 A         5 4             0     Very Prepared  No     1938 Fema… &lt;NA&gt;        
+##  7 A         3 6             1     Moderately Pr… No     1977 Fema… &lt;NA&gt;        
+##  8 A         5 4             0     Moderately Pr… No     1964 Fema… &lt;NA&gt;        
+##  9 A         1 3             0     Moderately Pr… No     1976 Male  $40,000-$69…
+## 10 A         2 6             0     Very Prepared  No     1964 Fema… Over $200,0…
+## # … with 1,120 more rows</code></pre>
+<p>Because variables can be labelled in SPSS, we can use them as well to find out what each column represents.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="reading.html#cb15-1"></a><span class="co"># To get the labels of the variables / columns</span></span>
+<span id="cb15-2"><a href="reading.html#cb15-2"></a><span class="kw">as.vector</span>(<span class="kw">unlist</span>(<span class="kw">lapply</span>(data, <span class="cf">function</span>(x) <span class="kw">attributes</span>(x)<span class="op">$</span>label)))</span></code></pre></div>
+<pre><code>## [1] &quot;Q4. Since the beginning of 2009, how many hurricanes and tropical storms, if any, hit your city or town on or near the Connecticut coast while you were at home; that is, not out of town?&quot;                                         
+## [2] &quot;Q5. Generally speaking, when a hurricane or tropical storm is approaching your city or town, how worried do you feel? Please answer using the following scale ranging from 1 (not at all worried) to 7 (extremely worried).&quot;        
+## [3] &quot;Q6. Since the beginning of 2009, how many times, if ever, did you leave your home for someplace safer to avoid a hurricane or tropical storm; that is, how many times did you evacuate? Please enter the number in the boxes below.&quot;
+## [4] &quot;Q7. Generally speaking, how prepared were you for the storm(s) you experienced?&quot;                                                                                                                                                    
+## [5] &quot;Q10. Before Superstorm Sandy hit your area, did you leave your home to go someplace safer; that is, did you evacuate?&quot;                                                                                                              
+## [6] &quot;Q50. In what year were you born?&quot;                                                                                                                                                                                                   
+## [7] &quot;Q51. Are you...?&quot;                                                                                                                                                                                                                   
+## [8] &quot;Q59. Last year (in 2013), what was your total HOUSEHOLD income from all sources?&quot;</code></pre>
+<p>To learn more about the <code>haven</code> package and how the variables are stored, please visit: <a href="https://haven.tidyverse.org/" class="uri">https://haven.tidyverse.org/</a></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="extraction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/01-reading.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["edsy.pdf", "edsy.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

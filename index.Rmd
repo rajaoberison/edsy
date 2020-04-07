@@ -1,7 +1,24 @@
+--- 
+title: "EDS Vignettes"
+author: "Andry Rajaoberison"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: rajaoberison/edsy
+description: "Data science resources for FES Students"
 ---
-title: "Environmental Data Science at FES"
-output:
-  html_document:
-    toc: true
-    number_sections: true
----
+
+# Prerequisites {-}
+
+The following tutorials are written in R. To install R on your computer, please visit this link: https://www.r-project.org/
+You should also install RStudio: https://rstudio.com/products/rstudio/download/
+
+We will use the packages in the **tidyverse** library:
+
+```{r eval=FALSE}
+install.packages("tidyverse")
+```

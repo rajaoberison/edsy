@@ -1,0 +1,120 @@
+# Reading {#reading}
+In this section, we learn how to read data from different file format.
+
+## CSV
+
+Reading csv with column headers and separated by `,`. These parameters are also the default values for the `read.csv` function.
+
+```{r reading-csv-1, eval=F}
+data <- read.csv(file = '/path/to/csv', header = TRUE, sep = ',')
+```
+
+```{r reading-csv-2, tidy=F, out.width='80%'}
+# Example
+data <- read.csv(file = 'data/eds.data.hurricane.csv', header = TRUE)
+```
+
+## Excel
+
+The main advantage of Excel files is that they can store multiple tables. But reading these tables at once is different from a CSV. For this example, we're going to use the `readxl` package from the `tidyverse` collection. Please visit this [website] (https://www.tidyverse.org/) to learn more about `tidyverse`.
+
+To read an excel file, you can use the `read_excel` function and specify at least the `path/to/the/file` and `sheet` you want to open. If you don't specify the `sheet`, `read_excel` will automatically open the first table in the spreadsheet.
+In the 'eds.excel.sample.xlsx' file, there are 2 tables: heatwave and hurricane. Here's how we load both tables into R:
+
+```{r reading-excel, eval=F}
+library(readxl)
+heatwave <-  read_excel(path='data/eds.excel.sample.xlsx', sheet = 'heatwave')
+hurricane <-  read_excel(path='data/eds.excel.sample.xlsx', sheet = 'hurricane')
+```
+
+Once the tables are stored into individual R variable, you can perform exploration and analysis with them.
+
+## Google Spreadsheets
+
+If the data is stored in a Google spreadsheet, we can read it using the `googledrive` and `googlesheet4` packages. We use the `googledrive` package to log into our Google Drive account and `googlesheets4` to read the speadsheets in our drive.
+
+In the example below, I used a spreadsheet named `eds.sample.googlesheets` which contains the same tables in the previous Excel example (heatwave and hurricane). You can clone the spreadsheet via this [link] (https://drive.google.com/open?id=1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc if you'd like to repeat the steps below using your Google account.
+
+Then authenticate to your drive using `drive_auth()`. When prompted: log in, authorized googledrive, and use the authorization code if  provided. You only need to run `drive_auth()` once.
+
+```{r reading-google-1, eval=F}
+library(googledrive)
+# To authenticate and authorize googledrive package
+drive_auth()
+```
+
+The following scripts show how to explore a Google Drive folder. Though this is not recommended as you might encounter performance issues. 
+
+```{r reading-google-2, eval=F}
+# NOT recommended
+# Then, to view the list of files in a folder
+drive_ls("EDS") # where "EDS" is the folder name
+# To also get the files within the subfolders
+drive_ls("EDS", recursive = TRUE)
+# To view the list of spreadsheets within a folder
+drive_ls("EDS", type="spreadsheet")
+```
+
+Also, because of Google authentification system, you may run into an error like below when running the previous code (using `drive_ls()`). Which is why it's not recommended.
+
+```{r reading-google-3}
+#> Error in add_id_path(nodes, root_id = root_id, leaf = leaf) : !anyDuplicated(nodes$id) is not TRUE
+```
+
+To avoid this, you can use the folder url instead of the folder name. The folder url can be obtained by right-clicking on the folder and click `Get shareable link`. Then run the following code:
+
+```{r reading-google-4, eval=FALSE}
+# If using folder name doesn't work
+folder_url = 'https://drive.google.com/open?id=1e0uJ9dwFcL34JA61F0tGSoaiMZ_xio_4'
+drive_ls(folder_url, type="spreadsheet")
+```
+
+Then you can load the spreadsheet by using its `id`
+
+```{r reading-google-5, eval=FALSE}
+eds.sample.spreadsheet <- drive_get(id = '1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc')
+```
+
+It also possible to read the spreadsheet right way by using its link / `path` (without using `drive_ls()`). I recommend using this to read any Google Drive files.
+
+```{r reading-google-6, eval=FALSE}
+eds.sample.spreadsheet <- drive_get(path = 'https://drive.google.com/open?id=1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc')
+```
+
+Once the spreadsheet is loaded, we run a similar code used for the Excel files to read tables within the spreadsheet. But for Google Sheets, function is called `read_sheet`
+
+```{r reading-google-7, eval=F}
+library(googlesheets4)
+# Authorizing the googlesheets4 package
+sheets_auth(token=drive_token())
+# Reading the tables
+heatwave <- read_sheet(eds.sample.spreadsheet, sheet = 'heatwave')
+hurricane <- read_sheet(eds.sample.spreadsheet, sheet = 'hurricane')
+```
+
+## SPSS
+
+```{r reading-spss-1, message=F, tidy=T}
+library(haven)
+data <- read_sav('data/eds.spss.sample.sav')
+```
+
+By default, the `read_sav()` will read the factor levels of non-numeric and non-character variables. If, instead, we want the labels, we can run the following code:
+
+```{r reading-spss-2, message=F, tidy=T}
+library(magrittr)
+library(dplyr)
+# Applying haven::as_factor() to labelled columns
+# Here, we already know that variables Zone, Q4 and Q50 are not factor variables.
+data %>% mutate_at(vars(-Zone, -Q4, -Q50), as_factor)
+```
+
+Because variables can be labelled in SPSS, we can use them as well to find out what each column represents.
+
+```{r reading-spss-3, tidy=T}
+# To get the labels of the variables / columns
+as.vector(unlist(lapply(data, function(x) attributes(x)$label)))
+```
+
+To learn more about the `haven` package and how the variables are stored, please visit: https://haven.tidyverse.org/
+

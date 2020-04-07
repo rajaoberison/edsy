@@ -1,8 +1,0 @@
----  
-title: EDS Tutorials
-output:
-  html_document:
-    toc: true
-    toc_float: true
-    number_sections: true
----
