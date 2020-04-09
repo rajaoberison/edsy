@@ -1,9 +1,135 @@
 # Visualization
 
-## ggplot2
+## Simple graph with `ggplot2`
 
-## plotly
+## Interactive graph with `plotly` and `gganimate`
 
-## RShiny
+## Web app with RShiny
 
+_This Shiny tutorial was edited based on the official tutorial on the [website](https://shiny.rstudio.com/tutorial/)_
+
+With RShiny, it is possible to make the functions in your R script available to people who don't necessarily know R. For example, in this [app](https://udwq.shinyapps.io/lakeprofiledashboard/), you can create different types of graph by selecting a site and other parameters. Basically, it's web development using the power of R libraries.
+
+So, just like any web tools, an RshinyApp has components on the User and Server side.
+![Rshiny app structure](images/appStructure.png)
+
+The visual appearance of the app can be modified in the user component. You can use it to change layout, font size, color, etc. Whereas on the server side, you can customize how your app responds to user inputs/interactions.
+
+A basic **ShinyApp starter template** looks like this:
+```{r shiny-starter-1, eval=F}
+library(shiny)
+ui <- fluidPage()
+server <- function(input, output){}
+shinyApp(ui=ui, server=server)
+```
+If you run the script above, it will give you and empty page. Some content will show when you add some (text) elements with `fluidPage`.
+
+```{r shiny-starter-2, eval=F}
+ui <- fluidPage('Hello world')
+server <- function(input, output){}
+shinyApp(ui=ui, server=server)
+```
+
+### Input functions
+
+For richer content, the `shiny` package has built-in functions that will allow you create them. `sliderInput` for example adds a slider in your web app.
+
+```{r shiny-starter-3, eval=F}
+ui <- fluidPage(
+  sliderInput(inputId='num',
+              label='Choose a number',
+              value=25, min=1, max=100)
+)
+server <- function(input, output){}
+shinyApp(ui=ui, server=server)
+```
+
+`sliderInput` is part of a group of function called **inputs**. These functions allow an Rshiny developper like yourself to add html element that will serve as user input. Here are some input functions you can try: 
+![Rshiny input functions](images/inputFunctions.png)
+
+All input functions take as first 2 arguments: `inputId` and `label`. `inputId` is an ID that R will use create the input element in a webpage and to reference it later. `label` is just a text that the user will see, describing what the input element is for. The rest of the arguments are function-specific.
+
+### Output functions
+
+Output functions, on the other hand, allow you to add outputs of R into your web page. As you know, these outputs can be image, plot, table, text, etc. And there are specific output functions for each type of output.
+
+![Rshiny output functions](images/outputFunctions.png)
+
+Output functions are called similarly to the input functions:
+![Rshiny output functions](images/callOutputFunctions.png)
+
+Here is our app with an output function:
+```{r shiny-starter-4, eval=F}
+ui <- fluidPage(
+  sliderInput(inputId='num',
+              label='Choose a number',
+              value=25, min=1, max=100),
+  plotOutput('hist')
+)
+server <- function(input, output){}
+shinyApp(ui=ui, server=server)
+```
+
+Running the previous script won't show any plot though. It just reserve a space in the webpage for plot with id: 'hist'. To actually create the plot, you must use the server function.
+
+### Server function
+
+Server function creates the interactivity in your web application, i.e. this is where you set up how an output (ex: graph) chnages with the user input (ex: some number). However, there are 3 rules that has to be followed and it is summarized in this script:
+```{r server-rules, eval=F}
+function(input, output){
+  #1 outputId is the outputId you defined with output function
+  #2 to render on a webpage. To render a plot, use renderPlot()
+  output$outputId <- renderSomething({
+    #3 inputId is the inputId you defined with input function
+    someFunction(input$inputId)
+  })
+}
+# Anything inside the curly braces is an R code. And it can be multiple lines of code.
+```
+
+In summary, you must define output variable by the `outputId` and prefixing it with `output$`. You must call the R script that will produce the output with a `render*({})` function. And you must call the user input with its `inputId` and prefixing it with `input$`.
+
+In our example script, we can render it as follow:
+
+```{r shiny-starter-5, eval=F}
+ui <- fluidPage(
+  sliderInput(inputId='num',
+              label='Choose a number',
+              value=25, min=1, max=100),
+  plotOutput('hist')
+)
+server <- function(input, output){
+    output$hist <- renderPlot({
+      title <- paste(input$num, 'random normal values')
+      hist(rnorm(input$num), main=title, xlab='values')
+  })
+}
+shinyApp(ui=ui, server=server)
+```
+
+To make much more advanced app, simply read the instructions on [Rshiny website](https://shiny.rstudio.com/articles/).
+
+### Sharing your app
+
+Now you can create your own Shiny app. But for now you can only run it in your computer and no one else has access to it. To make available to the public:
+
+1. Save the `ui` and `server` objects/scripts into a stand alone R script, name it `app.R`, and save it in a separate folder. You must name it `app.R` as that's the file that the server will look for when you deploy your app. For this example, I'd save this as `app.R`
+```{r shiny-starter-6, eval=F}
+ui <- fluidPage(
+  sliderInput(inputId='num',
+              label='Choose a number',
+              value=25, min=1, max=100),
+  plotOutput('hist')
+)
+server <- function(input, output){
+    output$hist <- renderPlot({
+      title <- paste(input$num, 'random normal values')
+      hist(rnorm(input$num), main=title, xlab='values')
+  })
+}
+```
+2. Go to [shinyapps.io](https://www.shinyapps.io) and log in or sign for an account.
+3. Now simply run the app on your computer
+4. In the top right cover of R viewer window, there is a `Publish` button that you can use to publish your app.
+5. Simply follow the instructions.
 

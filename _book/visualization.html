@@ -24,7 +24,7 @@
 <meta name="author" content="Andry Rajaoberison" />
 
 
-<meta name="date" content="2020-04-07" />
+<meta name="date" content="2020-04-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -161,9 +161,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5" data-path="visualization.html"><a href="visualization.html"><i class="fa fa-check"></i><b>5</b> Visualization</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="visualization.html"><a href="visualization.html#ggplot2"><i class="fa fa-check"></i><b>5.1</b> ggplot2</a></li>
-<li class="chapter" data-level="5.2" data-path="visualization.html"><a href="visualization.html#plotly"><i class="fa fa-check"></i><b>5.2</b> plotly</a></li>
-<li class="chapter" data-level="5.3" data-path="visualization.html"><a href="visualization.html#rshiny"><i class="fa fa-check"></i><b>5.3</b> RShiny</a></li>
+<li class="chapter" data-level="5.1" data-path="visualization.html"><a href="visualization.html#simple-graph-with-ggplot2"><i class="fa fa-check"></i><b>5.1</b> Simple graph with <code>ggplot2</code></a></li>
+<li class="chapter" data-level="5.2" data-path="visualization.html"><a href="visualization.html#interactive-graph-with-plotly-and-gganimate"><i class="fa fa-check"></i><b>5.2</b> Interactive graph with <code>plotly</code> and <code>gganimate</code></a></li>
+<li class="chapter" data-level="5.3" data-path="visualization.html"><a href="visualization.html#web-app-with-rshiny"><i class="fa fa-check"></i><b>5.3</b> Web app with RShiny</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="visualization.html"><a href="visualization.html#input-functions"><i class="fa fa-check"></i><b>5.3.1</b> Input functions</a></li>
+<li class="chapter" data-level="5.3.2" data-path="visualization.html"><a href="visualization.html#output-functions"><i class="fa fa-check"></i><b>5.3.2</b> Output functions</a></li>
+<li class="chapter" data-level="5.3.3" data-path="visualization.html"><a href="visualization.html#server-function"><i class="fa fa-check"></i><b>5.3.3</b> Server function</a></li>
+<li class="chapter" data-level="5.3.4" data-path="visualization.html"><a href="visualization.html#sharing-your-app"><i class="fa fa-check"></i><b>5.3.4</b> Sharing your app</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="analysis.html"><a href="analysis.html"><i class="fa fa-check"></i><b>6</b> Analysis</a></li>
 <li class="chapter" data-level="7" data-path="resources.html"><a href="resources.html"><i class="fa fa-check"></i><b>7</b> Resources</a></li>
@@ -190,15 +196,117 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="visualization" class="section level1" number="5">
 <h1><span class="header-section-number">Section 5</span> Visualization</h1>
-<div id="ggplot2" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> ggplot2</h2>
+<div id="simple-graph-with-ggplot2" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Simple graph with <code>ggplot2</code></h2>
 </div>
-<div id="plotly" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> plotly</h2>
+<div id="interactive-graph-with-plotly-and-gganimate" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Interactive graph with <code>plotly</code> and <code>gganimate</code></h2>
 </div>
-<div id="rshiny" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> RShiny</h2>
+<div id="web-app-with-rshiny" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Web app with RShiny</h2>
+<p><em>This Shiny tutorial was edited based on the official tutorial on the <a href="https://shiny.rstudio.com/tutorial/">website</a></em></p>
+<p>With RShiny, it is possible to make the functions in your R script available to people who don’t necessarily know R. For example, in this <a href="https://udwq.shinyapps.io/lakeprofiledashboard/">app</a>, you can create different types of graph by selecting a site and other parameters. Basically, it’s web development using the power of R libraries.</p>
+<p>So, just like any web tools, an RshinyApp has components on the User and Server side.
+<img src="images/appStructure.png" alt="Rshiny app structure" /></p>
+<p>The visual appearance of the app can be modified in the user component. You can use it to change layout, font size, color, etc. Whereas on the server side, you can customize how your app responds to user inputs/interactions.</p>
+<p>A basic <strong>ShinyApp starter template</strong> looks like this:</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="visualization.html#cb86-1"></a><span class="kw">library</span>(shiny)</span>
+<span id="cb86-2"><a href="visualization.html#cb86-2"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>()</span>
+<span id="cb86-3"><a href="visualization.html#cb86-3"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){}</span>
+<span id="cb86-4"><a href="visualization.html#cb86-4"></a><span class="kw">shinyApp</span>(<span class="dt">ui=</span>ui, <span class="dt">server=</span>server)</span></code></pre></div>
+<p>If you run the script above, it will give you and empty page. Some content will show when you add some (text) elements with <code>fluidPage</code>.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="visualization.html#cb87-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(<span class="st">&#39;Hello world&#39;</span>)</span>
+<span id="cb87-2"><a href="visualization.html#cb87-2"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){}</span>
+<span id="cb87-3"><a href="visualization.html#cb87-3"></a><span class="kw">shinyApp</span>(<span class="dt">ui=</span>ui, <span class="dt">server=</span>server)</span></code></pre></div>
+<div id="input-functions" class="section level3" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> Input functions</h3>
+<p>For richer content, the <code>shiny</code> package has built-in functions that will allow you create them. <code>sliderInput</code> for example adds a slider in your web app.</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="visualization.html#cb88-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb88-2"><a href="visualization.html#cb88-2"></a>  <span class="kw">sliderInput</span>(<span class="dt">inputId=</span><span class="st">&#39;num&#39;</span>,</span>
+<span id="cb88-3"><a href="visualization.html#cb88-3"></a>              <span class="dt">label=</span><span class="st">&#39;Choose a number&#39;</span>,</span>
+<span id="cb88-4"><a href="visualization.html#cb88-4"></a>              <span class="dt">value=</span><span class="dv">25</span>, <span class="dt">min=</span><span class="dv">1</span>, <span class="dt">max=</span><span class="dv">100</span>)</span>
+<span id="cb88-5"><a href="visualization.html#cb88-5"></a>)</span>
+<span id="cb88-6"><a href="visualization.html#cb88-6"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){}</span>
+<span id="cb88-7"><a href="visualization.html#cb88-7"></a><span class="kw">shinyApp</span>(<span class="dt">ui=</span>ui, <span class="dt">server=</span>server)</span></code></pre></div>
+<p><code>sliderInput</code> is part of a group of function called <strong>inputs</strong>. These functions allow an Rshiny developper like yourself to add html element that will serve as user input. Here are some input functions you can try:
+<img src="images/inputFunctions.png" alt="Rshiny input functions" /></p>
+<p>All input functions take as first 2 arguments: <code>inputId</code> and <code>label</code>. <code>inputId</code> is an ID that R will use create the input element in a webpage and to reference it later. <code>label</code> is just a text that the user will see, describing what the input element is for. The rest of the arguments are function-specific.</p>
+</div>
+<div id="output-functions" class="section level3" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> Output functions</h3>
+<p>Output functions, on the other hand, allow you to add outputs of R into your web page. As you know, these outputs can be image, plot, table, text, etc. And there are specific output functions for each type of output.</p>
+<div class="figure">
+<img src="images/outputFunctions.png" alt="" />
+<p class="caption">Rshiny output functions</p>
+</div>
+<p>Output functions are called similarly to the input functions:
+<img src="images/callOutputFunctions.png" alt="Rshiny output functions" /></p>
+<p>Here is our app with an output function:</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="visualization.html#cb89-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb89-2"><a href="visualization.html#cb89-2"></a>  <span class="kw">sliderInput</span>(<span class="dt">inputId=</span><span class="st">&#39;num&#39;</span>,</span>
+<span id="cb89-3"><a href="visualization.html#cb89-3"></a>              <span class="dt">label=</span><span class="st">&#39;Choose a number&#39;</span>,</span>
+<span id="cb89-4"><a href="visualization.html#cb89-4"></a>              <span class="dt">value=</span><span class="dv">25</span>, <span class="dt">min=</span><span class="dv">1</span>, <span class="dt">max=</span><span class="dv">100</span>),</span>
+<span id="cb89-5"><a href="visualization.html#cb89-5"></a>  <span class="kw">plotOutput</span>(<span class="st">&#39;hist&#39;</span>)</span>
+<span id="cb89-6"><a href="visualization.html#cb89-6"></a>)</span>
+<span id="cb89-7"><a href="visualization.html#cb89-7"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){}</span>
+<span id="cb89-8"><a href="visualization.html#cb89-8"></a><span class="kw">shinyApp</span>(<span class="dt">ui=</span>ui, <span class="dt">server=</span>server)</span></code></pre></div>
+<p>Running the previous script won’t show any plot though. It just reserve a space in the webpage for plot with id: ‘hist’. To actually create the plot, you must use the server function.</p>
+</div>
+<div id="server-function" class="section level3" number="5.3.3">
+<h3><span class="header-section-number">5.3.3</span> Server function</h3>
+<p>Server function creates the interactivity in your web application, i.e. this is where you set up how an output (ex: graph) chnages with the user input (ex: some number). However, there are 3 rules that has to be followed and it is summarized in this script:</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="visualization.html#cb90-1"></a><span class="cf">function</span>(input, output){</span>
+<span id="cb90-2"><a href="visualization.html#cb90-2"></a>  <span class="co">#1 outputId is the outputId you defined with output function</span></span>
+<span id="cb90-3"><a href="visualization.html#cb90-3"></a>  <span class="co">#2 to render on a webpage. To render a plot, use renderPlot()</span></span>
+<span id="cb90-4"><a href="visualization.html#cb90-4"></a>  output<span class="op">$</span>outputId &lt;-<span class="st"> </span><span class="kw">renderSomething</span>({</span>
+<span id="cb90-5"><a href="visualization.html#cb90-5"></a>    <span class="co">#3 inputId is the inputId you defined with input function</span></span>
+<span id="cb90-6"><a href="visualization.html#cb90-6"></a>    <span class="kw">someFunction</span>(input<span class="op">$</span>inputId)</span>
+<span id="cb90-7"><a href="visualization.html#cb90-7"></a>  })</span>
+<span id="cb90-8"><a href="visualization.html#cb90-8"></a>}</span>
+<span id="cb90-9"><a href="visualization.html#cb90-9"></a><span class="co"># Anything inside the curly braces is an R code. And it can be multiple lines of code.</span></span></code></pre></div>
+<p>In summary, you must define output variable by the <code>outputId</code> and prefixing it with <code>output$</code>. You must call the R script that will produce the output with a <code>render*({})</code> function. And you must call the user input with its <code>inputId</code> and prefixing it with <code>input$</code>.</p>
+<p>In our example script, we can render it as follow:</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="visualization.html#cb91-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb91-2"><a href="visualization.html#cb91-2"></a>  <span class="kw">sliderInput</span>(<span class="dt">inputId=</span><span class="st">&#39;num&#39;</span>,</span>
+<span id="cb91-3"><a href="visualization.html#cb91-3"></a>              <span class="dt">label=</span><span class="st">&#39;Choose a number&#39;</span>,</span>
+<span id="cb91-4"><a href="visualization.html#cb91-4"></a>              <span class="dt">value=</span><span class="dv">25</span>, <span class="dt">min=</span><span class="dv">1</span>, <span class="dt">max=</span><span class="dv">100</span>),</span>
+<span id="cb91-5"><a href="visualization.html#cb91-5"></a>  <span class="kw">plotOutput</span>(<span class="st">&#39;hist&#39;</span>)</span>
+<span id="cb91-6"><a href="visualization.html#cb91-6"></a>)</span>
+<span id="cb91-7"><a href="visualization.html#cb91-7"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){</span>
+<span id="cb91-8"><a href="visualization.html#cb91-8"></a>    output<span class="op">$</span>hist &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({</span>
+<span id="cb91-9"><a href="visualization.html#cb91-9"></a>      title &lt;-<span class="st"> </span><span class="kw">paste</span>(input<span class="op">$</span>num, <span class="st">&#39;random normal values&#39;</span>)</span>
+<span id="cb91-10"><a href="visualization.html#cb91-10"></a>      <span class="kw">hist</span>(<span class="kw">rnorm</span>(input<span class="op">$</span>num), <span class="dt">main=</span>title, <span class="dt">xlab=</span><span class="st">&#39;values&#39;</span>)</span>
+<span id="cb91-11"><a href="visualization.html#cb91-11"></a>  })</span>
+<span id="cb91-12"><a href="visualization.html#cb91-12"></a>}</span>
+<span id="cb91-13"><a href="visualization.html#cb91-13"></a><span class="kw">shinyApp</span>(<span class="dt">ui=</span>ui, <span class="dt">server=</span>server)</span></code></pre></div>
+<p>To make much more advanced app, simply read the instructions on <a href="https://shiny.rstudio.com/articles/">Rshiny website</a>.</p>
+</div>
+<div id="sharing-your-app" class="section level3" number="5.3.4">
+<h3><span class="header-section-number">5.3.4</span> Sharing your app</h3>
+<p>Now you can create your own Shiny app. But for now you can only run it in your computer and no one else has access to it. To make available to the public:</p>
+<ol style="list-style-type: decimal">
+<li>Save the <code>ui</code> and <code>server</code> objects/scripts into a stand alone R script, name it <code>app.R</code>, and save it in a separate folder. You must name it <code>app.R</code> as that’s the file that the server will look for when you deploy your app. For this example, I’d save this as <code>app.R</code></li>
+</ol>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="visualization.html#cb92-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb92-2"><a href="visualization.html#cb92-2"></a>  <span class="kw">sliderInput</span>(<span class="dt">inputId=</span><span class="st">&#39;num&#39;</span>,</span>
+<span id="cb92-3"><a href="visualization.html#cb92-3"></a>              <span class="dt">label=</span><span class="st">&#39;Choose a number&#39;</span>,</span>
+<span id="cb92-4"><a href="visualization.html#cb92-4"></a>              <span class="dt">value=</span><span class="dv">25</span>, <span class="dt">min=</span><span class="dv">1</span>, <span class="dt">max=</span><span class="dv">100</span>),</span>
+<span id="cb92-5"><a href="visualization.html#cb92-5"></a>  <span class="kw">plotOutput</span>(<span class="st">&#39;hist&#39;</span>)</span>
+<span id="cb92-6"><a href="visualization.html#cb92-6"></a>)</span>
+<span id="cb92-7"><a href="visualization.html#cb92-7"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){</span>
+<span id="cb92-8"><a href="visualization.html#cb92-8"></a>    output<span class="op">$</span>hist &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({</span>
+<span id="cb92-9"><a href="visualization.html#cb92-9"></a>      title &lt;-<span class="st"> </span><span class="kw">paste</span>(input<span class="op">$</span>num, <span class="st">&#39;random normal values&#39;</span>)</span>
+<span id="cb92-10"><a href="visualization.html#cb92-10"></a>      <span class="kw">hist</span>(<span class="kw">rnorm</span>(input<span class="op">$</span>num), <span class="dt">main=</span>title, <span class="dt">xlab=</span><span class="st">&#39;values&#39;</span>)</span>
+<span id="cb92-11"><a href="visualization.html#cb92-11"></a>  })</span>
+<span id="cb92-12"><a href="visualization.html#cb92-12"></a>}</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>Go to <a href="https://www.shinyapps.io">shinyapps.io</a> and log in or sign for an account.</li>
+<li>Now simply run the app on your computer</li>
+<li>In the top right cover of R viewer window, there is a <code>Publish</code> button that you can use to publish your app.</li>
+<li>Simply follow the instructions.</li>
+</ol>
 
+</div>
 </div>
 </div>
             </section>

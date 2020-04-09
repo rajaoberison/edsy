@@ -120,7 +120,7 @@
 
 \title{EDS Vignettes}
 \author{Andry Rajaoberison}
-\date{2020-04-07}
+\date{2020-04-08}
 
 \begin{document}
 \maketitle
@@ -388,8 +388,8 @@ Here is how we extract the dates:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "APR 7"  "APR 8"  "APR 9"  "APR 10" "APR 11" "APR 12" "APR 13" "APR 14"
-##  [9] "APR 15" "APR 16" "APR 17" "APR 18" "APR 19" "APR 20" "APR 21"
+##  [1] "APR 8"  "APR 9"  "APR 10" "APR 11" "APR 12" "APR 13" "APR 14" "APR 15"
+##  [9] "APR 16" "APR 17" "APR 18" "APR 19" "APR 20" "APR 21" "APR 22"
 \end{verbatim}
 
 \begin{Shaded}
@@ -401,9 +401,9 @@ Here is how we extract the dates:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "2020-04-07" "2020-04-08" "2020-04-09" "2020-04-10" "2020-04-11"
-##  [6] "2020-04-12" "2020-04-13" "2020-04-14" "2020-04-15" "2020-04-16"
-## [11] "2020-04-17" "2020-04-18" "2020-04-19" "2020-04-20" "2020-04-21"
+##  [1] "2020-04-08" "2020-04-09" "2020-04-10" "2020-04-11" "2020-04-12"
+##  [6] "2020-04-13" "2020-04-14" "2020-04-15" "2020-04-16" "2020-04-17"
+## [11] "2020-04-18" "2020-04-19" "2020-04-20" "2020-04-21" "2020-04-22"
 \end{verbatim}
 
 And here is the full code that extract the complete table:
@@ -478,21 +478,21 @@ And here is the full code that extract the complete table:
 ## # A tibble: 15 x 8
 ##    day        description high_temp low_temp precip wind_dir wind_speed himidity
 ##    <date>     <chr>       <chr>     <chr>     <dbl> <chr>    <chr>         <dbl>
-##  1 2020-04-07 Partly Clo… 64        46          0   SW       11            0.38 
-##  2 2020-04-08 AM Showers  52        44          0.5 NE       9             0.75 
-##  3 2020-04-09 Rain        50        38          1   S        17            0.81 
-##  4 2020-04-10 Mostly Clo… 49        36          0   WNW      20            0.44 
-##  5 2020-04-11 Partly Clo… 53        36          0   WNW      14            0.42 
-##  6 2020-04-12 Mostly Clo… 58        49          0.2 S        12            0.52 
-##  7 2020-04-13 Showers     60        47          0.8 ESE      16            0.81 
-##  8 2020-04-14 Partly Clo… 57        42          0.2 NW       10            0.55 
-##  9 2020-04-15 Showers     54        42          0.4 W        12            0.49 
-## 10 2020-04-16 Showers     49        38          0.4 WNW      13            0.55 
-## 11 2020-04-17 PM Showers  50        39          0.3 WNW      12            0.54 
-## 12 2020-04-18 Partly Clo… 52        41          0.2 WNW      12            0.52 
-## 13 2020-04-19 Showers     54        42          0.4 NNW      11            0.55 
-## 14 2020-04-20 PM Showers  53        42          0.4 NW       11            0.570
-## 15 2020-04-21 Showers     55        45          0.4 NNE      11            0.59
+##  1 2020-04-08 Mostly Cle… <NA>      38          0.1 S        4             0.9  
+##  2 2020-04-09 Thundersto… 59        39          1   S        18            0.81 
+##  3 2020-04-10 Partly Clo… 50        38          0   WNW      21            0.47 
+##  4 2020-04-11 Partly Clo… 52        35          0   WNW      16            0.41 
+##  5 2020-04-12 Partly Clo… 57        50          0.1 SSE      13            0.53 
+##  6 2020-04-13 Rain/Wind   64        48          0.9 S        21            0.82 
+##  7 2020-04-14 Partly Clo… 58        41          0.2 WNW      10            0.55 
+##  8 2020-04-15 Showers     51        38          0.4 NNW      9             0.53 
+##  9 2020-04-16 Mostly Sun… 51        38          0.2 WNW      13            0.47 
+## 10 2020-04-17 Partly Clo… 51        39          0.1 WNW      12            0.49 
+## 11 2020-04-18 Showers     51        42          0.5 NE       11            0.59 
+## 12 2020-04-19 Showers     56        43          0.4 WNW      12            0.59 
+## 13 2020-04-20 Showers     56        43          0.4 WNW      13            0.580
+## 14 2020-04-21 AM Showers  57        46          0.3 NW       11            0.56 
+## 15 2020-04-22 Showers     59        48          0.5 WSW      11            0.61
 \end{verbatim}
 
 \hypertarget{structuring}{%
@@ -1241,14 +1241,183 @@ Then we can visualize the data to see how well the imputation has performed. How
 \hypertarget{visualization}{%
 \chapter{Visualization}\label{visualization}}
 
-\hypertarget{ggplot2}{%
-\section{ggplot2}\label{ggplot2}}
+\hypertarget{simple-graph-with-ggplot2}{%
+\section{\texorpdfstring{Simple graph with \texttt{ggplot2}}{Simple graph with ggplot2}}\label{simple-graph-with-ggplot2}}
 
-\hypertarget{plotly}{%
-\section{plotly}\label{plotly}}
+\hypertarget{interactive-graph-with-plotly-and-gganimate}{%
+\section{\texorpdfstring{Interactive graph with \texttt{plotly} and \texttt{gganimate}}{Interactive graph with plotly and gganimate}}\label{interactive-graph-with-plotly-and-gganimate}}
 
-\hypertarget{rshiny}{%
-\section{RShiny}\label{rshiny}}
+\hypertarget{web-app-with-rshiny}{%
+\section{Web app with RShiny}\label{web-app-with-rshiny}}
+
+\emph{This Shiny tutorial was edited based on the official tutorial on the \href{https://shiny.rstudio.com/tutorial/}{website}}
+
+With RShiny, it is possible to make the functions in your R script available to people who don't necessarily know R. For example, in this \href{https://udwq.shinyapps.io/lakeprofiledashboard/}{app}, you can create different types of graph by selecting a site and other parameters. Basically, it's web development using the power of R libraries.
+
+So, just like any web tools, an RshinyApp has components on the User and Server side.
+\includegraphics{images/appStructure.png}
+
+The visual appearance of the app can be modified in the user component. You can use it to change layout, font size, color, etc. Whereas on the server side, you can customize how your app responds to user inputs/interactions.
+
+A basic \textbf{ShinyApp starter template} looks like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(shiny)}
+\NormalTok{ui \textless{}{-}}\StringTok{ }\KeywordTok{fluidPage}\NormalTok{()}
+\NormalTok{server \textless{}{-}}\StringTok{ }\ControlFlowTok{function}\NormalTok{(input, output)\{\}}
+\KeywordTok{shinyApp}\NormalTok{(}\DataTypeTok{ui=}\NormalTok{ui, }\DataTypeTok{server=}\NormalTok{server)}
+\end{Highlighting}
+\end{Shaded}
+
+If you run the script above, it will give you and empty page. Some content will show when you add some (text) elements with \texttt{fluidPage}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ui \textless{}{-}}\StringTok{ }\KeywordTok{fluidPage}\NormalTok{(}\StringTok{\textquotesingle{}Hello world\textquotesingle{}}\NormalTok{)}
+\NormalTok{server \textless{}{-}}\StringTok{ }\ControlFlowTok{function}\NormalTok{(input, output)\{\}}
+\KeywordTok{shinyApp}\NormalTok{(}\DataTypeTok{ui=}\NormalTok{ui, }\DataTypeTok{server=}\NormalTok{server)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{input-functions}{%
+\subsection{Input functions}\label{input-functions}}
+
+For richer content, the \texttt{shiny} package has built-in functions that will allow you create them. \texttt{sliderInput} for example adds a slider in your web app.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ui \textless{}{-}}\StringTok{ }\KeywordTok{fluidPage}\NormalTok{(}
+  \KeywordTok{sliderInput}\NormalTok{(}\DataTypeTok{inputId=}\StringTok{\textquotesingle{}num\textquotesingle{}}\NormalTok{,}
+              \DataTypeTok{label=}\StringTok{\textquotesingle{}Choose a number\textquotesingle{}}\NormalTok{,}
+              \DataTypeTok{value=}\DecValTok{25}\NormalTok{, }\DataTypeTok{min=}\DecValTok{1}\NormalTok{, }\DataTypeTok{max=}\DecValTok{100}\NormalTok{)}
+\NormalTok{)}
+\NormalTok{server \textless{}{-}}\StringTok{ }\ControlFlowTok{function}\NormalTok{(input, output)\{\}}
+\KeywordTok{shinyApp}\NormalTok{(}\DataTypeTok{ui=}\NormalTok{ui, }\DataTypeTok{server=}\NormalTok{server)}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{sliderInput} is part of a group of function called \textbf{inputs}. These functions allow an Rshiny developper like yourself to add html element that will serve as user input. Here are some input functions you can try:
+\includegraphics{images/inputFunctions.png}
+
+All input functions take as first 2 arguments: \texttt{inputId} and \texttt{label}. \texttt{inputId} is an ID that R will use create the input element in a webpage and to reference it later. \texttt{label} is just a text that the user will see, describing what the input element is for. The rest of the arguments are function-specific.
+
+\hypertarget{output-functions}{%
+\subsection{Output functions}\label{output-functions}}
+
+Output functions, on the other hand, allow you to add outputs of R into your web page. As you know, these outputs can be image, plot, table, text, etc. And there are specific output functions for each type of output.
+
+\begin{figure}
+\centering
+\includegraphics{images/outputFunctions.png}
+\caption{Rshiny output functions}
+\end{figure}
+
+Output functions are called similarly to the input functions:
+\includegraphics{images/callOutputFunctions.png}
+
+Here is our app with an output function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ui \textless{}{-}}\StringTok{ }\KeywordTok{fluidPage}\NormalTok{(}
+  \KeywordTok{sliderInput}\NormalTok{(}\DataTypeTok{inputId=}\StringTok{\textquotesingle{}num\textquotesingle{}}\NormalTok{,}
+              \DataTypeTok{label=}\StringTok{\textquotesingle{}Choose a number\textquotesingle{}}\NormalTok{,}
+              \DataTypeTok{value=}\DecValTok{25}\NormalTok{, }\DataTypeTok{min=}\DecValTok{1}\NormalTok{, }\DataTypeTok{max=}\DecValTok{100}\NormalTok{),}
+  \KeywordTok{plotOutput}\NormalTok{(}\StringTok{\textquotesingle{}hist\textquotesingle{}}\NormalTok{)}
+\NormalTok{)}
+\NormalTok{server \textless{}{-}}\StringTok{ }\ControlFlowTok{function}\NormalTok{(input, output)\{\}}
+\KeywordTok{shinyApp}\NormalTok{(}\DataTypeTok{ui=}\NormalTok{ui, }\DataTypeTok{server=}\NormalTok{server)}
+\end{Highlighting}
+\end{Shaded}
+
+Running the previous script won't show any plot though. It just reserve a space in the webpage for plot with id: `hist'. To actually create the plot, you must use the server function.
+
+\hypertarget{server-function}{%
+\subsection{Server function}\label{server-function}}
+
+Server function creates the interactivity in your web application, i.e.~this is where you set up how an output (ex: graph) chnages with the user input (ex: some number). However, there are 3 rules that has to be followed and it is summarized in this script:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{function}\NormalTok{(input, output)\{}
+  \CommentTok{\#1 outputId is the outputId you defined with output function}
+  \CommentTok{\#2 to render on a webpage. To render a plot, use renderPlot()}
+\NormalTok{  output}\OperatorTok{$}\NormalTok{outputId \textless{}{-}}\StringTok{ }\KeywordTok{renderSomething}\NormalTok{(\{}
+    \CommentTok{\#3 inputId is the inputId you defined with input function}
+    \KeywordTok{someFunction}\NormalTok{(input}\OperatorTok{$}\NormalTok{inputId)}
+\NormalTok{  \})}
+\NormalTok{\}}
+\CommentTok{\# Anything inside the curly braces is an R code. And it can be multiple lines of code.}
+\end{Highlighting}
+\end{Shaded}
+
+In summary, you must define output variable by the \texttt{outputId} and prefixing it with \texttt{output\$}. You must call the R script that will produce the output with a \texttt{render*(\{\})} function. And you must call the user input with its \texttt{inputId} and prefixing it with \texttt{input\$}.
+
+In our example script, we can render it as follow:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ui \textless{}{-}}\StringTok{ }\KeywordTok{fluidPage}\NormalTok{(}
+  \KeywordTok{sliderInput}\NormalTok{(}\DataTypeTok{inputId=}\StringTok{\textquotesingle{}num\textquotesingle{}}\NormalTok{,}
+              \DataTypeTok{label=}\StringTok{\textquotesingle{}Choose a number\textquotesingle{}}\NormalTok{,}
+              \DataTypeTok{value=}\DecValTok{25}\NormalTok{, }\DataTypeTok{min=}\DecValTok{1}\NormalTok{, }\DataTypeTok{max=}\DecValTok{100}\NormalTok{),}
+  \KeywordTok{plotOutput}\NormalTok{(}\StringTok{\textquotesingle{}hist\textquotesingle{}}\NormalTok{)}
+\NormalTok{)}
+\NormalTok{server \textless{}{-}}\StringTok{ }\ControlFlowTok{function}\NormalTok{(input, output)\{}
+\NormalTok{    output}\OperatorTok{$}\NormalTok{hist \textless{}{-}}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{      title \textless{}{-}}\StringTok{ }\KeywordTok{paste}\NormalTok{(input}\OperatorTok{$}\NormalTok{num, }\StringTok{\textquotesingle{}random normal values\textquotesingle{}}\NormalTok{)}
+      \KeywordTok{hist}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(input}\OperatorTok{$}\NormalTok{num), }\DataTypeTok{main=}\NormalTok{title, }\DataTypeTok{xlab=}\StringTok{\textquotesingle{}values\textquotesingle{}}\NormalTok{)}
+\NormalTok{  \})}
+\NormalTok{\}}
+\KeywordTok{shinyApp}\NormalTok{(}\DataTypeTok{ui=}\NormalTok{ui, }\DataTypeTok{server=}\NormalTok{server)}
+\end{Highlighting}
+\end{Shaded}
+
+To make much more advanced app, simply read the instructions on \href{https://shiny.rstudio.com/articles/}{Rshiny website}.
+
+\hypertarget{sharing-your-app}{%
+\subsection{Sharing your app}\label{sharing-your-app}}
+
+Now you can create your own Shiny app. But for now you can only run it in your computer and no one else has access to it. To make available to the public:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Save the \texttt{ui} and \texttt{server} objects/scripts into a stand alone R script, name it \texttt{app.R}, and save it in a separate folder. You must name it \texttt{app.R} as that's the file that the server will look for when you deploy your app. For this example, I'd save this as \texttt{app.R}
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ui \textless{}{-}}\StringTok{ }\KeywordTok{fluidPage}\NormalTok{(}
+  \KeywordTok{sliderInput}\NormalTok{(}\DataTypeTok{inputId=}\StringTok{\textquotesingle{}num\textquotesingle{}}\NormalTok{,}
+              \DataTypeTok{label=}\StringTok{\textquotesingle{}Choose a number\textquotesingle{}}\NormalTok{,}
+              \DataTypeTok{value=}\DecValTok{25}\NormalTok{, }\DataTypeTok{min=}\DecValTok{1}\NormalTok{, }\DataTypeTok{max=}\DecValTok{100}\NormalTok{),}
+  \KeywordTok{plotOutput}\NormalTok{(}\StringTok{\textquotesingle{}hist\textquotesingle{}}\NormalTok{)}
+\NormalTok{)}
+\NormalTok{server \textless{}{-}}\StringTok{ }\ControlFlowTok{function}\NormalTok{(input, output)\{}
+\NormalTok{    output}\OperatorTok{$}\NormalTok{hist \textless{}{-}}\StringTok{ }\KeywordTok{renderPlot}\NormalTok{(\{}
+\NormalTok{      title \textless{}{-}}\StringTok{ }\KeywordTok{paste}\NormalTok{(input}\OperatorTok{$}\NormalTok{num, }\StringTok{\textquotesingle{}random normal values\textquotesingle{}}\NormalTok{)}
+      \KeywordTok{hist}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(input}\OperatorTok{$}\NormalTok{num), }\DataTypeTok{main=}\NormalTok{title, }\DataTypeTok{xlab=}\StringTok{\textquotesingle{}values\textquotesingle{}}\NormalTok{)}
+\NormalTok{  \})}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Go to \href{https://www.shinyapps.io}{shinyapps.io} and log in or sign for an account.
+\item
+  Now simply run the app on your computer
+\item
+  In the top right cover of R viewer window, there is a \texttt{Publish} button that you can use to publish your app.
+\item
+  Simply follow the instructions.
+\end{enumerate}
 
 \hypertarget{analysis}{%
 \chapter{Analysis}\label{analysis}}
