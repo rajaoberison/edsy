@@ -24,7 +24,7 @@
 <meta name="author" content="Andry Rajaoberison" />
 
 
-<meta name="date" content="2020-04-08" />
+<meta name="date" content="2020-04-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,6 +51,13 @@
 
 
 
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.2/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -161,8 +168,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5" data-path="visualization.html"><a href="visualization.html"><i class="fa fa-check"></i><b>5</b> Visualization</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="visualization.html"><a href="visualization.html#simple-graph-with-ggplot2"><i class="fa fa-check"></i><b>5.1</b> Simple graph with <code>ggplot2</code></a></li>
-<li class="chapter" data-level="5.2" data-path="visualization.html"><a href="visualization.html#interactive-graph-with-plotly-and-gganimate"><i class="fa fa-check"></i><b>5.2</b> Interactive graph with <code>plotly</code> and <code>gganimate</code></a></li>
+<li class="chapter" data-level="5.1" data-path="visualization.html"><a href="visualization.html#simple-graph-with-ggplot2"><i class="fa fa-check"></i><b>5.1</b> Simple graph with <code>ggplot2</code></a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="visualization.html"><a href="visualization.html#setting-ggplot-theme"><i class="fa fa-check"></i><b>5.1.1</b> Setting <code>ggplot</code> theme</a></li>
+<li class="chapter" data-level="5.1.2" data-path="visualization.html"><a href="visualization.html#ggplot2-example-1"><i class="fa fa-check"></i><b>5.1.2</b> <code>ggplot2</code> Example 1</a></li>
+<li class="chapter" data-level="5.1.3" data-path="visualization.html"><a href="visualization.html#ggplot2-example-2"><i class="fa fa-check"></i><b>5.1.3</b> <code>ggplot2</code> Example 2</a></li>
+<li class="chapter" data-level="5.1.4" data-path="visualization.html"><a href="visualization.html#ggplot2-example-3"><i class="fa fa-check"></i><b>5.1.4</b> <code>ggplot2</code> Example 3</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="visualization.html"><a href="visualization.html#interactive-graph-with-plotly"><i class="fa fa-check"></i><b>5.2</b> Interactive graph with <code>plotly</code></a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="visualization.html"><a href="visualization.html#plotly-example-1"><i class="fa fa-check"></i><b>5.2.1</b> <code>plotly</code> Example 1</a></li>
+<li class="chapter" data-level="5.2.2" data-path="visualization.html"><a href="visualization.html#plotly-example-2"><i class="fa fa-check"></i><b>5.2.2</b> <code>plotly</code> Example 2</a></li>
+</ul></li>
 <li class="chapter" data-level="5.3" data-path="visualization.html"><a href="visualization.html#web-app-with-rshiny"><i class="fa fa-check"></i><b>5.3</b> Web app with RShiny</a>
 <ul>
 <li class="chapter" data-level="5.3.1" data-path="visualization.html"><a href="visualization.html#input-functions"><i class="fa fa-check"></i><b>5.3.1</b> Input functions</a></li>
@@ -172,7 +189,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="analysis.html"><a href="analysis.html"><i class="fa fa-check"></i><b>6</b> Analysis</a></li>
-<li class="chapter" data-level="7" data-path="resources.html"><a href="resources.html"><i class="fa fa-check"></i><b>7</b> Resources</a></li>
+<li class="chapter" data-level="7" data-path="resources.html"><a href="resources.html"><i class="fa fa-check"></i><b>7</b> Resources</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="resources.html"><a href="resources.html#data"><i class="fa fa-check"></i><b>7.1</b> Data</a></li>
+<li class="chapter" data-level="7.2" data-path="resources.html"><a href="resources.html#eds-course-map"><i class="fa fa-check"></i><b>7.2</b> EDS Course Map</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -198,9 +219,161 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Section 5</span> Visualization</h1>
 <div id="simple-graph-with-ggplot2" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Simple graph with <code>ggplot2</code></h2>
+<ul>
+<li>Reading and recoding data</li>
+</ul>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="visualization.html#cb86-1"></a><span class="kw">library</span>(haven)</span>
+<span id="cb86-2"><a href="visualization.html#cb86-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb86-3"><a href="visualization.html#cb86-3"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb86-4"><a href="visualization.html#cb86-4"></a><span class="kw">library</span>(tidyr)</span>
+<span id="cb86-5"><a href="visualization.html#cb86-5"></a></span>
+<span id="cb86-6"><a href="visualization.html#cb86-6"></a>raw.data &lt;-<span class="st"> </span><span class="kw">read_sav</span>(<span class="st">&#39;data/ypccc.hurricane.sav&#39;</span>)</span>
+<span id="cb86-7"><a href="visualization.html#cb86-7"></a>raw.data &lt;-<span class="st"> </span>raw.data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(raw.data<span class="op">$</span>Q1<span class="op">==</span><span class="dv">1</span> <span class="op">||</span><span class="st"> </span>raw.data<span class="op">$</span>Q2<span class="op">==</span><span class="dv">1</span>)</span>
+<span id="cb86-8"><a href="visualization.html#cb86-8"></a>raw.data &lt;-<span class="st"> </span>raw.data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(raw.data<span class="op">$</span>Q3), raw.data<span class="op">$</span>Q3<span class="op">!=</span><span class="dv">2</span>, raw.data<span class="op">$</span>Q3<span class="op">!=</span><span class="dv">3</span>)</span>
+<span id="cb86-9"><a href="visualization.html#cb86-9"></a></span>
+<span id="cb86-10"><a href="visualization.html#cb86-10"></a>raw.data<span class="op">$</span>S5_cluster &lt;-<span class="st"> </span><span class="kw">recode</span>(<span class="kw">as.character</span>(raw.data<span class="op">$</span>S5_cluster), <span class="st">&#39;1&#39;</span>=<span class="st">&#39;DieHards&#39;</span>, <span class="st">&#39;2&#39;</span>=<span class="st">&#39;Reluctant&#39;</span>, <span class="st">&#39;4&#39;</span>=<span class="st">&#39;Optimists&#39;</span>, <span class="st">&#39;3&#39;</span>=<span class="st">&#39;Constrained&#39;</span>, <span class="st">&#39;5&#39;</span>=<span class="st">&#39;First Out&#39;</span>)</span>
+<span id="cb86-11"><a href="visualization.html#cb86-11"></a>raw.data<span class="op">$</span>S5_cluster &lt;-<span class="st"> </span><span class="kw">factor</span>(raw.data<span class="op">$</span>S5_cluster, <span class="dt">ordered=</span>T, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&#39;First Out&#39;</span>, <span class="st">&#39;Constrained&#39;</span>, <span class="st">&#39;Optimists&#39;</span>, <span class="st">&#39;Reluctant&#39;</span>, <span class="st">&#39;DieHards&#39;</span>))</span>
+<span id="cb86-12"><a href="visualization.html#cb86-12"></a>data &lt;-<span class="st"> </span>raw.data[<span class="op">!</span><span class="kw">is.na</span>(raw.data<span class="op">$</span>S5_cluster),]</span></code></pre></div>
+<div id="setting-ggplot-theme" class="section level3" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> Setting <code>ggplot</code> theme</h3>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="visualization.html#cb87-1"></a>plot_theme &lt;-<span class="st"> </span></span>
+<span id="cb87-2"><a href="visualization.html#cb87-2"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb87-3"><a href="visualization.html#cb87-3"></a>    <span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb87-4"><a href="visualization.html#cb87-4"></a>    <span class="dt">legend.box.background =</span> <span class="kw">element_rect</span>(),</span>
+<span id="cb87-5"><a href="visualization.html#cb87-5"></a>    <span class="dt">legend.box.margin =</span> <span class="kw">margin</span>(<span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">6</span>),</span>
+<span id="cb87-6"><a href="visualization.html#cb87-6"></a>    <span class="dt">legend.background =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb87-7"><a href="visualization.html#cb87-7"></a>    <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">12</span>),</span>
+<span id="cb87-8"><a href="visualization.html#cb87-8"></a>    <span class="dt">legend.key.size =</span> <span class="kw">unit</span>(<span class="dv">1</span>, <span class="st">&quot;cm&quot;</span>)</span>
+<span id="cb87-9"><a href="visualization.html#cb87-9"></a>  ) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb87-10"><a href="visualization.html#cb87-10"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb87-11"><a href="visualization.html#cb87-11"></a>    <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">12</span>, <span class="dt">face=</span><span class="st">&#39;bold&#39;</span>),</span>
+<span id="cb87-12"><a href="visualization.html#cb87-12"></a>    <span class="dt">axis.line =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">colour =</span> <span class="st">&quot;#212F3D&quot;</span>),</span>
+<span id="cb87-13"><a href="visualization.html#cb87-13"></a>    <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb87-14"><a href="visualization.html#cb87-14"></a>    <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>()</span>
+<span id="cb87-15"><a href="visualization.html#cb87-15"></a>  ) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb87-16"><a href="visualization.html#cb87-16"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb87-17"><a href="visualization.html#cb87-17"></a>    <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>, <span class="dt">face=</span><span class="st">&#39;bold&#39;</span>, <span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">margin=</span><span class="kw">margin</span>(<span class="dv">6</span>,<span class="dv">6</span>,<span class="dv">6</span>,<span class="dv">6</span>)),</span>
+<span id="cb87-18"><a href="visualization.html#cb87-18"></a>    <span class="dt">plot.background=</span><span class="kw">element_blank</span>() </span>
+<span id="cb87-19"><a href="visualization.html#cb87-19"></a>  ) <span class="op">+</span></span>
+<span id="cb87-20"><a href="visualization.html#cb87-20"></a><span class="st">  </span><span class="kw">theme</span>(</span>
+<span id="cb87-21"><a href="visualization.html#cb87-21"></a>    <span class="dt">panel.grid.major.x =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb87-22"><a href="visualization.html#cb87-22"></a>    <span class="dt">panel.grid.minor.x =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb87-23"><a href="visualization.html#cb87-23"></a>    <span class="dt">panel.grid.major.y =</span> <span class="kw">element_line</span>(<span class="dt">size=</span><span class="dv">1</span>)</span>
+<span id="cb87-24"><a href="visualization.html#cb87-24"></a>  )</span></code></pre></div>
 </div>
-<div id="interactive-graph-with-plotly-and-gganimate" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Interactive graph with <code>plotly</code> and <code>gganimate</code></h2>
+<div id="ggplot2-example-1" class="section level3" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> <code>ggplot2</code> Example 1</h3>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="visualization.html#cb88-1"></a><span class="co"># Q7. Generally speaking, how prepared were you for the storm(s) you experienced?</span></span>
+<span id="cb88-2"><a href="visualization.html#cb88-2"></a>data<span class="op">$</span>Q7 &lt;-<span class="st"> </span><span class="kw">as_factor</span>(data<span class="op">$</span>Q7)</span>
+<span id="cb88-3"><a href="visualization.html#cb88-3"></a>data<span class="op">$</span>Q7 &lt;-<span class="st"> </span><span class="kw">recode</span>(<span class="kw">as.character</span>(data<span class="op">$</span>Q7), </span>
+<span id="cb88-4"><a href="visualization.html#cb88-4"></a>                  <span class="st">&#39;Fully Prepared&#39;</span>=<span class="st">&#39;Fully/Very prepared&#39;</span>, <span class="st">&#39;Very Prepared&#39;</span>=<span class="st">&#39;Fully/Very prepared&#39;</span>, </span>
+<span id="cb88-5"><a href="visualization.html#cb88-5"></a>                  <span class="st">&#39;A Little Prepared&#39;</span>=<span class="st">&#39;A little/Not at all prepared&#39;</span>, <span class="st">&#39;Not at all Prepared&#39;</span>=<span class="st">&#39;A little/Not at all prepared&#39;</span></span>
+<span id="cb88-6"><a href="visualization.html#cb88-6"></a>                  )</span>
+<span id="cb88-7"><a href="visualization.html#cb88-7"></a></span>
+<span id="cb88-8"><a href="visualization.html#cb88-8"></a>data<span class="op">$</span>Q7 &lt;-<span class="st"> </span><span class="kw">factor</span>(data<span class="op">$</span>Q7, <span class="dt">ordered=</span>T, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&#39;Fully/Very prepared&#39;</span>, <span class="st">&#39;A little/Not at all prepared&#39;</span>, <span class="st">&#39;Moderately Prepared&#39;</span>))</span>
+<span id="cb88-9"><a href="visualization.html#cb88-9"></a></span>
+<span id="cb88-10"><a href="visualization.html#cb88-10"></a>Q7_data &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb88-11"><a href="visualization.html#cb88-11"></a><span class="st">  </span><span class="kw">select</span>(Q7, S5_cluster, Final_wgt_pop) <span class="op">%&gt;%</span></span>
+<span id="cb88-12"><a href="visualization.html#cb88-12"></a><span class="st">  </span><span class="co"># na.omit() %&gt;%</span></span>
+<span id="cb88-13"><a href="visualization.html#cb88-13"></a><span class="st">  </span><span class="kw">group_by</span>(S5_cluster, Q7) <span class="op">%&gt;%</span></span>
+<span id="cb88-14"><a href="visualization.html#cb88-14"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Q7.wgt =</span> <span class="kw">sum</span>(Final_wgt_pop)) <span class="op">%&gt;%</span></span>
+<span id="cb88-15"><a href="visualization.html#cb88-15"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">freq.wgt =</span> <span class="kw">round</span>(<span class="dv">100</span><span class="op">*</span>Q7.wgt<span class="op">/</span><span class="kw">sum</span>(Q7.wgt))) <span class="op">%&gt;%</span></span>
+<span id="cb88-16"><a href="visualization.html#cb88-16"></a><span class="st">  </span><span class="kw">filter</span>(Q7<span class="op">!=</span><span class="st">&#39;Moderately Prepared&#39;</span>, <span class="op">!</span><span class="kw">is.na</span>(Q7))</span>
+<span id="cb88-17"><a href="visualization.html#cb88-17"></a></span>
+<span id="cb88-18"><a href="visualization.html#cb88-18"></a><span class="kw">ggplot</span>(Q7_data, <span class="kw">aes</span>(<span class="dt">x=</span>S5_cluster, <span class="dt">y=</span>freq.wgt, <span class="dt">fill=</span>Q7)) <span class="op">+</span></span>
+<span id="cb88-19"><a href="visualization.html#cb88-19"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">fill=</span>Q7), <span class="dt">width=</span>.<span class="dv">7</span>, <span class="dt">position=</span><span class="kw">position_dodge</span>(.<span class="dv">8</span>), <span class="dt">stat=</span><span class="st">&#39;identity&#39;</span>) <span class="op">+</span></span>
+<span id="cb88-20"><a href="visualization.html#cb88-20"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label=</span>freq.wgt, <span class="dt">vjust=</span><span class="fl">1.2</span>), <span class="dt">position=</span><span class="kw">position_dodge</span>(.<span class="dv">8</span>), <span class="dt">colour=</span><span class="st">&#39;white&#39;</span>, <span class="dt">size=</span><span class="dv">6</span>, <span class="dt">fontface=</span><span class="st">&#39;bold&#39;</span>) <span class="op">+</span></span>
+<span id="cb88-21"><a href="visualization.html#cb88-21"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&#39;#5499C7&#39;</span>, <span class="st">&#39;#DC7633&#39;</span>)) <span class="op">+</span></span>
+<span id="cb88-22"><a href="visualization.html#cb88-22"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> <span class="cf">function</span>(x) <span class="kw">paste0</span>(x, <span class="st">&quot;%&quot;</span>), <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>)) <span class="op">+</span></span>
+<span id="cb88-23"><a href="visualization.html#cb88-23"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Prepardness for past storms&quot;</span>) <span class="op">+</span></span>
+<span id="cb88-24"><a href="visualization.html#cb88-24"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="kw">c</span>(.<span class="dv">5</span>, <span class="fl">.8</span>)) <span class="op">+</span></span>
+<span id="cb88-25"><a href="visualization.html#cb88-25"></a><span class="st">  </span>plot_theme</span></code></pre></div>
+<p><img src="edsy_files/figure-html/example-1-1.png" width="672" /></p>
+</div>
+<div id="ggplot2-example-2" class="section level3" number="5.1.3">
+<h3><span class="header-section-number">5.1.3</span> <code>ggplot2</code> Example 2</h3>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="visualization.html#cb89-1"></a><span class="co"># Q31. Is your home located in a hurricane evacuation zone, or not?</span></span>
+<span id="cb89-2"><a href="visualization.html#cb89-2"></a>data<span class="op">$</span>Q31 &lt;-<span class="st"> </span><span class="kw">as_factor</span>(data<span class="op">$</span>Q31)</span>
+<span id="cb89-3"><a href="visualization.html#cb89-3"></a>data<span class="op">$</span>Q31 &lt;-<span class="st"> </span><span class="kw">factor</span>(data<span class="op">$</span>Q31, <span class="dt">ordered=</span>T, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&#39;No&#39;</span>, <span class="st">&#39;Not Sure&#39;</span>, <span class="st">&#39;Yes&#39;</span>))</span>
+<span id="cb89-4"><a href="visualization.html#cb89-4"></a></span>
+<span id="cb89-5"><a href="visualization.html#cb89-5"></a>Q31_data &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb89-6"><a href="visualization.html#cb89-6"></a><span class="st">  </span><span class="kw">select</span>(Q31, S5_cluster, Final_wgt_pop) <span class="op">%&gt;%</span></span>
+<span id="cb89-7"><a href="visualization.html#cb89-7"></a><span class="st">  </span><span class="co"># na.omit() %&gt;%</span></span>
+<span id="cb89-8"><a href="visualization.html#cb89-8"></a><span class="st">  </span><span class="kw">group_by</span>(S5_cluster, Q31) <span class="op">%&gt;%</span></span>
+<span id="cb89-9"><a href="visualization.html#cb89-9"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Q31.wgt =</span> <span class="kw">sum</span>(Final_wgt_pop)) <span class="op">%&gt;%</span></span>
+<span id="cb89-10"><a href="visualization.html#cb89-10"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">freq.wgt =</span> <span class="kw">round</span>(<span class="dv">100</span><span class="op">*</span>Q31.wgt<span class="op">/</span><span class="kw">sum</span>(Q31.wgt))) <span class="op">%&gt;%</span></span>
+<span id="cb89-11"><a href="visualization.html#cb89-11"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Q31))</span>
+<span id="cb89-12"><a href="visualization.html#cb89-12"></a></span>
+<span id="cb89-13"><a href="visualization.html#cb89-13"></a><span class="kw">ggplot</span>(Q31_data, <span class="kw">aes</span>(<span class="dt">x=</span>S5_cluster, <span class="dt">y=</span>freq.wgt, <span class="dt">fill=</span>Q31)) <span class="op">+</span></span>
+<span id="cb89-14"><a href="visualization.html#cb89-14"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">fill=</span>Q31), <span class="dt">width=</span>.<span class="dv">7</span>, <span class="dt">stat=</span><span class="st">&#39;identity&#39;</span>) <span class="op">+</span></span>
+<span id="cb89-15"><a href="visualization.html#cb89-15"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label=</span>freq.wgt, <span class="dt">vjust=</span>.<span class="dv">5</span>), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>), <span class="dt">colour=</span><span class="st">&#39;white&#39;</span>, <span class="dt">size=</span><span class="dv">6</span>, <span class="dt">fontface=</span><span class="st">&#39;bold&#39;</span>) <span class="op">+</span></span>
+<span id="cb89-16"><a href="visualization.html#cb89-16"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&#39;#DC7633&#39;</span>, <span class="st">&#39;#5D6D7E&#39;</span>, <span class="st">&#39;#5499C7&#39;</span>), <span class="dt">breaks=</span><span class="kw">c</span>(<span class="st">&#39;Yes&#39;</span>, <span class="st">&#39;Not Sure&#39;</span>, <span class="st">&#39;No&#39;</span>)) <span class="op">+</span></span>
+<span id="cb89-17"><a href="visualization.html#cb89-17"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> <span class="cf">function</span>(x) <span class="kw">paste0</span>(x, <span class="st">&quot;%&quot;</span>), <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>)) <span class="op">+</span></span>
+<span id="cb89-18"><a href="visualization.html#cb89-18"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;% of CT coastal residents who understand</span><span class="ch">\n</span><span class="st">that their home is in an evacuation zone&quot;</span>) <span class="op">+</span></span>
+<span id="cb89-19"><a href="visualization.html#cb89-19"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;top&quot;</span>) <span class="op">+</span></span>
+<span id="cb89-20"><a href="visualization.html#cb89-20"></a><span class="st">  </span>plot_theme <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.box.background =</span> <span class="kw">element_blank</span>(), <span class="dt">legend.spacing.x =</span> <span class="kw">unit</span>(.<span class="dv">2</span>, <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
+<p><img src="edsy_files/figure-html/example-2-1.png" width="672" /></p>
+</div>
+<div id="ggplot2-example-3" class="section level3" number="5.1.4">
+<h3><span class="header-section-number">5.1.4</span> <code>ggplot2</code> Example 3</h3>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="visualization.html#cb90-1"></a><span class="co"># Q23. On a scale of 0%-100%, with 0% being it definitely will NOT happen and 100% being it definitely WILL happen, </span></span>
+<span id="cb90-2"><a href="visualization.html#cb90-2"></a><span class="co"># how likely do you think it is that each of the following types of hurricane will hit somewhere along the </span></span>
+<span id="cb90-3"><a href="visualization.html#cb90-3"></a><span class="co"># Connecticut coast in the next 50 years?</span></span>
+<span id="cb90-4"><a href="visualization.html#cb90-4"></a></span>
+<span id="cb90-5"><a href="visualization.html#cb90-5"></a>Q23_data &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb90-6"><a href="visualization.html#cb90-6"></a><span class="st">  </span><span class="kw">select</span>(S5_cluster, Q23_<span class="dv">1</span>, Q23_<span class="dv">2</span>, Q23_<span class="dv">3</span>, Q23_<span class="dv">4</span>, Final_wgt_pop) <span class="op">%&gt;%</span></span>
+<span id="cb90-7"><a href="visualization.html#cb90-7"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="op">-</span><span class="kw">one_of</span>(<span class="st">&#39;S5_cluster&#39;</span>, <span class="st">&#39;Final_wgt_pop&#39;</span>), <span class="dt">names_to=</span><span class="st">&quot;Category&quot;</span>, <span class="dt">names_prefix =</span> <span class="st">&quot;Q23_&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;Q23&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb90-8"><a href="visualization.html#cb90-8"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Category =</span> <span class="kw">paste</span>(<span class="st">&quot;Category&quot;</span>, Category), <span class="dt">Q23.wgt =</span> Q23 <span class="op">*</span><span class="st"> </span>Final_wgt_pop) <span class="op">%&gt;%</span></span>
+<span id="cb90-9"><a href="visualization.html#cb90-9"></a><span class="st">  </span><span class="kw">na.omit</span>() <span class="op">%&gt;%</span></span>
+<span id="cb90-10"><a href="visualization.html#cb90-10"></a><span class="st">  </span><span class="kw">group_by</span>(S5_cluster, Category) <span class="op">%&gt;%</span></span>
+<span id="cb90-11"><a href="visualization.html#cb90-11"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">freq.wgt =</span> <span class="kw">round</span>(<span class="kw">sum</span>(Q23.wgt, <span class="dt">na.rm=</span>T)<span class="op">/</span><span class="kw">sum</span>(Final_wgt_pop, <span class="dt">na.rm=</span>T)))</span>
+<span id="cb90-12"><a href="visualization.html#cb90-12"></a></span>
+<span id="cb90-13"><a href="visualization.html#cb90-13"></a><span class="kw">ggplot</span>(Q23_data, <span class="kw">aes</span>(<span class="dt">x=</span>S5_cluster, <span class="dt">y=</span>freq.wgt, <span class="dt">fill=</span>Category)) <span class="op">+</span></span>
+<span id="cb90-14"><a href="visualization.html#cb90-14"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">fill=</span>Category), <span class="dt">width=</span>.<span class="dv">7</span>, <span class="dt">position=</span><span class="kw">position_dodge</span>(.<span class="dv">8</span>), <span class="dt">stat=</span><span class="st">&#39;identity&#39;</span>) <span class="op">+</span></span>
+<span id="cb90-15"><a href="visualization.html#cb90-15"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label=</span>freq.wgt, <span class="dt">vjust=</span><span class="fl">1.2</span>), <span class="dt">position=</span><span class="kw">position_dodge</span>(.<span class="dv">8</span>), <span class="dt">colour=</span><span class="st">&#39;white&#39;</span>, <span class="dt">size=</span><span class="dv">6</span>, <span class="dt">fontface=</span><span class="st">&#39;bold&#39;</span>) <span class="op">+</span></span>
+<span id="cb90-16"><a href="visualization.html#cb90-16"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&#39;#F6DDCC&#39;</span>, <span class="st">&#39;#EDBB99&#39;</span>, <span class="st">&#39;#E59866&#39;</span>, <span class="st">&#39;#DC7633&#39;</span>)) <span class="op">+</span></span>
+<span id="cb90-17"><a href="visualization.html#cb90-17"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> <span class="cf">function</span>(x) <span class="kw">paste0</span>(x, <span class="st">&quot;%&quot;</span>), <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>)) <span class="op">+</span></span>
+<span id="cb90-18"><a href="visualization.html#cb90-18"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Average perception of each segment that</span><span class="ch">\n</span><span class="st">a Category 1, 2, 3, or 4 hurricane will occur</span><span class="ch">\n</span><span class="st">in the next 50 years&quot;</span>) <span class="op">+</span></span>
+<span id="cb90-19"><a href="visualization.html#cb90-19"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;top&quot;</span>) <span class="op">+</span></span>
+<span id="cb90-20"><a href="visualization.html#cb90-20"></a><span class="st">  </span>plot_theme <span class="op">+</span><span class="st"> </span></span>
+<span id="cb90-21"><a href="visualization.html#cb90-21"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.box.background =</span> <span class="kw">element_blank</span>(), <span class="dt">legend.spacing.x =</span> <span class="kw">unit</span>(.<span class="dv">2</span>, <span class="st">&#39;cm&#39;</span>))</span></code></pre></div>
+<p><img src="edsy_files/figure-html/example-3-1.png" width="672" /></p>
+</div>
+</div>
+<div id="interactive-graph-with-plotly" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Interactive graph with <code>plotly</code></h2>
+<p>Creating an interactive version of the previous graphs is pretty simple using <code>plotly</code>. You just have to separate the data by group.</p>
+<div id="plotly-example-1" class="section level3" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> <code>plotly</code> Example 1</h3>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="visualization.html#cb91-1"></a><span class="kw">library</span>(plotly)</span>
+<span id="cb91-2"><a href="visualization.html#cb91-2"></a></span>
+<span id="cb91-3"><a href="visualization.html#cb91-3"></a>Q7.prepared &lt;-<span class="st"> </span>Q7_data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb91-4"><a href="visualization.html#cb91-4"></a><span class="st">  </span><span class="kw">filter</span>(Q7<span class="op">==</span><span class="st">&#39;Fully/Very prepared&#39;</span>)</span>
+<span id="cb91-5"><a href="visualization.html#cb91-5"></a>Q7.not.prepared &lt;-<span class="st"> </span>Q7_data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb91-6"><a href="visualization.html#cb91-6"></a><span class="st">  </span><span class="kw">filter</span>(Q7<span class="op">==</span><span class="st">&#39;A little/Not at all prepared&#39;</span>)</span>
+<span id="cb91-7"><a href="visualization.html#cb91-7"></a></span>
+<span id="cb91-8"><a href="visualization.html#cb91-8"></a><span class="kw">plot_ly</span>(<span class="dt">x=</span>Q7.prepared<span class="op">$</span>S5_cluster, <span class="dt">y=</span>Q7.prepared<span class="op">$</span>freq.wgt, <span class="dt">type=</span><span class="st">&#39;bar&#39;</span>, <span class="dt">name=</span><span class="st">&#39;Fully/Very prepared&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb91-9"><a href="visualization.html#cb91-9"></a><span class="st">  </span><span class="kw">add_trace</span>(<span class="dt">x=</span>Q7.not.prepared<span class="op">$</span>S5_cluster, <span class="dt">y=</span>Q7.not.prepared<span class="op">$</span>freq.wgt, <span class="dt">name=</span><span class="st">&#39;A little/Not at all prepared&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb91-10"><a href="visualization.html#cb91-10"></a><span class="st">  </span><span class="kw">layout</span>(<span class="dt">barmode =</span> <span class="st">&#39;group&#39;</span>)</span></code></pre></div>
+<div id="htmlwidget-de1f6a74071ab8b9c2f5" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-de1f6a74071ab8b9c2f5">{"x":{"visdat":{"c7625293230":["function () ","plotlyVisDat"]},"cur_data":"c7625293230","attrs":{"c7625293230":{"x":["First Out","Constrained","Optimists","Reluctant","DieHards"],"y":[43,30,17,43,51],"name":"Fully/Very prepared","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"},"c7625293230.1":{"x":["First Out","Constrained","Optimists","Reluctant","DieHards"],"y":[18,22,36,11,13],"name":"A little/Not at all prepared","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"barmode":"group","xaxis":{"domain":[0,1],"automargin":true,"title":[],"type":"category","categoryorder":"array","categoryarray":["First Out","Constrained","Optimists","Reluctant","DieHards"]},"yaxis":{"domain":[0,1],"automargin":true,"title":[]},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["First Out","Constrained","Optimists","Reluctant","DieHards"],"y":[43,30,17,43,51],"name":"Fully/Very prepared","type":"bar","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["First Out","Constrained","Optimists","Reluctant","DieHards"],"y":[18,22,36,11,13],"name":"A little/Not at all prepared","type":"bar","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="plotly-example-2" class="section level3" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> <code>plotly</code> Example 2</h3>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="visualization.html#cb92-1"></a>Q31.yes &lt;-<span class="st"> </span>Q31_data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb92-2"><a href="visualization.html#cb92-2"></a><span class="st">  </span><span class="kw">filter</span>(Q31<span class="op">==</span><span class="st">&#39;Yes&#39;</span>)</span>
+<span id="cb92-3"><a href="visualization.html#cb92-3"></a>Q31.notsure &lt;-<span class="st"> </span>Q31_data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb92-4"><a href="visualization.html#cb92-4"></a><span class="st">  </span><span class="kw">filter</span>(Q31<span class="op">==</span><span class="st">&#39;Not Sure&#39;</span>)</span>
+<span id="cb92-5"><a href="visualization.html#cb92-5"></a>Q31.no &lt;-<span class="st"> </span>Q31_data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb92-6"><a href="visualization.html#cb92-6"></a><span class="st">  </span><span class="kw">filter</span>(Q31<span class="op">==</span><span class="st">&#39;No&#39;</span>)</span>
+<span id="cb92-7"><a href="visualization.html#cb92-7"></a></span>
+<span id="cb92-8"><a href="visualization.html#cb92-8"></a><span class="kw">plot_ly</span>(<span class="dt">x=</span>Q31.yes<span class="op">$</span>S5_cluster, <span class="dt">y=</span>Q31.yes<span class="op">$</span>freq.wgt, <span class="dt">type=</span><span class="st">&#39;bar&#39;</span>, <span class="dt">name=</span><span class="st">&#39;Yes&#39;</span>, <span class="dt">marker =</span> <span class="kw">list</span>(<span class="dt">color =</span> <span class="st">&#39;#DC7633&#39;</span>), <span class="dt">text =</span> Q31.yes<span class="op">$</span>freq.wgt, <span class="dt">textposition =</span> <span class="st">&#39;auto&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb92-9"><a href="visualization.html#cb92-9"></a><span class="st">  </span><span class="kw">add_trace</span>(<span class="dt">x=</span>Q31.notsure<span class="op">$</span>S5_cluster, <span class="dt">y=</span>Q31.notsure<span class="op">$</span>freq.wgt, <span class="dt">name=</span><span class="st">&#39;Not Sure&#39;</span>, <span class="dt">marker =</span> <span class="kw">list</span>(<span class="dt">color =</span> <span class="st">&#39;#5D6D7E&#39;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb92-10"><a href="visualization.html#cb92-10"></a><span class="st">  </span><span class="kw">add_trace</span>(<span class="dt">x=</span>Q31.no<span class="op">$</span>S5_cluster, <span class="dt">y=</span>Q31.no<span class="op">$</span>freq.wgt, <span class="dt">name=</span><span class="st">&#39;No&#39;</span>, <span class="dt">marker =</span> <span class="kw">list</span>(<span class="dt">color =</span> <span class="st">&#39;#5499C7&#39;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb92-11"><a href="visualization.html#cb92-11"></a><span class="st">  </span><span class="kw">layout</span>(<span class="dt">barmode =</span> <span class="st">&#39;stack&#39;</span>)</span></code></pre></div>
+<div id="htmlwidget-9d8fe7eac167b82592bf" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9d8fe7eac167b82592bf">{"x":{"visdat":{"c764a2a7772":["function () ","plotlyVisDat"]},"cur_data":"c764a2a7772","attrs":{"c764a2a7772":{"x":["First Out","Constrained","Optimists","Reluctant","DieHards"],"y":[58,34,20,14,30],"marker":{"color":"#DC7633"},"text":[58,34,20,14,30],"textposition":"auto","name":"Yes","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"},"c764a2a7772.1":{"x":["First Out","Constrained","Optimists","Reluctant","DieHards"],"y":[32,51,60,54,41],"marker":{"color":"#5D6D7E"},"text":[58,34,20,14,30],"textposition":"auto","name":"Not Sure","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar","inherit":true},"c764a2a7772.2":{"x":["First Out","Constrained","Optimists","Reluctant","DieHards"],"y":[8,14,18,32,29],"marker":{"color":"#5499C7"},"text":[58,34,20,14,30],"textposition":"auto","name":"No","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"barmode":"stack","xaxis":{"domain":[0,1],"automargin":true,"title":[],"type":"category","categoryorder":"array","categoryarray":["First Out","Constrained","Optimists","Reluctant","DieHards"]},"yaxis":{"domain":[0,1],"automargin":true,"title":[]},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["First Out","Constrained","Optimists","Reluctant","DieHards"],"y":[58,34,20,14,30],"marker":{"color":"#DC7633","line":{"color":"rgba(31,119,180,1)"}},"text":[58,34,20,14,30],"textposition":["auto","auto","auto","auto","auto"],"name":"Yes","type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["First Out","Constrained","Optimists","Reluctant","DieHards"],"y":[32,51,60,54,41],"marker":{"color":"#5D6D7E","line":{"color":"rgba(255,127,14,1)"}},"text":[58,34,20,14,30],"textposition":["auto","auto","auto","auto","auto"],"name":"Not Sure","type":"bar","error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["First Out","Constrained","Optimists","Reluctant","DieHards"],"y":[8,14,18,32,29],"marker":{"color":"#5499C7","line":{"color":"rgba(44,160,44,1)"}},"text":[58,34,20,14,30],"textposition":["auto","auto","auto","auto","auto"],"name":"No","type":"bar","error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
 </div>
 <div id="web-app-with-rshiny" class="section level2" number="5.3">
 <h2><span class="header-section-number">5.3</span> Web app with RShiny</h2>
@@ -210,24 +383,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <img src="images/appStructure.png" alt="Rshiny app structure" /></p>
 <p>The visual appearance of the app can be modified in the user component. You can use it to change layout, font size, color, etc. Whereas on the server side, you can customize how your app responds to user inputs/interactions.</p>
 <p>A basic <strong>ShinyApp starter template</strong> looks like this:</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="visualization.html#cb86-1"></a><span class="kw">library</span>(shiny)</span>
-<span id="cb86-2"><a href="visualization.html#cb86-2"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>()</span>
-<span id="cb86-3"><a href="visualization.html#cb86-3"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){}</span>
-<span id="cb86-4"><a href="visualization.html#cb86-4"></a><span class="kw">shinyApp</span>(<span class="dt">ui=</span>ui, <span class="dt">server=</span>server)</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="visualization.html#cb93-1"></a><span class="kw">library</span>(shiny)</span>
+<span id="cb93-2"><a href="visualization.html#cb93-2"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>()</span>
+<span id="cb93-3"><a href="visualization.html#cb93-3"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){}</span>
+<span id="cb93-4"><a href="visualization.html#cb93-4"></a><span class="kw">shinyApp</span>(<span class="dt">ui=</span>ui, <span class="dt">server=</span>server)</span></code></pre></div>
 <p>If you run the script above, it will give you and empty page. Some content will show when you add some (text) elements with <code>fluidPage</code>.</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="visualization.html#cb87-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(<span class="st">&#39;Hello world&#39;</span>)</span>
-<span id="cb87-2"><a href="visualization.html#cb87-2"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){}</span>
-<span id="cb87-3"><a href="visualization.html#cb87-3"></a><span class="kw">shinyApp</span>(<span class="dt">ui=</span>ui, <span class="dt">server=</span>server)</span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="visualization.html#cb94-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(<span class="st">&#39;Hello world&#39;</span>)</span>
+<span id="cb94-2"><a href="visualization.html#cb94-2"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){}</span>
+<span id="cb94-3"><a href="visualization.html#cb94-3"></a><span class="kw">shinyApp</span>(<span class="dt">ui=</span>ui, <span class="dt">server=</span>server)</span></code></pre></div>
 <div id="input-functions" class="section level3" number="5.3.1">
 <h3><span class="header-section-number">5.3.1</span> Input functions</h3>
 <p>For richer content, the <code>shiny</code> package has built-in functions that will allow you create them. <code>sliderInput</code> for example adds a slider in your web app.</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="visualization.html#cb88-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
-<span id="cb88-2"><a href="visualization.html#cb88-2"></a>  <span class="kw">sliderInput</span>(<span class="dt">inputId=</span><span class="st">&#39;num&#39;</span>,</span>
-<span id="cb88-3"><a href="visualization.html#cb88-3"></a>              <span class="dt">label=</span><span class="st">&#39;Choose a number&#39;</span>,</span>
-<span id="cb88-4"><a href="visualization.html#cb88-4"></a>              <span class="dt">value=</span><span class="dv">25</span>, <span class="dt">min=</span><span class="dv">1</span>, <span class="dt">max=</span><span class="dv">100</span>)</span>
-<span id="cb88-5"><a href="visualization.html#cb88-5"></a>)</span>
-<span id="cb88-6"><a href="visualization.html#cb88-6"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){}</span>
-<span id="cb88-7"><a href="visualization.html#cb88-7"></a><span class="kw">shinyApp</span>(<span class="dt">ui=</span>ui, <span class="dt">server=</span>server)</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="visualization.html#cb95-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb95-2"><a href="visualization.html#cb95-2"></a>  <span class="kw">sliderInput</span>(<span class="dt">inputId=</span><span class="st">&#39;num&#39;</span>,</span>
+<span id="cb95-3"><a href="visualization.html#cb95-3"></a>              <span class="dt">label=</span><span class="st">&#39;Choose a number&#39;</span>,</span>
+<span id="cb95-4"><a href="visualization.html#cb95-4"></a>              <span class="dt">value=</span><span class="dv">25</span>, <span class="dt">min=</span><span class="dv">1</span>, <span class="dt">max=</span><span class="dv">100</span>)</span>
+<span id="cb95-5"><a href="visualization.html#cb95-5"></a>)</span>
+<span id="cb95-6"><a href="visualization.html#cb95-6"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){}</span>
+<span id="cb95-7"><a href="visualization.html#cb95-7"></a><span class="kw">shinyApp</span>(<span class="dt">ui=</span>ui, <span class="dt">server=</span>server)</span></code></pre></div>
 <p><code>sliderInput</code> is part of a group of function called <strong>inputs</strong>. These functions allow an Rshiny developper like yourself to add html element that will serve as user input. Here are some input functions you can try:
 <img src="images/inputFunctions.png" alt="Rshiny input functions" /></p>
 <p>All input functions take as first 2 arguments: <code>inputId</code> and <code>label</code>. <code>inputId</code> is an ID that R will use create the input element in a webpage and to reference it later. <code>label</code> is just a text that the user will see, describing what the input element is for. The rest of the arguments are function-specific.</p>
@@ -242,43 +415,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Output functions are called similarly to the input functions:
 <img src="images/callOutputFunctions.png" alt="Rshiny output functions" /></p>
 <p>Here is our app with an output function:</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="visualization.html#cb89-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
-<span id="cb89-2"><a href="visualization.html#cb89-2"></a>  <span class="kw">sliderInput</span>(<span class="dt">inputId=</span><span class="st">&#39;num&#39;</span>,</span>
-<span id="cb89-3"><a href="visualization.html#cb89-3"></a>              <span class="dt">label=</span><span class="st">&#39;Choose a number&#39;</span>,</span>
-<span id="cb89-4"><a href="visualization.html#cb89-4"></a>              <span class="dt">value=</span><span class="dv">25</span>, <span class="dt">min=</span><span class="dv">1</span>, <span class="dt">max=</span><span class="dv">100</span>),</span>
-<span id="cb89-5"><a href="visualization.html#cb89-5"></a>  <span class="kw">plotOutput</span>(<span class="st">&#39;hist&#39;</span>)</span>
-<span id="cb89-6"><a href="visualization.html#cb89-6"></a>)</span>
-<span id="cb89-7"><a href="visualization.html#cb89-7"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){}</span>
-<span id="cb89-8"><a href="visualization.html#cb89-8"></a><span class="kw">shinyApp</span>(<span class="dt">ui=</span>ui, <span class="dt">server=</span>server)</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="visualization.html#cb96-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb96-2"><a href="visualization.html#cb96-2"></a>  <span class="kw">sliderInput</span>(<span class="dt">inputId=</span><span class="st">&#39;num&#39;</span>,</span>
+<span id="cb96-3"><a href="visualization.html#cb96-3"></a>              <span class="dt">label=</span><span class="st">&#39;Choose a number&#39;</span>,</span>
+<span id="cb96-4"><a href="visualization.html#cb96-4"></a>              <span class="dt">value=</span><span class="dv">25</span>, <span class="dt">min=</span><span class="dv">1</span>, <span class="dt">max=</span><span class="dv">100</span>),</span>
+<span id="cb96-5"><a href="visualization.html#cb96-5"></a>  <span class="kw">plotOutput</span>(<span class="st">&#39;hist&#39;</span>)</span>
+<span id="cb96-6"><a href="visualization.html#cb96-6"></a>)</span>
+<span id="cb96-7"><a href="visualization.html#cb96-7"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){}</span>
+<span id="cb96-8"><a href="visualization.html#cb96-8"></a><span class="kw">shinyApp</span>(<span class="dt">ui=</span>ui, <span class="dt">server=</span>server)</span></code></pre></div>
 <p>Running the previous script won’t show any plot though. It just reserve a space in the webpage for plot with id: ‘hist’. To actually create the plot, you must use the server function.</p>
 </div>
 <div id="server-function" class="section level3" number="5.3.3">
 <h3><span class="header-section-number">5.3.3</span> Server function</h3>
 <p>Server function creates the interactivity in your web application, i.e. this is where you set up how an output (ex: graph) chnages with the user input (ex: some number). However, there are 3 rules that has to be followed and it is summarized in this script:</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="visualization.html#cb90-1"></a><span class="cf">function</span>(input, output){</span>
-<span id="cb90-2"><a href="visualization.html#cb90-2"></a>  <span class="co">#1 outputId is the outputId you defined with output function</span></span>
-<span id="cb90-3"><a href="visualization.html#cb90-3"></a>  <span class="co">#2 to render on a webpage. To render a plot, use renderPlot()</span></span>
-<span id="cb90-4"><a href="visualization.html#cb90-4"></a>  output<span class="op">$</span>outputId &lt;-<span class="st"> </span><span class="kw">renderSomething</span>({</span>
-<span id="cb90-5"><a href="visualization.html#cb90-5"></a>    <span class="co">#3 inputId is the inputId you defined with input function</span></span>
-<span id="cb90-6"><a href="visualization.html#cb90-6"></a>    <span class="kw">someFunction</span>(input<span class="op">$</span>inputId)</span>
-<span id="cb90-7"><a href="visualization.html#cb90-7"></a>  })</span>
-<span id="cb90-8"><a href="visualization.html#cb90-8"></a>}</span>
-<span id="cb90-9"><a href="visualization.html#cb90-9"></a><span class="co"># Anything inside the curly braces is an R code. And it can be multiple lines of code.</span></span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="visualization.html#cb97-1"></a><span class="cf">function</span>(input, output){</span>
+<span id="cb97-2"><a href="visualization.html#cb97-2"></a>  <span class="co">#1 outputId is the outputId you defined with output function</span></span>
+<span id="cb97-3"><a href="visualization.html#cb97-3"></a>  <span class="co">#2 to render on a webpage. To render a plot, use renderPlot()</span></span>
+<span id="cb97-4"><a href="visualization.html#cb97-4"></a>  output<span class="op">$</span>outputId &lt;-<span class="st"> </span><span class="kw">renderSomething</span>({</span>
+<span id="cb97-5"><a href="visualization.html#cb97-5"></a>    <span class="co">#3 inputId is the inputId you defined with input function</span></span>
+<span id="cb97-6"><a href="visualization.html#cb97-6"></a>    <span class="kw">someFunction</span>(input<span class="op">$</span>inputId)</span>
+<span id="cb97-7"><a href="visualization.html#cb97-7"></a>  })</span>
+<span id="cb97-8"><a href="visualization.html#cb97-8"></a>}</span>
+<span id="cb97-9"><a href="visualization.html#cb97-9"></a><span class="co"># Anything inside the curly braces is an R code. And it can be multiple lines of code.</span></span></code></pre></div>
 <p>In summary, you must define output variable by the <code>outputId</code> and prefixing it with <code>output$</code>. You must call the R script that will produce the output with a <code>render*({})</code> function. And you must call the user input with its <code>inputId</code> and prefixing it with <code>input$</code>.</p>
 <p>In our example script, we can render it as follow:</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="visualization.html#cb91-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
-<span id="cb91-2"><a href="visualization.html#cb91-2"></a>  <span class="kw">sliderInput</span>(<span class="dt">inputId=</span><span class="st">&#39;num&#39;</span>,</span>
-<span id="cb91-3"><a href="visualization.html#cb91-3"></a>              <span class="dt">label=</span><span class="st">&#39;Choose a number&#39;</span>,</span>
-<span id="cb91-4"><a href="visualization.html#cb91-4"></a>              <span class="dt">value=</span><span class="dv">25</span>, <span class="dt">min=</span><span class="dv">1</span>, <span class="dt">max=</span><span class="dv">100</span>),</span>
-<span id="cb91-5"><a href="visualization.html#cb91-5"></a>  <span class="kw">plotOutput</span>(<span class="st">&#39;hist&#39;</span>)</span>
-<span id="cb91-6"><a href="visualization.html#cb91-6"></a>)</span>
-<span id="cb91-7"><a href="visualization.html#cb91-7"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){</span>
-<span id="cb91-8"><a href="visualization.html#cb91-8"></a>    output<span class="op">$</span>hist &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({</span>
-<span id="cb91-9"><a href="visualization.html#cb91-9"></a>      title &lt;-<span class="st"> </span><span class="kw">paste</span>(input<span class="op">$</span>num, <span class="st">&#39;random normal values&#39;</span>)</span>
-<span id="cb91-10"><a href="visualization.html#cb91-10"></a>      <span class="kw">hist</span>(<span class="kw">rnorm</span>(input<span class="op">$</span>num), <span class="dt">main=</span>title, <span class="dt">xlab=</span><span class="st">&#39;values&#39;</span>)</span>
-<span id="cb91-11"><a href="visualization.html#cb91-11"></a>  })</span>
-<span id="cb91-12"><a href="visualization.html#cb91-12"></a>}</span>
-<span id="cb91-13"><a href="visualization.html#cb91-13"></a><span class="kw">shinyApp</span>(<span class="dt">ui=</span>ui, <span class="dt">server=</span>server)</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="visualization.html#cb98-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb98-2"><a href="visualization.html#cb98-2"></a>  <span class="kw">sliderInput</span>(<span class="dt">inputId=</span><span class="st">&#39;num&#39;</span>,</span>
+<span id="cb98-3"><a href="visualization.html#cb98-3"></a>              <span class="dt">label=</span><span class="st">&#39;Choose a number&#39;</span>,</span>
+<span id="cb98-4"><a href="visualization.html#cb98-4"></a>              <span class="dt">value=</span><span class="dv">25</span>, <span class="dt">min=</span><span class="dv">1</span>, <span class="dt">max=</span><span class="dv">100</span>),</span>
+<span id="cb98-5"><a href="visualization.html#cb98-5"></a>  <span class="kw">plotOutput</span>(<span class="st">&#39;hist&#39;</span>)</span>
+<span id="cb98-6"><a href="visualization.html#cb98-6"></a>)</span>
+<span id="cb98-7"><a href="visualization.html#cb98-7"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){</span>
+<span id="cb98-8"><a href="visualization.html#cb98-8"></a>    output<span class="op">$</span>hist &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({</span>
+<span id="cb98-9"><a href="visualization.html#cb98-9"></a>      title &lt;-<span class="st"> </span><span class="kw">paste</span>(input<span class="op">$</span>num, <span class="st">&#39;random normal values&#39;</span>)</span>
+<span id="cb98-10"><a href="visualization.html#cb98-10"></a>      <span class="kw">hist</span>(<span class="kw">rnorm</span>(input<span class="op">$</span>num), <span class="dt">main=</span>title, <span class="dt">xlab=</span><span class="st">&#39;values&#39;</span>)</span>
+<span id="cb98-11"><a href="visualization.html#cb98-11"></a>  })</span>
+<span id="cb98-12"><a href="visualization.html#cb98-12"></a>}</span>
+<span id="cb98-13"><a href="visualization.html#cb98-13"></a><span class="kw">shinyApp</span>(<span class="dt">ui=</span>ui, <span class="dt">server=</span>server)</span></code></pre></div>
 <p>To make much more advanced app, simply read the instructions on <a href="https://shiny.rstudio.com/articles/">Rshiny website</a>.</p>
 </div>
 <div id="sharing-your-app" class="section level3" number="5.3.4">
@@ -287,18 +460,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol style="list-style-type: decimal">
 <li>Save the <code>ui</code> and <code>server</code> objects/scripts into a stand alone R script, name it <code>app.R</code>, and save it in a separate folder. You must name it <code>app.R</code> as that’s the file that the server will look for when you deploy your app. For this example, I’d save this as <code>app.R</code></li>
 </ol>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="visualization.html#cb92-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
-<span id="cb92-2"><a href="visualization.html#cb92-2"></a>  <span class="kw">sliderInput</span>(<span class="dt">inputId=</span><span class="st">&#39;num&#39;</span>,</span>
-<span id="cb92-3"><a href="visualization.html#cb92-3"></a>              <span class="dt">label=</span><span class="st">&#39;Choose a number&#39;</span>,</span>
-<span id="cb92-4"><a href="visualization.html#cb92-4"></a>              <span class="dt">value=</span><span class="dv">25</span>, <span class="dt">min=</span><span class="dv">1</span>, <span class="dt">max=</span><span class="dv">100</span>),</span>
-<span id="cb92-5"><a href="visualization.html#cb92-5"></a>  <span class="kw">plotOutput</span>(<span class="st">&#39;hist&#39;</span>)</span>
-<span id="cb92-6"><a href="visualization.html#cb92-6"></a>)</span>
-<span id="cb92-7"><a href="visualization.html#cb92-7"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){</span>
-<span id="cb92-8"><a href="visualization.html#cb92-8"></a>    output<span class="op">$</span>hist &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({</span>
-<span id="cb92-9"><a href="visualization.html#cb92-9"></a>      title &lt;-<span class="st"> </span><span class="kw">paste</span>(input<span class="op">$</span>num, <span class="st">&#39;random normal values&#39;</span>)</span>
-<span id="cb92-10"><a href="visualization.html#cb92-10"></a>      <span class="kw">hist</span>(<span class="kw">rnorm</span>(input<span class="op">$</span>num), <span class="dt">main=</span>title, <span class="dt">xlab=</span><span class="st">&#39;values&#39;</span>)</span>
-<span id="cb92-11"><a href="visualization.html#cb92-11"></a>  })</span>
-<span id="cb92-12"><a href="visualization.html#cb92-12"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="visualization.html#cb99-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb99-2"><a href="visualization.html#cb99-2"></a>  <span class="kw">sliderInput</span>(<span class="dt">inputId=</span><span class="st">&#39;num&#39;</span>,</span>
+<span id="cb99-3"><a href="visualization.html#cb99-3"></a>              <span class="dt">label=</span><span class="st">&#39;Choose a number&#39;</span>,</span>
+<span id="cb99-4"><a href="visualization.html#cb99-4"></a>              <span class="dt">value=</span><span class="dv">25</span>, <span class="dt">min=</span><span class="dv">1</span>, <span class="dt">max=</span><span class="dv">100</span>),</span>
+<span id="cb99-5"><a href="visualization.html#cb99-5"></a>  <span class="kw">plotOutput</span>(<span class="st">&#39;hist&#39;</span>)</span>
+<span id="cb99-6"><a href="visualization.html#cb99-6"></a>)</span>
+<span id="cb99-7"><a href="visualization.html#cb99-7"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output){</span>
+<span id="cb99-8"><a href="visualization.html#cb99-8"></a>    output<span class="op">$</span>hist &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({</span>
+<span id="cb99-9"><a href="visualization.html#cb99-9"></a>      title &lt;-<span class="st"> </span><span class="kw">paste</span>(input<span class="op">$</span>num, <span class="st">&#39;random normal values&#39;</span>)</span>
+<span id="cb99-10"><a href="visualization.html#cb99-10"></a>      <span class="kw">hist</span>(<span class="kw">rnorm</span>(input<span class="op">$</span>num), <span class="dt">main=</span>title, <span class="dt">xlab=</span><span class="st">&#39;values&#39;</span>)</span>
+<span id="cb99-11"><a href="visualization.html#cb99-11"></a>  })</span>
+<span id="cb99-12"><a href="visualization.html#cb99-12"></a>}</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Go to <a href="https://www.shinyapps.io">shinyapps.io</a> and log in or sign for an account.</li>
 <li>Now simply run the app on your computer</li>

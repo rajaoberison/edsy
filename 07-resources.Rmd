@@ -1,36 +1,20 @@
 # Resources {#resources}
 
-Data
+## Data
 
-sea (fish vs phys), land (human, animal, plant, phys), air (compos), region
-climate, weather
-air quality
-hydrology
-water quality
-earth quake data
+Here is a non-exhaustive list of data resources for environmental studies.
 
+```{r data-resources, echo=F}
+library(dplyr)
+data <- read.csv('data/data-resources.csv') %>% 
+  arrange(desc(Region))
+knitr::kable(
+  data, booktabs=T
+)
+```
 
-Business and the Environment
+## EDS Course Map
 
-Climate Change Science and Solutions
+Here are the suggested courses at Yale and tracks to improve your data science skills.
 
-Ecosystems and Land Conservation and Management
-
-Energy and the Environment
-
-Environmental Policy Analysis
-
-Forestry
-
-Industrial Ecology and Green Chemistry
-
-People, Equity, and the Environment
-
-Urban
-
-Water Resource Science and Management
-
-Other
-
-
-Yale Course Map
+![EDS Course Map](images/EDSCourseMap.png)

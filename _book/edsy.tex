@@ -120,7 +120,7 @@
 
 \title{EDS Vignettes}
 \author{Andry Rajaoberison}
-\date{2020-04-08}
+\date{2020-04-13}
 
 \begin{document}
 \maketitle
@@ -388,8 +388,8 @@ Here is how we extract the dates:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "APR 8"  "APR 9"  "APR 10" "APR 11" "APR 12" "APR 13" "APR 14" "APR 15"
-##  [9] "APR 16" "APR 17" "APR 18" "APR 19" "APR 20" "APR 21" "APR 22"
+##  [1] "APR 13" "APR 14" "APR 15" "APR 16" "APR 17" "APR 18" "APR 19" "APR 20"
+##  [9] "APR 21" "APR 22" "APR 23" "APR 24" "APR 25" "APR 26" "APR 27"
 \end{verbatim}
 
 \begin{Shaded}
@@ -401,9 +401,9 @@ Here is how we extract the dates:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "2020-04-08" "2020-04-09" "2020-04-10" "2020-04-11" "2020-04-12"
-##  [6] "2020-04-13" "2020-04-14" "2020-04-15" "2020-04-16" "2020-04-17"
-## [11] "2020-04-18" "2020-04-19" "2020-04-20" "2020-04-21" "2020-04-22"
+##  [1] "2020-04-13" "2020-04-14" "2020-04-15" "2020-04-16" "2020-04-17"
+##  [6] "2020-04-18" "2020-04-19" "2020-04-20" "2020-04-21" "2020-04-22"
+## [11] "2020-04-23" "2020-04-24" "2020-04-25" "2020-04-26" "2020-04-27"
 \end{verbatim}
 
 And here is the full code that extract the complete table:
@@ -478,21 +478,21 @@ And here is the full code that extract the complete table:
 ## # A tibble: 15 x 8
 ##    day        description high_temp low_temp precip wind_dir wind_speed himidity
 ##    <date>     <chr>       <chr>     <chr>     <dbl> <chr>    <chr>         <dbl>
-##  1 2020-04-08 Mostly Cle… <NA>      38          0.1 S        4             0.88 
-##  2 2020-04-09 Rain        58        39          1   S        19            0.82 
-##  3 2020-04-10 Partly Clo… 51        37          0   WNW      21            0.47 
-##  4 2020-04-11 Partly Clo… 52        37          0   WNW      15            0.41 
-##  5 2020-04-12 Partly Clo… 57        50          0.1 SSE      13            0.54 
-##  6 2020-04-13 Rain/Wind   64        48          0.9 S        22            0.82 
-##  7 2020-04-14 Partly Clo… 58        41          0.2 WNW      10            0.55 
-##  8 2020-04-15 Showers     52        38          0.4 NNW      9             0.53 
-##  9 2020-04-16 Mostly Sun… 51        39          0.2 WNW      13            0.47 
-## 10 2020-04-17 Partly Clo… 51        40          0.1 WNW      13            0.49 
-## 11 2020-04-18 Showers     51        42          0.5 NE       11            0.59 
-## 12 2020-04-19 Showers     56        43          0.4 WNW      12            0.59 
-## 13 2020-04-20 Showers     56        43          0.4 WNW      13            0.580
-## 14 2020-04-21 AM Showers  57        46          0.3 NW       11            0.56 
-## 15 2020-04-22 Showers     60        49          0.5 SSW      11            0.61
+##  1 2020-04-13 Thundersto… 60        44          1   SSW      28            0.89 
+##  2 2020-04-14 Partly Clo… 56        41          0   W        8             0.5  
+##  3 2020-04-15 Mostly Clo… 51        37          0.2 WNW      10            0.48 
+##  4 2020-04-16 Partly Clo… 51        34          0.1 WNW      13            0.4  
+##  5 2020-04-17 PM Showers  49        36          0.5 WSW      13            0.5  
+##  6 2020-04-18 PM Showers  52        39          0.3 NW       11            0.51 
+##  7 2020-04-19 PM Showers  58        47          0.4 SW       14            0.570
+##  8 2020-04-20 AM Showers  58        39          0.4 WNW      12            0.59 
+##  9 2020-04-21 Partly Clo… 57        43          0   WNW      11            0.44 
+## 10 2020-04-22 Mostly Sun… 61        48          0.1 SW       12            0.52 
+## 11 2020-04-23 Showers     59        48          0.4 E        10            0.63 
+## 12 2020-04-24 Showers     58        46          0.4 N        10            0.64 
+## 13 2020-04-25 AM Showers  58        46          0.4 NNE      12            0.59 
+## 14 2020-04-26 Mostly Clo… 59        47          0.2 N        10            0.59 
+## 15 2020-04-27 Showers     62        50          0.4 SE       10            0.59
 \end{verbatim}
 
 \hypertarget{structuring}{%
@@ -1244,8 +1244,202 @@ Then we can visualize the data to see how well the imputation has performed. How
 \hypertarget{simple-graph-with-ggplot2}{%
 \section{\texorpdfstring{Simple graph with \texttt{ggplot2}}{Simple graph with ggplot2}}\label{simple-graph-with-ggplot2}}
 
-\hypertarget{interactive-graph-with-plotly-and-gganimate}{%
-\section{\texorpdfstring{Interactive graph with \texttt{plotly} and \texttt{gganimate}}{Interactive graph with plotly and gganimate}}\label{interactive-graph-with-plotly-and-gganimate}}
+\begin{itemize}
+\tightlist
+\item
+  Reading and recoding data
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(haven)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(dplyr)}
+\KeywordTok{library}\NormalTok{(tidyr)}
+
+\NormalTok{raw.data \textless{}{-}}\StringTok{ }\KeywordTok{read\_sav}\NormalTok{(}\StringTok{\textquotesingle{}data/ypccc.hurricane.sav\textquotesingle{}}\NormalTok{)}
+\NormalTok{raw.data \textless{}{-}}\StringTok{ }\NormalTok{raw.data }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{filter}\NormalTok{(raw.data}\OperatorTok{$}\NormalTok{Q1}\OperatorTok{==}\DecValTok{1} \OperatorTok{||}\StringTok{ }\NormalTok{raw.data}\OperatorTok{$}\NormalTok{Q2}\OperatorTok{==}\DecValTok{1}\NormalTok{)}
+\NormalTok{raw.data \textless{}{-}}\StringTok{ }\NormalTok{raw.data }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(raw.data}\OperatorTok{$}\NormalTok{Q3), raw.data}\OperatorTok{$}\NormalTok{Q3}\OperatorTok{!=}\DecValTok{2}\NormalTok{, raw.data}\OperatorTok{$}\NormalTok{Q3}\OperatorTok{!=}\DecValTok{3}\NormalTok{)}
+
+\NormalTok{raw.data}\OperatorTok{$}\NormalTok{S5\_cluster \textless{}{-}}\StringTok{ }\KeywordTok{recode}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(raw.data}\OperatorTok{$}\NormalTok{S5\_cluster), }\StringTok{\textquotesingle{}1\textquotesingle{}}\NormalTok{=}\StringTok{\textquotesingle{}DieHards\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}2\textquotesingle{}}\NormalTok{=}\StringTok{\textquotesingle{}Reluctant\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}4\textquotesingle{}}\NormalTok{=}\StringTok{\textquotesingle{}Optimists\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}3\textquotesingle{}}\NormalTok{=}\StringTok{\textquotesingle{}Constrained\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}5\textquotesingle{}}\NormalTok{=}\StringTok{\textquotesingle{}First Out\textquotesingle{}}\NormalTok{)}
+\NormalTok{raw.data}\OperatorTok{$}\NormalTok{S5\_cluster \textless{}{-}}\StringTok{ }\KeywordTok{factor}\NormalTok{(raw.data}\OperatorTok{$}\NormalTok{S5\_cluster, }\DataTypeTok{ordered=}\NormalTok{T, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{\textquotesingle{}First Out\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Constrained\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Optimists\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Reluctant\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}DieHards\textquotesingle{}}\NormalTok{))}
+\NormalTok{data \textless{}{-}}\StringTok{ }\NormalTok{raw.data[}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(raw.data}\OperatorTok{$}\NormalTok{S5\_cluster),]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{setting-ggplot-theme}{%
+\subsection{\texorpdfstring{Setting \texttt{ggplot} theme}{Setting ggplot theme}}\label{setting-ggplot-theme}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot\_theme \textless{}{-}}\StringTok{ }
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}
+    \DataTypeTok{legend.title =} \KeywordTok{element\_blank}\NormalTok{(),}
+    \DataTypeTok{legend.box.background =} \KeywordTok{element\_rect}\NormalTok{(),}
+    \DataTypeTok{legend.box.margin =} \KeywordTok{margin}\NormalTok{(}\DecValTok{6}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{6}\NormalTok{),}
+    \DataTypeTok{legend.background =} \KeywordTok{element\_blank}\NormalTok{(),}
+    \DataTypeTok{legend.text =} \KeywordTok{element\_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{12}\NormalTok{),}
+    \DataTypeTok{legend.key.size =} \KeywordTok{unit}\NormalTok{(}\DecValTok{1}\NormalTok{, }\StringTok{"cm"}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}
+    \DataTypeTok{axis.text =} \KeywordTok{element\_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{12}\NormalTok{, }\DataTypeTok{face=}\StringTok{\textquotesingle{}bold\textquotesingle{}}\NormalTok{),}
+    \DataTypeTok{axis.line =} \KeywordTok{element\_line}\NormalTok{(}\DataTypeTok{size =} \DecValTok{1}\NormalTok{, }\DataTypeTok{colour =} \StringTok{"\#212F3D"}\NormalTok{),}
+    \DataTypeTok{axis.title.x =} \KeywordTok{element\_blank}\NormalTok{(),}
+    \DataTypeTok{axis.title.y =} \KeywordTok{element\_blank}\NormalTok{()}
+\NormalTok{  ) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}
+    \DataTypeTok{plot.title =} \KeywordTok{element\_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{20}\NormalTok{, }\DataTypeTok{face=}\StringTok{\textquotesingle{}bold\textquotesingle{}}\NormalTok{, }\DataTypeTok{hjust =} \FloatTok{0.5}\NormalTok{, }\DataTypeTok{margin=}\KeywordTok{margin}\NormalTok{(}\DecValTok{6}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{6}\NormalTok{)),}
+    \DataTypeTok{plot.background=}\KeywordTok{element\_blank}\NormalTok{() }
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}
+    \DataTypeTok{panel.grid.major.x =} \KeywordTok{element\_blank}\NormalTok{(),}
+    \DataTypeTok{panel.grid.minor.x =} \KeywordTok{element\_blank}\NormalTok{(),}
+    \DataTypeTok{panel.grid.major.y =} \KeywordTok{element\_line}\NormalTok{(}\DataTypeTok{size=}\DecValTok{1}\NormalTok{)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ggplot2-example-1}{%
+\subsection{\texorpdfstring{\texttt{ggplot2} Example 1}{ggplot2 Example 1}}\label{ggplot2-example-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Q7. Generally speaking, how prepared were you for the storm(s) you experienced?}
+\NormalTok{data}\OperatorTok{$}\NormalTok{Q7 \textless{}{-}}\StringTok{ }\KeywordTok{as\_factor}\NormalTok{(data}\OperatorTok{$}\NormalTok{Q7)}
+\NormalTok{data}\OperatorTok{$}\NormalTok{Q7 \textless{}{-}}\StringTok{ }\KeywordTok{recode}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(data}\OperatorTok{$}\NormalTok{Q7), }
+                  \StringTok{\textquotesingle{}Fully Prepared\textquotesingle{}}\NormalTok{=}\StringTok{\textquotesingle{}Fully/Very prepared\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Very Prepared\textquotesingle{}}\NormalTok{=}\StringTok{\textquotesingle{}Fully/Very prepared\textquotesingle{}}\NormalTok{, }
+                  \StringTok{\textquotesingle{}A Little Prepared\textquotesingle{}}\NormalTok{=}\StringTok{\textquotesingle{}A little/Not at all prepared\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Not at all Prepared\textquotesingle{}}\NormalTok{=}\StringTok{\textquotesingle{}A little/Not at all prepared\textquotesingle{}}
+\NormalTok{                  )}
+
+\NormalTok{data}\OperatorTok{$}\NormalTok{Q7 \textless{}{-}}\StringTok{ }\KeywordTok{factor}\NormalTok{(data}\OperatorTok{$}\NormalTok{Q7, }\DataTypeTok{ordered=}\NormalTok{T, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{\textquotesingle{}Fully/Very prepared\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}A little/Not at all prepared\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Moderately Prepared\textquotesingle{}}\NormalTok{))}
+
+\NormalTok{Q7\_data \textless{}{-}}\StringTok{ }\NormalTok{data }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(Q7, S5\_cluster, Final\_wgt\_pop) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\CommentTok{\# na.omit() \%\textgreater{}\%}
+\StringTok{  }\KeywordTok{group\_by}\NormalTok{(S5\_cluster, Q7) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{Q7.wgt =} \KeywordTok{sum}\NormalTok{(Final\_wgt\_pop)) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{freq.wgt =} \KeywordTok{round}\NormalTok{(}\DecValTok{100}\OperatorTok{*}\NormalTok{Q7.wgt}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(Q7.wgt))) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(Q7}\OperatorTok{!=}\StringTok{\textquotesingle{}Moderately Prepared\textquotesingle{}}\NormalTok{, }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(Q7))}
+
+\KeywordTok{ggplot}\NormalTok{(Q7\_data, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{S5\_cluster, }\DataTypeTok{y=}\NormalTok{freq.wgt, }\DataTypeTok{fill=}\NormalTok{Q7)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_bar}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill=}\NormalTok{Q7), }\DataTypeTok{width=}\NormalTok{.}\DecValTok{7}\NormalTok{, }\DataTypeTok{position=}\KeywordTok{position\_dodge}\NormalTok{(.}\DecValTok{8}\NormalTok{), }\DataTypeTok{stat=}\StringTok{\textquotesingle{}identity\textquotesingle{}}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label=}\NormalTok{freq.wgt, }\DataTypeTok{vjust=}\FloatTok{1.2}\NormalTok{), }\DataTypeTok{position=}\KeywordTok{position\_dodge}\NormalTok{(.}\DecValTok{8}\NormalTok{), }\DataTypeTok{colour=}\StringTok{\textquotesingle{}white\textquotesingle{}}\NormalTok{, }\DataTypeTok{size=}\DecValTok{6}\NormalTok{, }\DataTypeTok{fontface=}\StringTok{\textquotesingle{}bold\textquotesingle{}}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale\_fill\_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{\textquotesingle{}\#5499C7\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}\#DC7633\textquotesingle{}}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale\_y\_continuous}\NormalTok{(}\DataTypeTok{labels =} \ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{paste0}\NormalTok{(x, }\StringTok{"\%"}\NormalTok{), }\DataTypeTok{expand =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{), }\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{100}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Prepardness for past storms"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position=}\KeywordTok{c}\NormalTok{(.}\DecValTok{5}\NormalTok{, }\FloatTok{.8}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\NormalTok{plot\_theme}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{edsy_files/figure-latex/example-1-1.pdf}
+
+\hypertarget{ggplot2-example-2}{%
+\subsection{\texorpdfstring{\texttt{ggplot2} Example 2}{ggplot2 Example 2}}\label{ggplot2-example-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Q31. Is your home located in a hurricane evacuation zone, or not?}
+\NormalTok{data}\OperatorTok{$}\NormalTok{Q31 \textless{}{-}}\StringTok{ }\KeywordTok{as\_factor}\NormalTok{(data}\OperatorTok{$}\NormalTok{Q31)}
+\NormalTok{data}\OperatorTok{$}\NormalTok{Q31 \textless{}{-}}\StringTok{ }\KeywordTok{factor}\NormalTok{(data}\OperatorTok{$}\NormalTok{Q31, }\DataTypeTok{ordered=}\NormalTok{T, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{\textquotesingle{}No\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Not Sure\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Yes\textquotesingle{}}\NormalTok{))}
+
+\NormalTok{Q31\_data \textless{}{-}}\StringTok{ }\NormalTok{data }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(Q31, S5\_cluster, Final\_wgt\_pop) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\CommentTok{\# na.omit() \%\textgreater{}\%}
+\StringTok{  }\KeywordTok{group\_by}\NormalTok{(S5\_cluster, Q31) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{Q31.wgt =} \KeywordTok{sum}\NormalTok{(Final\_wgt\_pop)) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{freq.wgt =} \KeywordTok{round}\NormalTok{(}\DecValTok{100}\OperatorTok{*}\NormalTok{Q31.wgt}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(Q31.wgt))) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(Q31))}
+
+\KeywordTok{ggplot}\NormalTok{(Q31\_data, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{S5\_cluster, }\DataTypeTok{y=}\NormalTok{freq.wgt, }\DataTypeTok{fill=}\NormalTok{Q31)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_bar}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill=}\NormalTok{Q31), }\DataTypeTok{width=}\NormalTok{.}\DecValTok{7}\NormalTok{, }\DataTypeTok{stat=}\StringTok{\textquotesingle{}identity\textquotesingle{}}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label=}\NormalTok{freq.wgt, }\DataTypeTok{vjust=}\NormalTok{.}\DecValTok{5}\NormalTok{), }\DataTypeTok{position =} \KeywordTok{position\_stack}\NormalTok{(}\DataTypeTok{vjust =} \FloatTok{0.5}\NormalTok{), }\DataTypeTok{colour=}\StringTok{\textquotesingle{}white\textquotesingle{}}\NormalTok{, }\DataTypeTok{size=}\DecValTok{6}\NormalTok{, }\DataTypeTok{fontface=}\StringTok{\textquotesingle{}bold\textquotesingle{}}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale\_fill\_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{\textquotesingle{}\#DC7633\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}\#5D6D7E\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}\#5499C7\textquotesingle{}}\NormalTok{), }\DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\StringTok{\textquotesingle{}Yes\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Not Sure\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}No\textquotesingle{}}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale\_y\_continuous}\NormalTok{(}\DataTypeTok{labels =} \ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{paste0}\NormalTok{(x, }\StringTok{"\%"}\NormalTok{), }\DataTypeTok{expand =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{), }\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{100}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"\% of CT coastal residents who understand}\CharTok{\textbackslash{}n}\StringTok{that their home is in an evacuation zone"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position=}\StringTok{"top"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\NormalTok{plot\_theme }\OperatorTok{+}\StringTok{ }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.box.background =} \KeywordTok{element\_blank}\NormalTok{(), }\DataTypeTok{legend.spacing.x =} \KeywordTok{unit}\NormalTok{(.}\DecValTok{2}\NormalTok{, }\StringTok{\textquotesingle{}cm\textquotesingle{}}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{edsy_files/figure-latex/example-2-1.pdf}
+
+\hypertarget{ggplot2-example-3}{%
+\subsection{\texorpdfstring{\texttt{ggplot2} Example 3}{ggplot2 Example 3}}\label{ggplot2-example-3}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Q23. On a scale of 0\%{-}100\%, with 0\% being it definitely will NOT happen and 100\% being it definitely WILL happen, }
+\CommentTok{\# how likely do you think it is that each of the following types of hurricane will hit somewhere along the }
+\CommentTok{\# Connecticut coast in the next 50 years?}
+
+\NormalTok{Q23\_data \textless{}{-}}\StringTok{ }\NormalTok{data }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(S5\_cluster, Q23\_}\DecValTok{1}\NormalTok{, Q23\_}\DecValTok{2}\NormalTok{, Q23\_}\DecValTok{3}\NormalTok{, Q23\_}\DecValTok{4}\NormalTok{, Final\_wgt\_pop) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{pivot\_longer}\NormalTok{(}\OperatorTok{{-}}\KeywordTok{one\_of}\NormalTok{(}\StringTok{\textquotesingle{}S5\_cluster\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Final\_wgt\_pop\textquotesingle{}}\NormalTok{), }\DataTypeTok{names\_to=}\StringTok{"Category"}\NormalTok{, }\DataTypeTok{names\_prefix =} \StringTok{"Q23\_"}\NormalTok{, }\DataTypeTok{values\_to =} \StringTok{"Q23"}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{Category =} \KeywordTok{paste}\NormalTok{(}\StringTok{"Category"}\NormalTok{, Category), }\DataTypeTok{Q23.wgt =}\NormalTok{ Q23 }\OperatorTok{*}\StringTok{ }\NormalTok{Final\_wgt\_pop) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{na.omit}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{group\_by}\NormalTok{(S5\_cluster, Category) }\OperatorTok{\%\textgreater{}\%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{freq.wgt =} \KeywordTok{round}\NormalTok{(}\KeywordTok{sum}\NormalTok{(Q23.wgt, }\DataTypeTok{na.rm=}\NormalTok{T)}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(Final\_wgt\_pop, }\DataTypeTok{na.rm=}\NormalTok{T)))}
+
+\KeywordTok{ggplot}\NormalTok{(Q23\_data, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{S5\_cluster, }\DataTypeTok{y=}\NormalTok{freq.wgt, }\DataTypeTok{fill=}\NormalTok{Category)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_bar}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill=}\NormalTok{Category), }\DataTypeTok{width=}\NormalTok{.}\DecValTok{7}\NormalTok{, }\DataTypeTok{position=}\KeywordTok{position\_dodge}\NormalTok{(.}\DecValTok{8}\NormalTok{), }\DataTypeTok{stat=}\StringTok{\textquotesingle{}identity\textquotesingle{}}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label=}\NormalTok{freq.wgt, }\DataTypeTok{vjust=}\FloatTok{1.2}\NormalTok{), }\DataTypeTok{position=}\KeywordTok{position\_dodge}\NormalTok{(.}\DecValTok{8}\NormalTok{), }\DataTypeTok{colour=}\StringTok{\textquotesingle{}white\textquotesingle{}}\NormalTok{, }\DataTypeTok{size=}\DecValTok{6}\NormalTok{, }\DataTypeTok{fontface=}\StringTok{\textquotesingle{}bold\textquotesingle{}}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale\_fill\_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{\textquotesingle{}\#F6DDCC\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}\#EDBB99\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}\#E59866\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}\#DC7633\textquotesingle{}}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale\_y\_continuous}\NormalTok{(}\DataTypeTok{labels =} \ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{paste0}\NormalTok{(x, }\StringTok{"\%"}\NormalTok{), }\DataTypeTok{expand =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{), }\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{100}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Average perception of each segment that}\CharTok{\textbackslash{}n}\StringTok{a Category 1, 2, 3, or 4 hurricane will occur}\CharTok{\textbackslash{}n}\StringTok{in the next 50 years"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position=}\StringTok{"top"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\NormalTok{plot\_theme }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.box.background =} \KeywordTok{element\_blank}\NormalTok{(), }\DataTypeTok{legend.spacing.x =} \KeywordTok{unit}\NormalTok{(.}\DecValTok{2}\NormalTok{, }\StringTok{\textquotesingle{}cm\textquotesingle{}}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{edsy_files/figure-latex/example-3-1.pdf}
+
+\hypertarget{interactive-graph-with-plotly}{%
+\section{\texorpdfstring{Interactive graph with \texttt{plotly}}{Interactive graph with plotly}}\label{interactive-graph-with-plotly}}
+
+Creating an interactive version of the previous graphs is pretty simple using \texttt{plotly}. You just have to separate the data by group.
+
+\hypertarget{plotly-example-1}{%
+\subsection{\texorpdfstring{\texttt{plotly} Example 1}{plotly Example 1}}\label{plotly-example-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(plotly)}
+
+\NormalTok{Q7.prepared \textless{}{-}}\StringTok{ }\NormalTok{Q7\_data }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(Q7}\OperatorTok{==}\StringTok{\textquotesingle{}Fully/Very prepared\textquotesingle{}}\NormalTok{)}
+\NormalTok{Q7.not.prepared \textless{}{-}}\StringTok{ }\NormalTok{Q7\_data }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(Q7}\OperatorTok{==}\StringTok{\textquotesingle{}A little/Not at all prepared\textquotesingle{}}\NormalTok{)}
+
+\KeywordTok{plot\_ly}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Q7.prepared}\OperatorTok{$}\NormalTok{S5\_cluster, }\DataTypeTok{y=}\NormalTok{Q7.prepared}\OperatorTok{$}\NormalTok{freq.wgt, }\DataTypeTok{type=}\StringTok{\textquotesingle{}bar\textquotesingle{}}\NormalTok{, }\DataTypeTok{name=}\StringTok{\textquotesingle{}Fully/Very prepared\textquotesingle{}}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{add\_trace}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Q7.not.prepared}\OperatorTok{$}\NormalTok{S5\_cluster, }\DataTypeTok{y=}\NormalTok{Q7.not.prepared}\OperatorTok{$}\NormalTok{freq.wgt, }\DataTypeTok{name=}\StringTok{\textquotesingle{}A little/Not at all prepared\textquotesingle{}}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{layout}\NormalTok{(}\DataTypeTok{barmode =} \StringTok{\textquotesingle{}group\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{htmlwidget-19c5f7e5398d74df67b1}{}
+
+\hypertarget{plotly-example-2}{%
+\subsection{\texorpdfstring{\texttt{plotly} Example 2}{plotly Example 2}}\label{plotly-example-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Q31.yes \textless{}{-}}\StringTok{ }\NormalTok{Q31\_data }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(Q31}\OperatorTok{==}\StringTok{\textquotesingle{}Yes\textquotesingle{}}\NormalTok{)}
+\NormalTok{Q31.notsure \textless{}{-}}\StringTok{ }\NormalTok{Q31\_data }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(Q31}\OperatorTok{==}\StringTok{\textquotesingle{}Not Sure\textquotesingle{}}\NormalTok{)}
+\NormalTok{Q31.no \textless{}{-}}\StringTok{ }\NormalTok{Q31\_data }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(Q31}\OperatorTok{==}\StringTok{\textquotesingle{}No\textquotesingle{}}\NormalTok{)}
+
+\KeywordTok{plot\_ly}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Q31.yes}\OperatorTok{$}\NormalTok{S5\_cluster, }\DataTypeTok{y=}\NormalTok{Q31.yes}\OperatorTok{$}\NormalTok{freq.wgt, }\DataTypeTok{type=}\StringTok{\textquotesingle{}bar\textquotesingle{}}\NormalTok{, }\DataTypeTok{name=}\StringTok{\textquotesingle{}Yes\textquotesingle{}}\NormalTok{, }\DataTypeTok{marker =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{color =} \StringTok{\textquotesingle{}\#DC7633\textquotesingle{}}\NormalTok{), }\DataTypeTok{text =}\NormalTok{ Q31.yes}\OperatorTok{$}\NormalTok{freq.wgt, }\DataTypeTok{textposition =} \StringTok{\textquotesingle{}auto\textquotesingle{}}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{add\_trace}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Q31.notsure}\OperatorTok{$}\NormalTok{S5\_cluster, }\DataTypeTok{y=}\NormalTok{Q31.notsure}\OperatorTok{$}\NormalTok{freq.wgt, }\DataTypeTok{name=}\StringTok{\textquotesingle{}Not Sure\textquotesingle{}}\NormalTok{, }\DataTypeTok{marker =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{color =} \StringTok{\textquotesingle{}\#5D6D7E\textquotesingle{}}\NormalTok{)) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{add\_trace}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Q31.no}\OperatorTok{$}\NormalTok{S5\_cluster, }\DataTypeTok{y=}\NormalTok{Q31.no}\OperatorTok{$}\NormalTok{freq.wgt, }\DataTypeTok{name=}\StringTok{\textquotesingle{}No\textquotesingle{}}\NormalTok{, }\DataTypeTok{marker =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{color =} \StringTok{\textquotesingle{}\#5499C7\textquotesingle{}}\NormalTok{)) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{layout}\NormalTok{(}\DataTypeTok{barmode =} \StringTok{\textquotesingle{}stack\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{htmlwidget-03897aacea723c0335c0}{}
 
 \hypertarget{web-app-with-rshiny}{%
 \section{Web app with RShiny}\label{web-app-with-rshiny}}
@@ -1427,38 +1621,66 @@ Example studies conducted by FES Professors.
 \hypertarget{resources}{%
 \chapter{Resources}\label{resources}}
 
-Data
+\hypertarget{data}{%
+\section{Data}\label{data}}
 
-sea (fish vs phys), land (human, animal, plant, phys), air (compos), region
-climate, weather
-air quality
-hydrology
-water quality
-earth quake data
+Here is a non-exhaustive list of data resources for environmental studies.
 
-Business and the Environment
+\begin{tabular}{lll}
+\toprule
+Region & URL & Topics\\
+\midrule
+World Cities & http://www.worldclimate.com/ & Temperature, Rainfall, Sea-level\\
+US & https://climatecommunication.yale.edu/ & Yale Program on Climate Change Communication\\
+US & https://data.census.gov/cedsci/ & Census surveys\\
+US & https://www.epa.gov/ejscreen/download-ejscreen-data & Environmental justice\\
+US & https://www.data.gov/ & Agriculture, Climate, Consumer, Ecosystems, Education, Energy, Finance, Health, Local Government, Manufacturing, Maritime, Ocean, Public Safety, Science \& Research\\
+\addlinespace
+US & https://simplyanalytics.com/ & Demography, Business, Health, Marketing\\
+US & https://www.ncdc.noaa.gov/cdo-web/datatools & Climate, Weather\\
+US & https://www.epa.gov/outdoor-air-quality-data & Air quality\\
+US & https://www.americancommunities.org/methodology/ & Communities\\
+US & https://tidesandcurrents.noaa.gov/products.html & Sea water levels\\
+\addlinespace
+US & https://www.waterqualitydata.us/ & Water quality\\
+US & https://waterdata.usgs.gov/nwis/qw & Water quality\\
+US & https://hifld-geoplatform.opendata.arcgis.com/ & Agriculture, Borders, Boundaries, Chemicals, Commercial, Communications, Education, Emergency Services, Energy, Finance, Food Industry, Geonames, Government, Law Enforcement, Mail Shipping, Mining, National Flood Hazard, Natural Hazards, Public Health, Public Venues, Transportation Air, Transportation Ground, Transportation Water, Water Supply\\
+OECD & https://data.oecd.org/ & Agriculture, Development, Economy, Education, Energy, Environment, Finance, Government, Health, Innovation and Technology, Jobs, Society\\
+Multpile & https://www.kdnuggets.com/datasets/index.html & Multiple\\
+\addlinespace
+Multiple & https://www.kaggle.com/datasets & Multiple\\
+Multiple & https://data.fivethirtyeight.com/ & Multiple\\
+Global & https://csssi.yale.edu/ & Yale CSSSI\\
+Global & https://yceo.yale.edu/image-sources & Yale Center for Earth Observation\\
+Global & https://osf.io/ & Multiple\\
+\addlinespace
+Global & https://data.worldbank.org/ & Development\\
+Global & https://data.humdata.org/ & Humanitarian\\
+Global & https://climatedataguide.ucar.edu/climate-data & Geospatial data resources\\
+Global & http://chelsa-climate.org/downloads/ & Climate predictions, timeseries\\
+Global & https://ourworldindata.org/ & Health, Demographic Change, Food and Agriculture, Education and Knowledge, Energy and Environment, Innovation and Technological Change, Poverty and Economic Development, Living conditions, Community and Wellbeing, Human rights and Democracy, Violence and War\\
+\addlinespace
+Global & http://aqicn.org/data-platform/register/ & Air quality\\
+Global & https://globalfishingwatch.org/datasets-and-code/ & Fishing\\
+Global & https://www.gbif.org/ & Biodiversity occurences\\
+Global & https://data.globalforestwatch.org/ & Forest Change, Land Use, Conservation, People, Forest Cover\\
+Global & https://resourcewatch.org/data/explore & Food, Climate, Energy, Water, Forests, Ocean, Society, Cities\\
+\addlinespace
+Europe & https://www.eea.europa.eu/data-and-maps & Air pollution, Biodiversity – Ecosystems, Chemicals, Climate change adaptation, Climate change mitigation, Energy, Environment and health, Industry, Land use, Marine, Policy instruments, Resource efficiency and waste, Soil, Specific regions, Sustainability transitions, Transport, Water and marine environment\\
+Coastal & https://data.unep-wcmc.org/ & Ecosystem, Biodiversity\\
+\bottomrule
+\end{tabular}
 
-Climate Change Science and Solutions
+\hypertarget{eds-course-map}{%
+\section{EDS Course Map}\label{eds-course-map}}
 
-Ecosystems and Land Conservation and Management
+Here are the suggested courses at Yale and tracks to improve your data science skills.
 
-Energy and the Environment
-
-Environmental Policy Analysis
-
-Forestry
-
-Industrial Ecology and Green Chemistry
-
-People, Equity, and the Environment
-
-Urban
-
-Water Resource Science and Management
-
-Other
-
-Yale Course Map
+\begin{figure}
+\centering
+\includegraphics{images/EDSCourseMap.png}
+\caption{EDS Course Map}
+\end{figure}
 
   \bibliography{book.bib,packages.bib}
 

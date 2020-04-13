@@ -24,7 +24,7 @@
 <meta name="author" content="Andry Rajaoberison" />
 
 
-<meta name="date" content="2020-04-08" />
+<meta name="date" content="2020-04-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,6 +51,13 @@
 
 
 
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.2/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -161,8 +168,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5" data-path="visualization.html"><a href="visualization.html"><i class="fa fa-check"></i><b>5</b> Visualization</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="visualization.html"><a href="visualization.html#simple-graph-with-ggplot2"><i class="fa fa-check"></i><b>5.1</b> Simple graph with <code>ggplot2</code></a></li>
-<li class="chapter" data-level="5.2" data-path="visualization.html"><a href="visualization.html#interactive-graph-with-plotly-and-gganimate"><i class="fa fa-check"></i><b>5.2</b> Interactive graph with <code>plotly</code> and <code>gganimate</code></a></li>
+<li class="chapter" data-level="5.1" data-path="visualization.html"><a href="visualization.html#simple-graph-with-ggplot2"><i class="fa fa-check"></i><b>5.1</b> Simple graph with <code>ggplot2</code></a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="visualization.html"><a href="visualization.html#setting-ggplot-theme"><i class="fa fa-check"></i><b>5.1.1</b> Setting <code>ggplot</code> theme</a></li>
+<li class="chapter" data-level="5.1.2" data-path="visualization.html"><a href="visualization.html#ggplot2-example-1"><i class="fa fa-check"></i><b>5.1.2</b> <code>ggplot2</code> Example 1</a></li>
+<li class="chapter" data-level="5.1.3" data-path="visualization.html"><a href="visualization.html#ggplot2-example-2"><i class="fa fa-check"></i><b>5.1.3</b> <code>ggplot2</code> Example 2</a></li>
+<li class="chapter" data-level="5.1.4" data-path="visualization.html"><a href="visualization.html#ggplot2-example-3"><i class="fa fa-check"></i><b>5.1.4</b> <code>ggplot2</code> Example 3</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="visualization.html"><a href="visualization.html#interactive-graph-with-plotly"><i class="fa fa-check"></i><b>5.2</b> Interactive graph with <code>plotly</code></a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="visualization.html"><a href="visualization.html#plotly-example-1"><i class="fa fa-check"></i><b>5.2.1</b> <code>plotly</code> Example 1</a></li>
+<li class="chapter" data-level="5.2.2" data-path="visualization.html"><a href="visualization.html#plotly-example-2"><i class="fa fa-check"></i><b>5.2.2</b> <code>plotly</code> Example 2</a></li>
+</ul></li>
 <li class="chapter" data-level="5.3" data-path="visualization.html"><a href="visualization.html#web-app-with-rshiny"><i class="fa fa-check"></i><b>5.3</b> Web app with RShiny</a>
 <ul>
 <li class="chapter" data-level="5.3.1" data-path="visualization.html"><a href="visualization.html#input-functions"><i class="fa fa-check"></i><b>5.3.1</b> Input functions</a></li>
@@ -172,7 +189,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="analysis.html"><a href="analysis.html"><i class="fa fa-check"></i><b>6</b> Analysis</a></li>
-<li class="chapter" data-level="7" data-path="resources.html"><a href="resources.html"><i class="fa fa-check"></i><b>7</b> Resources</a></li>
+<li class="chapter" data-level="7" data-path="resources.html"><a href="resources.html"><i class="fa fa-check"></i><b>7</b> Resources</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="resources.html"><a href="resources.html#data"><i class="fa fa-check"></i><b>7.1</b> Data</a></li>
+<li class="chapter" data-level="7.2" data-path="resources.html"><a href="resources.html#eds-course-map"><i class="fa fa-check"></i><b>7.2</b> EDS Course Map</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -196,26 +217,190 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="resources" class="section level1" number="7">
 <h1><span class="header-section-number">Section 7</span> Resources</h1>
-<p>Data</p>
-<p>sea (fish vs phys), land (human, animal, plant, phys), air (compos), region
-climate, weather
-air quality
-hydrology
-water quality
-earth quake data</p>
-<p>Business and the Environment</p>
-<p>Climate Change Science and Solutions</p>
-<p>Ecosystems and Land Conservation and Management</p>
-<p>Energy and the Environment</p>
-<p>Environmental Policy Analysis</p>
-<p>Forestry</p>
-<p>Industrial Ecology and Green Chemistry</p>
-<p>People, Equity, and the Environment</p>
-<p>Urban</p>
-<p>Water Resource Science and Management</p>
-<p>Other</p>
-<p>Yale Course Map</p>
+<div id="data" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Data</h2>
+<p>Here is a non-exhaustive list of data resources for environmental studies.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Region</th>
+<th align="left">URL</th>
+<th align="left">Topics</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">World Cities</td>
+<td align="left"><a href="http://www.worldclimate.com/" class="uri">http://www.worldclimate.com/</a></td>
+<td align="left">Temperature, Rainfall, Sea-level</td>
+</tr>
+<tr class="even">
+<td align="left">US</td>
+<td align="left"><a href="https://climatecommunication.yale.edu/" class="uri">https://climatecommunication.yale.edu/</a></td>
+<td align="left">Yale Program on Climate Change Communication</td>
+</tr>
+<tr class="odd">
+<td align="left">US</td>
+<td align="left"><a href="https://data.census.gov/cedsci/" class="uri">https://data.census.gov/cedsci/</a></td>
+<td align="left">Census surveys</td>
+</tr>
+<tr class="even">
+<td align="left">US</td>
+<td align="left"><a href="https://www.epa.gov/ejscreen/download-ejscreen-data" class="uri">https://www.epa.gov/ejscreen/download-ejscreen-data</a></td>
+<td align="left">Environmental justice</td>
+</tr>
+<tr class="odd">
+<td align="left">US</td>
+<td align="left"><a href="https://www.data.gov/" class="uri">https://www.data.gov/</a></td>
+<td align="left">Agriculture, Climate, Consumer, Ecosystems, Education, Energy, Finance, Health, Local Government, Manufacturing, Maritime, Ocean, Public Safety, Science &amp; Research</td>
+</tr>
+<tr class="even">
+<td align="left">US</td>
+<td align="left"><a href="https://simplyanalytics.com/" class="uri">https://simplyanalytics.com/</a></td>
+<td align="left">Demography, Business, Health, Marketing</td>
+</tr>
+<tr class="odd">
+<td align="left">US</td>
+<td align="left"><a href="https://www.ncdc.noaa.gov/cdo-web/datatools" class="uri">https://www.ncdc.noaa.gov/cdo-web/datatools</a></td>
+<td align="left">Climate, Weather</td>
+</tr>
+<tr class="even">
+<td align="left">US</td>
+<td align="left"><a href="https://www.epa.gov/outdoor-air-quality-data" class="uri">https://www.epa.gov/outdoor-air-quality-data</a></td>
+<td align="left">Air quality</td>
+</tr>
+<tr class="odd">
+<td align="left">US</td>
+<td align="left"><a href="https://www.americancommunities.org/methodology/" class="uri">https://www.americancommunities.org/methodology/</a></td>
+<td align="left">Communities</td>
+</tr>
+<tr class="even">
+<td align="left">US</td>
+<td align="left"><a href="https://tidesandcurrents.noaa.gov/products.html" class="uri">https://tidesandcurrents.noaa.gov/products.html</a></td>
+<td align="left">Sea water levels</td>
+</tr>
+<tr class="odd">
+<td align="left">US</td>
+<td align="left"><a href="https://www.waterqualitydata.us/" class="uri">https://www.waterqualitydata.us/</a></td>
+<td align="left">Water quality</td>
+</tr>
+<tr class="even">
+<td align="left">US</td>
+<td align="left"><a href="https://waterdata.usgs.gov/nwis/qw" class="uri">https://waterdata.usgs.gov/nwis/qw</a></td>
+<td align="left">Water quality</td>
+</tr>
+<tr class="odd">
+<td align="left">US</td>
+<td align="left"><a href="https://hifld-geoplatform.opendata.arcgis.com/" class="uri">https://hifld-geoplatform.opendata.arcgis.com/</a></td>
+<td align="left">Agriculture, Borders, Boundaries, Chemicals, Commercial, Communications, Education, Emergency Services, Energy, Finance, Food Industry, Geonames, Government, Law Enforcement, Mail Shipping, Mining, National Flood Hazard, Natural Hazards, Public Health, Public Venues, Transportation Air, Transportation Ground, Transportation Water, Water Supply</td>
+</tr>
+<tr class="even">
+<td align="left">OECD</td>
+<td align="left"><a href="https://data.oecd.org/" class="uri">https://data.oecd.org/</a></td>
+<td align="left">Agriculture, Development, Economy, Education, Energy, Environment, Finance, Government, Health, Innovation and Technology, Jobs, Society</td>
+</tr>
+<tr class="odd">
+<td align="left">Multpile</td>
+<td align="left"><a href="https://www.kdnuggets.com/datasets/index.html" class="uri">https://www.kdnuggets.com/datasets/index.html</a></td>
+<td align="left">Multiple</td>
+</tr>
+<tr class="even">
+<td align="left">Multiple</td>
+<td align="left"><a href="https://www.kaggle.com/datasets" class="uri">https://www.kaggle.com/datasets</a></td>
+<td align="left">Multiple</td>
+</tr>
+<tr class="odd">
+<td align="left">Multiple</td>
+<td align="left"><a href="https://data.fivethirtyeight.com/" class="uri">https://data.fivethirtyeight.com/</a></td>
+<td align="left">Multiple</td>
+</tr>
+<tr class="even">
+<td align="left">Global</td>
+<td align="left"><a href="https://csssi.yale.edu/" class="uri">https://csssi.yale.edu/</a></td>
+<td align="left">Yale CSSSI</td>
+</tr>
+<tr class="odd">
+<td align="left">Global</td>
+<td align="left"><a href="https://yceo.yale.edu/image-sources" class="uri">https://yceo.yale.edu/image-sources</a></td>
+<td align="left">Yale Center for Earth Observation</td>
+</tr>
+<tr class="even">
+<td align="left">Global</td>
+<td align="left"><a href="https://osf.io/" class="uri">https://osf.io/</a></td>
+<td align="left">Multiple</td>
+</tr>
+<tr class="odd">
+<td align="left">Global</td>
+<td align="left"><a href="https://data.worldbank.org/" class="uri">https://data.worldbank.org/</a></td>
+<td align="left">Development</td>
+</tr>
+<tr class="even">
+<td align="left">Global</td>
+<td align="left"><a href="https://data.humdata.org/" class="uri">https://data.humdata.org/</a></td>
+<td align="left">Humanitarian</td>
+</tr>
+<tr class="odd">
+<td align="left">Global</td>
+<td align="left"><a href="https://climatedataguide.ucar.edu/climate-data" class="uri">https://climatedataguide.ucar.edu/climate-data</a></td>
+<td align="left">Geospatial data resources</td>
+</tr>
+<tr class="even">
+<td align="left">Global</td>
+<td align="left"><a href="http://chelsa-climate.org/downloads/" class="uri">http://chelsa-climate.org/downloads/</a></td>
+<td align="left">Climate predictions, timeseries</td>
+</tr>
+<tr class="odd">
+<td align="left">Global</td>
+<td align="left"><a href="https://ourworldindata.org/" class="uri">https://ourworldindata.org/</a></td>
+<td align="left">Health, Demographic Change, Food and Agriculture, Education and Knowledge, Energy and Environment, Innovation and Technological Change, Poverty and Economic Development, Living conditions, Community and Wellbeing, Human rights and Democracy, Violence and War</td>
+</tr>
+<tr class="even">
+<td align="left">Global</td>
+<td align="left"><a href="http://aqicn.org/data-platform/register/" class="uri">http://aqicn.org/data-platform/register/</a></td>
+<td align="left">Air quality</td>
+</tr>
+<tr class="odd">
+<td align="left">Global</td>
+<td align="left"><a href="https://globalfishingwatch.org/datasets-and-code/" class="uri">https://globalfishingwatch.org/datasets-and-code/</a></td>
+<td align="left">Fishing</td>
+</tr>
+<tr class="even">
+<td align="left">Global</td>
+<td align="left"><a href="https://www.gbif.org/" class="uri">https://www.gbif.org/</a></td>
+<td align="left">Biodiversity occurences</td>
+</tr>
+<tr class="odd">
+<td align="left">Global</td>
+<td align="left"><a href="https://data.globalforestwatch.org/" class="uri">https://data.globalforestwatch.org/</a></td>
+<td align="left">Forest Change, Land Use, Conservation, People, Forest Cover</td>
+</tr>
+<tr class="even">
+<td align="left">Global</td>
+<td align="left"><a href="https://resourcewatch.org/data/explore" class="uri">https://resourcewatch.org/data/explore</a></td>
+<td align="left">Food, Climate, Energy, Water, Forests, Ocean, Society, Cities</td>
+</tr>
+<tr class="odd">
+<td align="left">Europe</td>
+<td align="left"><a href="https://www.eea.europa.eu/data-and-maps" class="uri">https://www.eea.europa.eu/data-and-maps</a></td>
+<td align="left">Air pollution, Biodiversity – Ecosystems, Chemicals, Climate change adaptation, Climate change mitigation, Energy, Environment and health, Industry, Land use, Marine, Policy instruments, Resource efficiency and waste, Soil, Specific regions, Sustainability transitions, Transport, Water and marine environment</td>
+</tr>
+<tr class="even">
+<td align="left">Coastal</td>
+<td align="left"><a href="https://data.unep-wcmc.org/" class="uri">https://data.unep-wcmc.org/</a></td>
+<td align="left">Ecosystem, Biodiversity</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="eds-course-map" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> EDS Course Map</h2>
+<p>Here are the suggested courses at Yale and tracks to improve your data science skills.</p>
+<div class="figure">
+<img src="images/EDSCourseMap.png" alt="" />
+<p class="caption">EDS Course Map</p>
+</div>
 
+</div>
 </div>
             </section>
 

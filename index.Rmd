@@ -10,6 +10,7 @@ biblio-style: apalike
 link-citations: yes
 github-repo: rajaoberison/edsy
 description: "Data science resources for FES Students"
+always_allow_html: true
 ---
 
 # Prerequisites {-}
