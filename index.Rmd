@@ -20,6 +20,8 @@ You should also install RStudio: https://rstudio.com/products/rstudio/download/
 
 We will use the packages in the **tidyverse** library:
 
-```{r eval=FALSE}
+```{r eval=F}
 install.packages("tidyverse")
 ```
+
+We will use a sample datasets from the Yale Program on Climate Change Communication. The advantage of these data is that they were collected and processed by our colleagues. So we have a good documentation on the sampling methods and the data processing workflow applied to eah of the datasets.

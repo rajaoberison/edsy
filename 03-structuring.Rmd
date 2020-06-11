@@ -10,13 +10,13 @@ One method of detecting these anomalies is the summary statistics of the variabl
 
 ```{r inspecting-data-1, echo=F, message=F}
 library(haven)
-data <- read_sav('data/eds.spss.sample.sav')
+data <- read_sav('data/spss-sample.sav')
 ```
 
 
 ```{r inspecting-data-2, message=F}
 # Structure of the data
-str(data)
+str(data[,1:3])
 # Summary for a numerical variables
 summary(data$Q4)
 # Summary for a categorical variable
@@ -58,7 +58,7 @@ One type of anomaly that we may also encounter is the coercion of irrelevant dat
 
 For example, if we read in the same SPSS data from the Reading data section, we get the coded values instead of the labels.
 ```{r data-types-1, echo=FALSE}
-data <- tibble::as_tibble(read_sav('data/eds.spss.sample.sav'))
+data <- read_sav('data/spss-sample.sav')
 ```
 
 ```{r data-types-2, message=FALSE, echo=FALSE}
@@ -68,7 +68,7 @@ head(data)
 So if we run `summary(data)` right away then we'll get this unintended result:
 
 ```{r data-types-3, echo=FALSE}
-summary(data)
+summary(as_factor(data, levels='values') %>% mutate_all(as.numeric))
 ```
 
 `Q4` and `Q50` are the only variables that are supposed to be numeric. But here everything is treated as numeric which is incorrect. Also, it is best if we read `Zone` as factor as well so that we find out the possible values.

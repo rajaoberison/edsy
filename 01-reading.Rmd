@@ -11,7 +11,7 @@ data <- read.csv(file = '/path/to/csv', header = TRUE, sep = ',')
 
 ```{r reading-csv-2, tidy=F, out.width='80%'}
 # Example
-data <- read.csv(file = 'data/eds.data.hurricane.csv', header = TRUE)
+data <- read.csv(file = 'data/hurricane.csv', header = TRUE)
 ```
 
 ## Excel
@@ -23,8 +23,8 @@ In the 'eds.excel.sample.xlsx' file, there are 2 tables: heatwave and hurricane.
 
 ```{r reading-excel, eval=F}
 library(readxl)
-heatwave <-  read_excel(path='data/eds.excel.sample.xlsx', sheet = 'heatwave')
-hurricane <-  read_excel(path='data/eds.excel.sample.xlsx', sheet = 'hurricane')
+heatwave <-  read_excel(path='data/excel-sample.xlsx', sheet = 'heatwave')
+hurricane <-  read_excel(path='data/excel-sample.xlsx', sheet = 'hurricane')
 ```
 
 Once the tables are stored into individual R variable, you can perform exploration and analysis with them.
@@ -75,7 +75,7 @@ Then you can load the spreadsheet by using its `id`
 eds.sample.spreadsheet <- drive_get(id = '1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc')
 ```
 
-It also possible to read the spreadsheet right way by using its link / `path` (without using `drive_ls()`). I recommend using this to read any Google Drive files.
+It also possible to read the spreadsheet right way by using its link/path (without using `drive_ls()`). I recommend using this to read any Google Drive files.
 
 ```{r reading-google-6, eval=FALSE}
 eds.sample.spreadsheet <- drive_get(path = 'https://drive.google.com/open?id=1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc')
@@ -96,7 +96,7 @@ hurricane <- read_sheet(eds.sample.spreadsheet, sheet = 'hurricane')
 
 ```{r reading-spss-1, message=F, tidy=T}
 library(haven)
-data <- read_sav('data/eds.spss.sample.sav')
+data <- read_sav('data/spss-sample.sav')
 ```
 
 By default, the `read_sav()` will read the factor levels of non-numeric and non-character variables. If, instead, we want the labels, we can run the following code:

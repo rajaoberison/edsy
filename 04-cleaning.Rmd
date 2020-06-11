@@ -1,6 +1,6 @@
 # Cleaning {#cleaning}
 
-Data cleaning is the process of getting the data ready for statistical analysis. In contrast to "Structuring the data" the target anomalies in this case are the varibale values such as missing values, outliers, distribution, etc.
+Data cleaning is the process of getting the data ready for statistical analysis. In contrast to "Structuring the data" the target anomalies in this case are the variable values such as missing values, outliers, distribution, etc.
 
 ## Fixing skewed distribution
 
@@ -9,82 +9,123 @@ A data is skewed when it's distribution is not symetrical but rather distored on
 ```{r skewed-1, echo=F, message=F}
 library(haven)
 library(dplyr)
-data <- read_sav('data/eds.spss.sample.sav')
-data <- filter(data, !is.na(data$Q4))
+data <- read.csv('data/hurricane.csv', header=T)
+data <- filter(data, !is.na(data$nstorm))
 hurricane <- data
 ```
 
 ```{r skewed-2}
 # Example of skewed data
-{x <- data$Q4
-h <- hist(x, breaks = 20, col = "grey")
-xfit <- seq(min(x),max(x),length=40)
-yfit <- dnorm(xfit,mean=mean(x),sd=sd(x))
+{x <- data$nstorm
+h <- hist(x, breaks=20, col="grey")
+xfit <- seq(min(x), max(x), length=40)
+yfit <- dnorm(xfit, mean=mean(x), sd=sd(x))
 yfit <- yfit*diff(h$mids[1:2])*length(x)
 lines(xfit, yfit, col="red", lwd=2)}
 
 # Log-transformation
-{x <- log(data$Q4)
-h <- hist(x, breaks = 10, col = "grey")}
+{log.x <- log(data$nstorm)
+h <- hist(log.x, breaks = 10, col = "grey")}
 ```
 
-For `nstorm` and `nevac`, we can better investigate what's going on by actually visualizing them in a histogram using the `hist()` or `boxplot()`.
+While the previous log-transformation seem to have worked, it is not entirely correct because the variable `nstorm` has `0` values. In this case, one of the commonly used method is **square root**.
 
-```{r skewed-3, echo=F, eval=F}
-hurricane$nstorm <- as.numeric(hurricane$nstorm)
-hurricane$nevac <- as.numeric(hurricane$nevac)
+```{r skewed-3}
+# sqrt transformation
+{sqrt.x <- sqrt(data$nstorm)
+h <- hist(sqrt.x, breaks = 10, col = "grey")}
 ```
 
+## Treating outliers
 
-```{r skewed-4, eval=F}
-par(mfrow=c(2,2)) # 4 figures arranged in 2 rows and 2 columns
-hist(hurricane$nstorm, breaks=10, xlab="Number of storms", main=NA)
-boxplot(hurricane$nstorm)
-hist(hurricane$nevac, breaks=10, xlab="Number of evacuations", main=NA)
-boxplot(hurricane$nevac)
-mtext("How many storms have you experienced?", side=3, outer=TRUE, line=-2)
-mtext("How many times have you evacuated?", side=3, outer=TRUE, line=-16)
+Outliers are usually extreme values in the datasets. If not detected and handled appropriately, they can affect the accuracy of the predicitions and analysis. Treating outliers depends on a good knowledge of the data and it is up to the data analyst to decide on how to go about on fixing them. [Selva Prabhakaran](http://r-statistics.co/Outlier-Treatment-With-R.html) gave some ways of handling outliers that we're going to show below.
+
+You can detect outliers using `boxplot` and they will show up as dots outside the whiskers:
+
+```{r outliers-1}
+# For continuous variable
+outlier_values <- unique(boxplot.stats(data$nstorm)$out)  # outlier values.
+boxplot(data$nstorm, main="How many storm have you experienced?", boxwex=0.1)
+mtext(paste("Outliers: ", paste(outlier_values, collapse=", ")), cex=0.6)
 ```
 
+```{r outliers-2}
+# For categorical variable
+boxplot(nstorm ~ worry, data=data, main="Number of storms experienced across levels of worry")
+```
 
-Using `select()`, `mutate()`, `filter()`, etc.
-
-## Fixing outliers
-
-As we can see, both variables are not normally distributed but skewed. And there are several method of treating such variables based on the objective of the analysis: log-transformation, conversion to categorical variables, or simply removing the outliers, etc.
+Approaches for outlier treatment include imputation with `mean`, `median`, or `mode`. We can also cap the values, predict them, or delete the observations. We'll talk more about that below.
 
 ## Fixing missing values
 
-We can also notice from the summary above that the there are missing values (`NA`) as well. They can also be detected using `anyNA()`. And the best way to treat them is by removing all of the corresponding observations using `drop_na()` from the `tidyr` package. Or, in some cases, removing the variable itself.
+Ways of detectng missing values (`NA`) include the `summary` and `anyNA()`.
 
-```{r outliers-1, eval=F}
-tidyr::drop_na(hurricane)
+```{r missing-1, include=F}
+x <- sample(1:nrow(data), 50, F)
+data[x,'nstorm'] <- NA
+data <- as_tibble(data)
+```
+
+```{r missing-2}
+anyNA(data$nstorm)
+summary(data$nstorm)
+```
+
+The easiest way to handle them is by removing all of the corresponding observations using `tidyr::drop_na()`. Or, in some cases, removing the variable itself.
+
+```{r missing-3}
+tidyr::drop_na(data)
 ```
 
 However, if dropping all of the rows with missing values affect the quality of the data, then another option is to replace the missing values with the mean/median/mode of the variable or predict using an appropriate algorithm. There are several packages out there that are solely dedicated to treating missing values including `VIM` and `MICE`.
 
 In this next example, we'll try to predict the 15 missing values in the variable `nstorm` (number of storms the survey respondents have experienced) using the variables that has no missing values: `zone`, `lat`, and `long`.
 
-```{r outliers-2, eval=F}
+```{r missing-4, message=F}
 # Imputation using MICE
 library(mice)
 
 # Building the mice model
-mice_model <- mice(select(hurricane, zone, lat, long, nstorm), method="rf") # select() is from the dplyr package
+mice_model <- mice(select(data, zone, lat, long, nstorm), method="rf", printFlag=F)
 # Predicting the missing values
-mice_prediction <- complete(mice_model)  # generate the completed data.
+# generate the completed data
+mice_prediction <- complete(mice_model)
+# checking for NAs
 anyNA(mice_prediction)
 ```
 
 Then we can visualize the data to see how well the imputation has performed. However, the best way to assess the accuracy is to compare actual values with predicted values using measures such as: `MSE`, `MAE`, `MAPE`, etc.
 
-```{r outliers-3, eval=F}
+```{r missing-5, message=F}
 # Visualizing the prediction
-non_na_latitude <- hurricane$lat[!is.na(hurricane$nstorm)]
-non_na_nstorm <- hurricane$nstorm[!is.na(hurricane$nstorm)]
-na_latitude <- mice_prediction$lat[is.na(hurricane$nstorm)]
-na_nstorm <- mice_prediction$nstorm[is.na(hurricane$nstorm)]
+non_na_latitude <- data$lat[!is.na(data$nstorm)]
+non_na_nstorm <- data$nstorm[!is.na(data$nstorm)]
+na_latitude <- mice_prediction$lat[is.na(data$nstorm)]
+na_nstorm <- mice_prediction$nstorm[is.na(data$nstorm)]
 plot(non_na_nstorm, non_na_latitude, col="grey", pch="•", ylab="Latitude", xlab="Number of Storms Experienced")
 points(na_nstorm, na_latitude, col="red", pch="•", cex=2)
 legend("topright", c("Existing values", "Predicted missing values"), col=c("grey", "red"), pch="•", cex=1.5)
 ```
+
+Other ways of imputing the missing values are with `mean`, `median`, or mode.
+
+```{r missing-6}
+prediction <- data
+na.observations <- is.na(data$nstorm)
+prediction$nstorm[na.observations] <- median(prediction$nstorm[!na.observations])
+# Visualizing the prediction
+na_latitude <- prediction$lat[na.observations]
+na_nstorm <- prediction$nstorm[na.observations]
+plot(non_na_nstorm, non_na_latitude, col="grey", pch="•", ylab="Latitude", xlab="Number of Storms Experienced")
+points(na_nstorm, na_latitude, col="red", pch="•", cex=2)
+legend("topright", c("Existing values", "Predicted missing values"), col=c("grey", "red"), pch="•", cex=1.5)
+```
+
+For mode, there is no built-in function in R but I found one [here](https://www.tutorialspoint.com/r/r_mean_median_mode.htm):
+```{r missing-7}
+getmode <- function(v) {
+   uniqv <- unique(v)
+   uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+```
+

@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # Visualization
 
 ## Simple graph with `ggplot2`
@@ -10,7 +15,7 @@ library(ggplot2)
 library(dplyr)
 library(tidyr)
 
-raw.data <- read_sav('data/ypccc.hurricane.sav')
+raw.data <- read_sav('data/ypccc-hurricane.sav')
 raw.data <- raw.data %>% filter(raw.data$Q1==1 || raw.data$Q2==1)
 raw.data <- raw.data %>% filter(!is.na(raw.data$Q3), raw.data$Q3!=2, raw.data$Q3!=3)
 
@@ -164,6 +169,8 @@ plot_ly(x=Q31.yes$S5_cluster, y=Q31.yes$freq.wgt, type='bar', name='Yes', marker
   layout(barmode = 'stack')
 ```
 
+You can find more ezamples of using `plotly` on their website: https://plotly.com/r/. 
+
 ## Web app with RShiny
 
 _This Shiny tutorial was edited based on the official tutorial on the [website](https://shiny.rstudio.com/tutorial/)_
@@ -292,4 +299,11 @@ server <- function(input, output){
 3. Now simply run the app on your computer
 4. In the top right cover of R viewer window, there is a `Publish` button that you can use to publish your app.
 5. Simply follow the instructions.
+
+```{r dataviz-list, include=F, eval=F}
+## Other data visualization resources
+datadrive <- googledrive::drive_get(path = 'https://docs.google.com/spreadsheets/d/156QjpOgLCiDlcmkhJ0RQTVjFYBld8qAhaZsgT7He7b4')
+dataviz <- googlesheets4::read_sheet(datadrive, sheet = 'Sheet1')
+knitr::kable(dataviz, booktabs=T)
+```
 

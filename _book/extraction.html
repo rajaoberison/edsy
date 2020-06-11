@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Section 2 Extraction | EDS Vignettes</title>
   <meta name="description" content="Data science resources for FES Students" />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Section 2 Extraction | EDS Vignettes" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Andry Rajaoberison" />
 
 
-<meta name="date" content="2020-04-13" />
+<meta name="date" content="2020-06-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="reading.html"/>
 <link rel="next" href="structuring.html"/>
-<script src="libs/header-attrs-2.1/header-attrs.js"></script>
+<script src="libs/header-attrs-2.2/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -52,10 +52,10 @@
 
 
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.2/plotly.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
@@ -93,35 +93,30 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
 code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
 code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
 code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -163,14 +158,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="cleaning.html"><a href="cleaning.html"><i class="fa fa-check"></i><b>4</b> Cleaning</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="cleaning.html"><a href="cleaning.html#fixing-skewed-distribution"><i class="fa fa-check"></i><b>4.1</b> Fixing skewed distribution</a></li>
-<li class="chapter" data-level="4.2" data-path="cleaning.html"><a href="cleaning.html#fixing-outliers"><i class="fa fa-check"></i><b>4.2</b> Fixing outliers</a></li>
+<li class="chapter" data-level="4.2" data-path="cleaning.html"><a href="cleaning.html#treating-outliers"><i class="fa fa-check"></i><b>4.2</b> Treating outliers</a></li>
 <li class="chapter" data-level="4.3" data-path="cleaning.html"><a href="cleaning.html#fixing-missing-values"><i class="fa fa-check"></i><b>4.3</b> Fixing missing values</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="visualization.html"><a href="visualization.html"><i class="fa fa-check"></i><b>5</b> Visualization</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="visualization.html"><a href="visualization.html#simple-graph-with-ggplot2"><i class="fa fa-check"></i><b>5.1</b> Simple graph with <code>ggplot2</code></a>
 <ul>
-<li class="chapter" data-level="5.1.1" data-path="visualization.html"><a href="visualization.html#setting-ggplot-theme"><i class="fa fa-check"></i><b>5.1.1</b> Setting <code>ggplot</code> theme</a></li>
+<li class="chapter" data-level="5.1.1" data-path="visualization.html"><a href="visualization.html#setting-ggplot2-theme"><i class="fa fa-check"></i><b>5.1.1</b> Setting <code>ggplot2</code> theme</a></li>
 <li class="chapter" data-level="5.1.2" data-path="visualization.html"><a href="visualization.html#ggplot2-example-1"><i class="fa fa-check"></i><b>5.1.2</b> <code>ggplot2</code> Example 1</a></li>
 <li class="chapter" data-level="5.1.3" data-path="visualization.html"><a href="visualization.html#ggplot2-example-2"><i class="fa fa-check"></i><b>5.1.3</b> <code>ggplot2</code> Example 2</a></li>
 <li class="chapter" data-level="5.1.4" data-path="visualization.html"><a href="visualization.html#ggplot2-example-3"><i class="fa fa-check"></i><b>5.1.4</b> <code>ggplot2</code> Example 3</a></li>
@@ -188,7 +183,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.3.4" data-path="visualization.html"><a href="visualization.html#sharing-your-app"><i class="fa fa-check"></i><b>5.3.4</b> Sharing your app</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="analysis.html"><a href="analysis.html"><i class="fa fa-check"></i><b>6</b> Analysis</a></li>
+<li class="chapter" data-level="6" data-path="analysis.html"><a href="analysis.html"><i class="fa fa-check"></i><b>6</b> Analysis</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="analysis.html"><a href="analysis.html#working-with-survey-data"><i class="fa fa-check"></i><b>6.1</b> Working with survey data</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="analysis.html"><a href="analysis.html#variable-standardization"><i class="fa fa-check"></i><b>6.1.1</b> Variable Standardization</a></li>
+<li class="chapter" data-level="6.1.2" data-path="analysis.html"><a href="analysis.html#sample-weighting"><i class="fa fa-check"></i><b>6.1.2</b> Sample weighting</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="resources.html"><a href="resources.html"><i class="fa fa-check"></i><b>7</b> Resources</a>
 <ul>
 <li class="chapter" data-level="7.1" data-path="resources.html"><a href="resources.html#data"><i class="fa fa-check"></i><b>7.1</b> Data</a></li>
@@ -254,14 +256,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb19-9"><a href="extraction.html#cb19-9"></a><span class="co"># Extracting the exact value</span></span>
 <span id="cb19-10"><a href="extraction.html#cb19-10"></a>raw_date &lt;-<span class="st"> </span><span class="kw">html_text</span>(date_locations)</span>
 <span id="cb19-11"><a href="extraction.html#cb19-11"></a>raw_date</span></code></pre></div>
-<pre><code>##  [1] &quot;APR 13&quot; &quot;APR 14&quot; &quot;APR 15&quot; &quot;APR 16&quot; &quot;APR 17&quot; &quot;APR 18&quot; &quot;APR 19&quot; &quot;APR 20&quot;
-##  [9] &quot;APR 21&quot; &quot;APR 22&quot; &quot;APR 23&quot; &quot;APR 24&quot; &quot;APR 25&quot; &quot;APR 26&quot; &quot;APR 27&quot;</code></pre>
+<pre><code>## character(0)</code></pre>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="extraction.html#cb21-1"></a><span class="co"># Because the value are formatted like &quot;NOV 21&quot; we have to convert to a date format</span></span>
 <span id="cb21-2"><a href="extraction.html#cb21-2"></a>exact_date &lt;-<span class="st"> </span><span class="kw">as.Date</span>(raw_date, <span class="dt">format=</span><span class="st">&quot;%b %d&quot;</span>) <span class="co"># b = month, d = day</span></span>
 <span id="cb21-3"><a href="extraction.html#cb21-3"></a>exact_date</span></code></pre></div>
-<pre><code>##  [1] &quot;2020-04-13&quot; &quot;2020-04-14&quot; &quot;2020-04-15&quot; &quot;2020-04-16&quot; &quot;2020-04-17&quot;
-##  [6] &quot;2020-04-18&quot; &quot;2020-04-19&quot; &quot;2020-04-20&quot; &quot;2020-04-21&quot; &quot;2020-04-22&quot;
-## [11] &quot;2020-04-23&quot; &quot;2020-04-24&quot; &quot;2020-04-25&quot; &quot;2020-04-26&quot; &quot;2020-04-27&quot;</code></pre>
+<pre><code>## Date of length 0</code></pre>
 <p>And here is the full code that extract the complete table:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="extraction.html#cb23-1"></a><span class="kw">library</span>(rvest)</span>
 <span id="cb23-2"><a href="extraction.html#cb23-2"></a><span class="co"># Get the webpage url</span></span>
@@ -324,24 +323,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb23-59"><a href="extraction.html#cb23-59"></a>                        <span class="st">&#39;precip&#39;</span> =<span class="st"> </span>precip, <span class="st">&#39;wind_dir&#39;</span> =<span class="st"> </span>wind_dir,</span>
 <span id="cb23-60"><a href="extraction.html#cb23-60"></a>                        <span class="st">&#39;wind_speed&#39;</span> =<span class="st"> </span>wind_speed, <span class="st">&#39;himidity&#39;</span> =<span class="st"> </span>humidity)</span>
 <span id="cb23-61"><a href="extraction.html#cb23-61"></a>new_haven_forecast</span></code></pre></div>
-<pre><code>## # A tibble: 15 x 8
-##    day        description high_temp low_temp precip wind_dir wind_speed himidity
-##    &lt;date&gt;     &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt;
-##  1 2020-04-13 Thundersto… 60        44          1   SSW      28            0.89 
-##  2 2020-04-14 Partly Clo… 56        41          0   W        8             0.5  
-##  3 2020-04-15 Mostly Clo… 51        37          0.2 WNW      10            0.48 
-##  4 2020-04-16 Partly Clo… 51        34          0.1 WNW      13            0.4  
-##  5 2020-04-17 PM Showers  49        36          0.5 WSW      13            0.5  
-##  6 2020-04-18 PM Showers  52        39          0.3 NW       11            0.51 
-##  7 2020-04-19 PM Showers  58        47          0.4 SW       14            0.570
-##  8 2020-04-20 AM Showers  58        39          0.4 WNW      12            0.59 
-##  9 2020-04-21 Partly Clo… 57        43          0   WNW      11            0.44 
-## 10 2020-04-22 Mostly Sun… 61        48          0.1 SW       12            0.52 
-## 11 2020-04-23 Showers     59        48          0.4 E        10            0.63 
-## 12 2020-04-24 Showers     58        46          0.4 N        10            0.64 
-## 13 2020-04-25 AM Showers  58        46          0.4 NNE      12            0.59 
-## 14 2020-04-26 Mostly Clo… 59        47          0.2 N        10            0.59 
-## 15 2020-04-27 Showers     62        50          0.4 SE       10            0.59</code></pre>
+<pre><code>## # A tibble: 0 x 8
+## # … with 8 variables: day &lt;date&gt;, description &lt;chr&gt;, high_temp &lt;lgl&gt;,
+## #   low_temp &lt;dbl&gt;, precip &lt;dbl&gt;, wind_dir &lt;chr&gt;, wind_speed &lt;chr&gt;,
+## #   himidity &lt;dbl&gt;</code></pre>
 
 </div>
 </div>
@@ -401,6 +386,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
