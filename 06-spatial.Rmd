@@ -1,0 +1,19 @@
+# Spatial data {#spatial}
+
+
+
+## Reading
+
+```{r spaatial-1, echo=F}
+library(sf)
+
+```
+
+
+## Processing
+
+Joining, centroid, etc.
+
+
+## Visualization
+

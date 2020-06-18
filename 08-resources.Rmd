@@ -4,6 +4,8 @@
 
 Here is a non-exhaustive list of data resources for environmental studies.
 
+https://archive.ics.uci.edu/ml/datasets/Forest+Fires
+
 ```{r data-resources, echo=F}
 library(dplyr)
 data <- read.csv('data/data-resources.csv') %>% 
@@ -18,3 +20,4 @@ knitr::kable(
 Here are the suggested courses at Yale and tracks to improve your data science skills.
 
 ![EDS Course Map](images/EDSCourseMap.png)
+
