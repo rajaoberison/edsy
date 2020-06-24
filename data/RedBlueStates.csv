@@ -1,0 +1,52 @@
+GEOID,State,Party,Color
+1,Alabama,Republican,Red
+2,Alaska,Republican,Red
+4,Arizona,Republican,Red
+5,Arkansas,Republican,Red
+6,California,Democratic,Blue
+8,Colorado,Democratic,Purple
+9,Connecticut,Democratic,Blue
+10,Delaware,Democratic,Blue
+11,District of Columbia,Democratic,Blue
+12,Florida,Republican,Purple
+13,Georgia,Republican,Red
+15,Hawaii,Democratic,Blue
+16,Idaho,Republican,Red
+17,Illinois,Democratic,Blue
+18,Indiana,Republican,Red
+19,Iowa,Republican,Purple
+20,Kansas,Republican,Red
+21,Kentucky,Republican,Red
+22,Louisiana,Republican,Red
+23,Maine,Democratic,Blue
+24,Maryland,Democratic,Blue
+25,Massachusetts,Democratic,Blue
+26,Michigan,Republican,Purple
+27,Minnesota,Democratic,Purple
+28,Mississippi,Republican,Red
+29,Missouri,Republican,Red
+30,Montana,Republican,Red
+31,Nebraska,Republican,Red
+32,Nevada,Democratic,Purple
+33,New Hampshire,Democratic,Purple
+34,New Jersey,Democratic,Blue
+35,New Mexico,Democratic,Blue
+36,New York,Democratic,Blue
+37,North Carolina,Republican,Purple
+38,North Dakota,Republican,Red
+39,Ohio,Republican,Purple
+40,Oklahoma,Republican,Red
+41,Oregon,Democratic,Blue
+42,Pennsylvania,Republican,Purple
+44,Rhode Island,Democratic,Blue
+45,South Carolina,Republican,Red
+46,South Dakota,Republican,Red
+47,Tennessee,Republican,Red
+48,Texas,Republican,Red
+49,Utah,Republican,Red
+50,Vermont,Democratic,Blue
+51,Virginia,Democratic,Purple
+53,Washington,Democratic,Blue
+54,West Virginia,Republican,Red
+55,Wisconsin,Republican,Purple
+56,Wyoming,Republican,Red

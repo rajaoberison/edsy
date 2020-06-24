@@ -12,3 +12,16 @@ pre {
 pre code {
   white-space: inherit;
 }
+
+.book .book-header, .book .book-summary {
+    font-family: Tahoma, sans-serif;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal {
+  font-size: 1.5rem;
+  font-family: Tahoma;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal code, .book .book-body .page-wrapper .page-inner section.normal pre {
+    font-family: Menlo, monospace;
+}

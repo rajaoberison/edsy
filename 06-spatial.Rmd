@@ -1,19 +1,179 @@
 # Spatial data {#spatial}
 
+In R, spatial data format such as shapefile, geodatabase, geojson, etc. can be read and processed as a dataframe just like common data formats (csv, excel, etc.). However, we have to use special libraries to do so. In addition, because of the nature of this data, spatial relationship operations can also be performed to join or create new features. In this tutorial, we'll make some examples using the `sf` and `raster` libraries.
 
+## Importing spatial data
 
-## Reading
-
-```{r spaatial-1, echo=F}
-library(sf)
-
+```{r spatial-library, echo=F, message=F}
+library(dplyr)
+library(viridis)
 ```
 
+Spatial data have many formats and the most commonly used is `shapefile` for vectors and `tiff` for rasters. This tutorial will focus on these 2 types of data.
+
+### Reading shapefile
+
+The shapefile format consists of at least 3 files: the main file (.shp), the index file (.shx), and the table file (.dbf). Sometimes there is also a projection file (.prj). Please visit [this webpage](https://www.loc.gov/preservation/digital/formats/fdd/fdd000280.shtml) for more details.
+Because of this file structure, it is good practice to save shapefile in a folder or .zip file. And when reading the data in R, we simply point to the `.shp` file in the folder.
+
+```{r spatial-1, echo=F}
+library(sf)
+# source: https://hifld-geoplatform.opendata.arcgis.com/datasets/historical-tsunami-event-locations-with-runups
+tsunami <- read_sf('data/Historical_Tsunami_Event/Historical_Tsunami_Event.shp')
+str(tsunami[,1:10])
+```
+When looking at the dataframe structure above, we can see that the shapefile is processed similarly to a regular dataframe, except for the additional `geometry` field which contain the spatial information.
+
+If we want to plot this data, we can simply use the base `plot` function.
+
+```{r spatial-2, warning=F, message=F}
+# a plot of the first 4 columns
+# plotted as location
+plot(tsunami[, 1:4])
+
+# a plot of only columns
+# plotted as values without geometry
+plot(tsunami$DEATHS)
+plot(tsunami$LONGITUDE, tsunami$DIST_FROM_)
+```
+
+If you only want to plot the geometry (points):
+```{r spatial-3, warning=F, message=F}
+plot(st_geometry(tsunami))
+```
+
+### Reading raster
+
+Raster `.tif` files can be imported with the `raster` library. 
+```{r spatial-4, warning=F, message=F}
+library(raster)
+wind_jan <- raster('data/wc2.1_10m_wind/wc2.1_10m_wind_01.tif')
+plot(wind_jan)
+```
 
 ## Processing
 
-Joining, centroid, etc.
+### Creating point data
 
+This example shows how to convert a data with latitude, longitude coordinates to a spatial dataframe. We'll use the charcoal records from the `GCD` package as example.
+```{r spatial-5, warning=F, message=F}
+library(GCD)
+data("paleofiresites")
+df.table <- paleofiresites
+wgs84crs <- 4269
+sf.table <- st_as_sf(df.table, coords=c('long', 'lat'), crs=wgs84crs, remove=F)
+```
 
-## Visualization
+```{r spatial-6, warning=F, message=F}
+# non spatial data
+plot(df.table[,c(7,11:13)])
+
+# spatial data
+plot(sf.table[,c(7,11:13)])
+```
+
+### Joining with another dataframe
+
+Oftentimes, we want to join a non-spatial data with their geographic location. For example, if we have information on [energy production and consumption by state](https://www.eia.gov/state/), we can join it with spatial feature for better visualization.
+
+```{r spatial-7, warning=F, message=F}
+# get energy data
+energy.data <- read.csv('data/energy-by_state.csv')
+
+# use USABoundaries library to get US spatial data
+library(USAboundaries)
+us.geo <- us_states(resolution='low')
+joined.data <- us.geo %>% inner_join(energy.data, by=c('state_abbr'='State'))
+joined.data.albers <- st_transform(joined.data, crs=5070)
+plot(joined.data.albers[,'Production..U.S..Share'])
+```
+
+### Spatial joining
+
+If we look at the `paleofiresites` data, we can see that we don't have the US state corresponding to each point location. We can create this variable with spatial join.
+
+```{r spatial-8, warning=F, message=F}
+# get paleo sites for the US
+us.paleo <- paleofiresites %>% filter(country=='USA') %>% 
+  st_as_sf(coords=c('long', 'lat'), crs=wgs84crs)
+# set to the same coordinate system
+us.paleo.albers <- st_transform(us.paleo, crs=5070)
+us.geo.albers <- st_transform(us.geo, crs=5070)
+# spatial join
+# here we join by within
+sp.join <- st_join(us.paleo.albers, us.geo.albers, join=st_within)
+{plot(st_geometry(us.geo.albers))
+plot(sp.join[, 'state_name'], add=T, pch=16)}
+```
+
+For more on what you can do with a vector files in r, please visit `sf` [library reference](https://r-spatial.github.io/sf/reference/index.html) or read the book [Geocomputation with R](https://geocompr.robinlovelace.net/).
+
+## Some Visualization Examples
+
+### Plotting charcoal data
+```{r spatial-9, warning=F, message=F}
+# get world map from rnaturalearth library
+library(rnaturalearth)
+world <- ne_countries(scale='small', returnclass='sf')
+# project to robinson projection
+sf.world.robin <- st_transform(world, crs='+proj=robin')
+
+# use imported graticule data for viz
+grat <- st_geometry(read_sf('data/ne_110m_graticules_all/ne_110m_wgs84_bounding_box.shp'))
+
+# get paleo sites
+paleosites <- paleofiresites %>% 
+  mutate(site_name = trimws(as.character(site_name))) %>% 
+  st_as_sf(coords=c('long', 'lat'), crs=4326) %>% 
+  st_transform(crs='+proj=robin')
+newCoods <- st_coordinates(paleosites)
+paleosites$Lon <- newCoods[,1]
+paleosites$Lat <- newCoods[,2]
+
+# set ggplot theme
+library(ggplot2)
+library(ggrepel)
+ggTheme <- theme(
+  legend.position='none',
+  panel.grid.minor = element_blank(),
+  panel.grid.major = element_blank(),
+  panel.background = element_blank(),
+  plot.background = element_rect(fill='#e6e8ed'),
+  panel.border = element_blank(),
+  axis.line = element_blank(),
+  axis.text.x = element_blank(),
+  axis.text.y = element_blank(),
+  axis.ticks = element_blank(),
+  axis.title.x = element_blank(),
+  axis.title.y = element_blank(),
+  plot.title = element_text(size=22)
+)
+
+# few sites to be highlighted
+selected.sites <- c(
+  'Little Molas Lake','Xindi','Laguna Oprasa','Morro de Itapeva',
+  'Aracatuba', 'Lago del Greppo','Nursery Swamp', 'Huguangyan Maar Lake'
+)
+
+# mapping
+map <- ggplot(data=sf.world.robin) +
+  geom_sf(data=grat, fill='white', color='white') +
+  geom_sf(fill='#c1cdcd', size=.1, color='white') + 
+  geom_point(
+    data=paleosites,
+    aes(x=Lon, y=Lat), color='#009ACD',size=1) +
+  geom_point(
+    data=paleosites %>% filter(site_name %in% selected.sites),
+    aes(x=Lon, y=Lat), color='#FF0000',size=2) +
+  geom_text_repel(
+    data=paleosites %>% filter(site_name %in% selected.sites),
+    aes(x=Lon, y=Lat, label=site_name),
+    color='#000000',
+    size=4) +
+  coord_sf(datum=st_crs(54030)) +
+  ggTheme
+
+map
+```
+
 

@@ -1,19 +1,14 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 # Visualization
 
-## Simple graph with `ggplot2`
+## Simple graphs with `ggplot2`
 
 Reading and recoding data
 
 ```{r reading-recoding, message=F, warning=F}
 library(haven)
 library(ggplot2)
-library(dplyr)
 library(tidyr)
+library(dplyr)
 
 raw.data <- read_sav('data/ypccc-hurricane.sav')
 raw.data <- raw.data %>% filter(raw.data$Q1==1 || raw.data$Q2==1)
@@ -53,39 +48,9 @@ plot_theme <-
   )
 ```
 
-### `ggplot2` Example 1
+### `ggplot2` Example 1: Stacked bar plot
 
-```{r example-1, warning=F}
-# Q7. Generally speaking, how prepared were you for the storm(s) you experienced?
-data$Q7 <- as_factor(data$Q7)
-data$Q7 <- recode(as.character(data$Q7), 
-                  'Fully Prepared'='Fully/Very prepared', 'Very Prepared'='Fully/Very prepared', 
-                  'A Little Prepared'='A little/Not at all prepared', 'Not at all Prepared'='A little/Not at all prepared'
-                  )
-
-data$Q7 <- factor(data$Q7, ordered=T, levels=c('Fully/Very prepared', 'A little/Not at all prepared', 'Moderately Prepared'))
-
-Q7_data <- data %>% 
-  select(Q7, S5_cluster, Final_wgt_pop) %>%
-  # na.omit() %>%
-  group_by(S5_cluster, Q7) %>%
-  summarise(Q7.wgt = sum(Final_wgt_pop)) %>%
-  mutate(freq.wgt = round(100*Q7.wgt/sum(Q7.wgt))) %>%
-  filter(Q7!='Moderately Prepared', !is.na(Q7))
-
-ggplot(Q7_data, aes(x=S5_cluster, y=freq.wgt, fill=Q7)) +
-  geom_bar(aes(fill=Q7), width=.7, position=position_dodge(.8), stat='identity') +
-  geom_text(aes(label=freq.wgt, vjust=1.2), position=position_dodge(.8), colour='white', size=6, fontface='bold') +
-  scale_fill_manual(values=c('#5499C7', '#DC7633')) +
-  scale_y_continuous(labels = function(x) paste0(x, "%"), expand = c(0, 0), limits = c(0, 100)) +
-  labs(title = "Prepardness for past storms") +
-  theme(legend.position=c(.5, .8)) +
-  plot_theme
-```
-
-### `ggplot2` Example 2
-
-```{r example-2, warning=F}
+```{r example-1, warning=F, message=F}
 # Q31. Is your home located in a hurricane evacuation zone, or not?
 data$Q31 <- as_factor(data$Q31)
 data$Q31 <- factor(data$Q31, ordered=T, levels=c('No', 'Not Sure', 'Yes'))
@@ -108,9 +73,9 @@ ggplot(Q31_data, aes(x=S5_cluster, y=freq.wgt, fill=Q31)) +
   plot_theme + theme(legend.box.background = element_blank(), legend.spacing.x = unit(.2, 'cm'))
 ```
 
-### `ggplot2` Example 3
+### `ggplot2` Example 2: Grouped bar plot
 
-```{r example-3, warning=F}
+```{r example-2, warning=F, message=F}
 # Q23. On a scale of 0%-100%, with 0% being it definitely will NOT happen and 100% being it definitely WILL happen, 
 # how likely do you think it is that each of the following types of hurricane will hit somewhere along the 
 # Connecticut coast in the next 50 years?
@@ -134,28 +99,88 @@ ggplot(Q23_data, aes(x=S5_cluster, y=freq.wgt, fill=Category)) +
   theme(legend.box.background = element_blank(), legend.spacing.x = unit(.2, 'cm'))
 ```
 
+### `ggplot2` Example 3: Scatterplot
+
+```{r example-3, warning=F, message=F}
+# Scatterplot of state-level average annual temperature by avg ann precipitation (values and anomalies)
+# CAweather <- read.csv('CA_Weather.csv') # missing dataset so go to original source and download manually
+# Data source: https://www.ncdc.noaa.gov/cag/statewide/time-series
+# Need to set base period from 1978 to 1998 in Options dialog and set parameters before downloading (12-Month)
+
+ca.pcp <- read.csv('data/4-pcp-12-12-1978-2020.csv', skip=4)
+ca.tavg <- read.csv('data/4-tavg-12-12-1978-2020.csv', skip=4)
+names(ca.pcp) <- c('Year', 'Precip', 'Precip.Anomaly')
+names(ca.tavg) <- c('Year', 'Temp', 'Temp.Anomaly')
+
+ca.weather <- left_join(ca.tavg, ca.pcp, by='Year') %>% 
+  mutate(Year=as.integer(substr(Year, 1, 4)), 
+         Period=if_else(Year<1990, 'Before 1990',
+                         if_else(Year<2000, '1990-2000',
+                                 if_else(Year<2010, '2000-2010', 'Since 2010')))) %>% 
+  mutate(Period=factor(Period, c('Before 1990', '1990-2000', '2000-2010', 'Since 2010')))
+
+s <- ggplot(data = ca.weather, aes(x=Temp.Anomaly, y=Precip.Anomaly))
+
+hottest.v <- max(ca.weather$Temp.Anomaly)
+hottest.y <- filter(ca.weather, Temp.Anomaly==hottest.v)$Year
+driest.v <- min(ca.weather$Precip.Anomaly)
+driest.y <- filter(ca.weather, Precip.Anomaly==driest.v)$Year
+
+s + 
+  geom_point(aes(color=Period), size=2) +
+  geom_smooth() +
+  geom_label(label=if_else(ca.weather$Temp.Anomaly==hottest.v, paste('Hottest Year\n', hottest.y), NULL), nudge_x = -.2, nudge_y = 3) +
+  geom_label(label=if_else(ca.weather$Precip.Anomaly==driest.v, paste('Driest Year\n', driest.y), NULL), nudge_x = -.4, nudge_y = 0) +
+  labs(title='Hotter and Drier Wildfire Seasons in California', subtitle='Precipitation vs. temperature anomalies in California from January to October over 40 years (1978-2020)', caption='Data from NOAA', y='Precipitation anomaly (inches)', x='Temperature anomaly (°F)') + 
+  theme_light() 
+
+# save as png file
+# ggsave(file = 'CA.weather.png', height=9, width=12)
+
+# a simpler one
+ggplot(ca.weather, aes(Year, Temp.Anomaly)) +
+  geom_line(color='#0D47A1') + geom_point(aes(color=Temp.Anomaly)) +
+  geom_hline(yintercept=0, linetype=2, color='#aaaaaa') +
+  labs(title='California Temperature Anomaly 1978-2020') +
+  scale_color_gradient(low='blue', high='red') + 
+  theme_classic()
+```
+
+## Animated graph with `gganimate`
+
+We can do this by simply adding `gganimate` code to the previous plot.
+```{r gganim-1, warning=F, message=F}
+library(gganimate)
+
+animated.plot <- ggplot(ca.weather, aes(Year, Temp.Anomaly)) +
+  geom_line(color='#0D47A1') +geom_point(aes(color=Temp.Anomaly)) +
+  geom_hline(yintercept=0, linetype=2, color='#aaaaaa') +
+  labs(title='California Temperature Anomaly 1978-2020') +
+  scale_color_gradient(low='blue', high='red') + 
+  theme_classic() +
+  # labels
+  geom_label(aes(label=as.character(Year)), nudge_y=.3) +
+  # gganimate code
+  transition_reveal(seq_along(Year))
+
+# animate(animated.plot)
+```
+
+```{r gganim-2, warning=F, message=F, include=F}
+# anim_save('images/gganim.gif', animated.plot)
+```
+
+![gganim](images/gganim.gif)
+
 ## Interactive graph with `plotly`
 
 Creating an interactive version of the previous graphs is pretty simple using `plotly`. You just have to separate the data by group.
 
-### `plotly` Example 1
+### `plotly` Example 1: Interactive version of the stacked bar
 
 ```{r plotly-1, message=F, warning=F}
 library(plotly)
 
-Q7.prepared <- Q7_data %>% 
-  filter(Q7=='Fully/Very prepared')
-Q7.not.prepared <- Q7_data %>% 
-  filter(Q7=='A little/Not at all prepared')
-
-plot_ly(x=Q7.prepared$S5_cluster, y=Q7.prepared$freq.wgt, type='bar', name='Fully/Very prepared') %>% 
-  add_trace(x=Q7.not.prepared$S5_cluster, y=Q7.not.prepared$freq.wgt, name='A little/Not at all prepared') %>% 
-  layout(barmode = 'group')
-```
-
-### `plotly` Example 2
-
-```{r plotly-2, message=F, warning=F}
 Q31.yes <- Q31_data %>% 
   filter(Q31=='Yes')
 Q31.notsure <- Q31_data %>% 
@@ -300,6 +325,9 @@ server <- function(input, output){
 4. In the top right cover of R viewer window, there is a `Publish` button that you can use to publish your app.
 5. Simply follow the instructions.
 
+## More dataviz resources
+
+More data visualization resources can be found in this [spreadsheet](https://docs.google.com/spreadsheets/d/156QjpOgLCiDlcmkhJ0RQTVjFYBld8qAhaZsgT7He7b4).
 ```{r dataviz-list, include=F, eval=F}
 ## Other data visualization resources
 datadrive <- googledrive::drive_get(path = 'https://docs.google.com/spreadsheets/d/156QjpOgLCiDlcmkhJ0RQTVjFYBld8qAhaZsgT7He7b4')

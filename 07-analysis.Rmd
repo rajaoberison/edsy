@@ -1,21 +1,23 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 # Analysis {#analysis}
 
 ## Working with survey data
 
 We'll use a survey [data](https://osf.io/79t2k/) from a study of approach to engage christians in the issue of global warming. Using this data allow us to compare our results with the original. In this exercise, we'll replicate the application of sampling weights and the standardization of variables which are common treatments of raw survey data.
 
+```{r fix-raster-dplyr-conflicts, include=F}
+detach('package:raster', unload=TRUE)
+```
+
+
 ```{r survey-data-1, echo=F, warning=F, message=F}
-library(dplyr)
+library(ggplot2)
+library(gganimate)
 library(haven)
 library(stringr)
 library(rvest)
-library(tidyr)
 library(survey)
+library(dplyr)
+options(scipen=999)
 rm(list=ls())
 
 data <- read_sav('https://files.osf.io/v1/resources/79t2k/providers/osfstorage/5c6c390e82a3950018c77ec2?action=download&direct&version=1')
@@ -142,7 +144,7 @@ head(pew.data,10)
 pew.gender_age <- pew.data %>% 
   select(pew.age, pew.gender, WEIGHT) %>% 
   group_by(pew.gender, pew.age) %>% summarise(n=sum(WEIGHT)) %>% 
-  pivot_wider(names_from=pew.age, values_from=n) %>% 
+  tidyr::pivot_wider(names_from=pew.age, values_from=n) %>% 
   select(-`NA`)
 
 pew.race <- pew.data %>% select(pew.race, WEIGHT) %>% 
@@ -176,7 +178,7 @@ our_data.recoded <- data %>%
       `Two+ races non-hispanic`='Other'
     )
   ) %>% 
-  unite(col=gender_age, ex_ppgender, age_group, remove=F) %>% 
+  tidyr::unite(col=gender_age, ex_ppgender, age_group, remove=F) %>% 
   mutate(gender_age=replace(x=gender_age, list=gender_age %in% c('Female_NA', 'Male_NA'), values=NA)) %>% 
   na.omit()
 
@@ -185,7 +187,7 @@ our_data.recoded <- data %>%
 our_data.gender_age <- our_data.recoded %>% 
   group_by(age_group, ex_ppgender) %>%
   summarise(n = n()) %>% 
-  pivot_wider(names_from=age_group, values_from=n)
+  tidyr::pivot_wider(names_from=age_group, values_from=n)
 
 our_data.race <- our_data.recoded %>% 
   group_by(race_cat) %>%
@@ -203,8 +205,8 @@ our_data.wgt <- nrow(our_data.recoded)
 # scaling PEW to our data
 # for age and gender
 pew.gender_age.scaled <- pew.gender_age %>%
-  pivot_longer(-pew.gender, names_to='pew.age', values_to='WEIGHT') %>%
-  unite(col=gender_age, pew.gender, pew.age)
+  tidyr::pivot_longer(-pew.gender, names_to='pew.age', values_to='WEIGHT') %>%
+  tidyr::unite(col=gender_age, pew.gender, pew.age)
 
 total.pew <- pew.gender_age.scaled$WEIGHT %>% sum()
 
@@ -244,7 +246,7 @@ head(weighted_data, 10)
 ```
 
 
-```{r include=F}
+```{r survey-data-7, include=F}
 # scraping data from PEW
 url = 'https://www.pewforum.org/religious-landscape-study/christians/christian/'
 pew.page <- read_html(url)
@@ -262,13 +264,95 @@ get_pew_table <- function(page, table_i){
 }
 ```
 
+## Working with COVID-19 data
 
+In this example, we'll use daily updated data from the [JHU Covid Resource Center](https://coronavirus.jhu.edu/data) to create animated time series of coronavirus cases and deaths in the US.
 
+The data is available in [their GitHub](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data). We'll use the daily report for the US from 04-12-2020 to 06-22-2020.
 
+```{r covid-1, message=F, warning=F}
+repo.url <- 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports_us/'
 
+# importing all csv
+us.covid.files <- list()
+date.format <- '%m-%d-%Y'
+dates <- format(seq(as.Date('2020/04/12'), as.Date(as.Date('2020/06/22')), by='day'), date.format)
+i <- 1
+for (date in dates){
+  us.covid.files[[i]] <- read.csv(url(paste0(repo.url, date, '.csv'))) %>% 
+    select(Province_State, Confirmed, Deaths, Recovered, Mortality_Rate) %>% 
+    mutate(Date=as.Date(date, date.format), Confirmed.rank=rank(-Confirmed),
+           Deaths.rank=rank(-Deaths), Mortality.rank=rank(-Mortality_Rate))
+  i <- i+1
+}
+head(us.covid.files[[1]])
+us.covid.df <- do.call(rbind, us.covid.files)
+```
 
+```{r covid-2, message=F, warning=F}
+# line series by state
+last.df <- us.covid.files[[length(us.covid.files)]]
 
+us.covid.plot <- ggplot(us.covid.df %>% filter(Confirmed.rank <=10), 
+                        aes(y=Confirmed.rank, group=Province_State, fill=Province_State)) +
+  geom_tile(aes(x=Confirmed/2, width=Confirmed, height=0.9), alpha=0.8, color=NA) +
+  geom_text(aes(x=0, label=paste(Province_State, ' ')), hjust=1, vjust=1) +
+  geom_text(aes(x=Confirmed, label=paste0('  ', round(Confirmed/1000), 'k')), hjust=0) +
+  scale_y_reverse() + coord_cartesian(clip='off') + 
+  theme_bw() +
+  # custom ggtheme
+  theme(legend.position='none', axis.line=element_blank(), 
+        axis.title=element_blank(), axis.ticks=element_blank(),
+        axis.text=element_blank(), panel.grid.major.y=element_blank(),
+        panel.grid.minor.y=element_blank(), panel.border=element_blank(),
+        plot.margin = margin(2,1,2,3,'cm'))
+  
+us.covid.anim <- us.covid.plot + transition_states(Date, transition_length=4, state_length=1) +
+  view_follow(fixed_x=T)  +
+  labs(title = 'Daily coronavirus cases : {closest_state}',  
+       subtitle  =  'Top 10 States',
+       caption  ='Data Source: Johns Hopkins Coronavirus Resource Center')
 
+# animate(us.covid.anim, nframes=400, fps=10, renderer=gifski_renderer('images/us-covid-rank.gif'))
+```
+
+![us-covid-rank](images/us-covid-rank.gif)
+
+The previous animated plot shows the the evolution of the number of cases. And changing to other variables such as `Mortality_Rate` or `Deaths` would follow the same steps.
+
+Now, if instead we want to show how the evolution of case change over space, we can do mapping instead.
+
+```{r covid-3, message=F, warning=F}
+library(sf)
+# first we'll join with a geometry feature of the US
+us.states.geo <- read_sf('data/us-states/us-states.shp')
+# adding geometry
+us.covid.sf <- us.states.geo %>% right_join(us.covid.df, by=c('state_name'='Province_State'))
+```
+
+```{r covid-4, message=F, warning=F}
+# mapping
+max_val <- max(us.covid.df$Mortality_Rate)
+mid_val <- mean(us.covid.df$Mortality_Rate)
+map <- ggplot(us.covid.sf) +
+  geom_sf(aes(fill=Mortality_Rate), size=.1) +
+  scale_fill_gradient2(high='#6E2C00', mid='#FDFEFE', low='#28B463', midpoint=mid_val, limits = c(0,max_val)) + 
+  coord_sf(crs=5070) + theme_bw() +
+  # custom ggtheme
+  theme(legend.position='bottom', axis.line=element_blank(),
+        axis.title=element_blank(), axis.ticks=element_blank(),
+        axis.text=element_blank(), panel.grid.major.y=element_blank(),
+        panel.grid.minor.y=element_blank(), panel.border=element_blank(),
+        plot.margin = margin(1,1,1,1,'cm'))
+
+map.anim <- map + transition_states(Date, transition_length=4, state_length=1) +
+  labs(title = 'Daily coronavirus cases : {closest_state}',
+       caption  ='Data Source: Johns Hopkins Coronavirus Resource Center')
+
+# animate(map.anim, nframes=100, fps=5, renderer=gifski_renderer('images/us-covid-map.gif'))
+```
+
+![us-covid-map](images/us-covid-map.gif)
 
 
 
