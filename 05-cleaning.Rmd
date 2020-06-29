@@ -88,12 +88,12 @@ summary(data$nstorm)
 
 Sometimes you want to access only the entries that are not missing within a specific column. For these cases, the is.na() function is incredibly useful. It returns a vector of True/False for entries which are missing or not missing. In R, if you want to flip a Boolean (T/F) value, simply use the '!' character. This comes in handy when, for instance, we want only the non-missing values
 
-```{r}
+```{r missing-2b}
 # Test to show ! usage
 TRUE == !FALSE
 
 # Returns only the real values
-data$nstorm[!is.na(data.nstorm)]
+data$nstorm[!is.na(data$nstorm)]
 ```
 
 The simplest way to handle missing values is by removing all of the corresponding observations using `tidyr::drop_na()` or, in some cases, removing a variable itself. The goal of treating NA values is to expereince as little data loss as possible while maintaining your overall data integrity. If, for example, a column has only 5 real values and 95 missing values, it's probably not worth keeping in your dataset. If a row has only 1 real value and 11 missing values, it also might not be worth keeping. The discretion of treatment is largely in the hands of the analyst. The command below is a sweeping way to remove rows with any missing values, which is effective when you have rare missing values and voluminous data to choose from.
