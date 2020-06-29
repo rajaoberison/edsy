@@ -1,0 +1,369 @@
+# Structuring {#structuring}
+
+Data structuring is the process of correcting, rearranging, or removing inaccurate records from raw data so that, after the treatment, the transformed data will be easy to analyze. The variable names, types, and values must be consistent and uniform. The focus here is on the 'appearance' of the data. We often restructure data so that we can merge two dataframes with pairable attributes, combine several sources describing the same event, or prepare data for intense statistical analysis that requires consistent and complete data. Whatever the purpose, having clean data is a good habit regardless of application or functionality. If somebody else picks up your project, you do not want to have to explain to them the complications and intricacies of messy data. The first stage of structuring is to make sure that your read-in process gave you data of the type that you anticipated or intended. Before we can do that, we should learn how to access specific parts of the data for examination.
+
+## Accessing Data in R
+
+Once you have read in your data, you may want to look, change, or perform calculations on a specific part or element. Keep in mind that R uses 1-indexing instead of 0-indexing, which other languages like Python employ. 1-indexing means that you start counting from the number 1 instead of 0. To access a range of values in a dataframe, you can specify a set of numbers or column names. Let's create a dataframe below so that you can get a sense of how this works.
+
+```{r}
+x <- data.frame(replicate(5, sample(1:10,20,rep=TRUE)))
+names(x) <- c("One", "Two", "Three", "Four", "Five")
+```
+
+What we've just done above is create a dataframe with 5 columns, each of which has 20 rows populated by a random number between 1 and 10. The names of these columns are 'One', 'Two', 'Three', 'Four', and 'Five' respectively. Let's say that we want to access just the first three rows of the third and fourth columns. We can do that one of two ways:
+
+```{r, eval=F}
+# Accessing a part of the data
+x[1:3, 3:4]
+x[1:3, c("Three", "Four")]
+```
+
+The first line shows how we use indexing to access data. The rows are listed first, then after a comma the columns are listed. If we want a range of values, we use ':' to indicate we want every number between the two values. 1:4 means we want rows 1, 2, 3, and 4 while just typing 4 means we want just row 4. We use the same logic for columns. However, if we want to access columns by name, we can generate a vector within c(), which is the R shorthand way of writing a vector. Each value within c() is treated as a single variable, separated by commas. In the example, we typed c("Three", "Four") to get the third and fourth columns. Whatever the names of the columns that you want are, you can use this method to access them. You can also use c() to get a non-consecutive set of numbers. Say we want the first, third, and fifth column. We could use c(1,3,5) to get just these columns.
+
+Let's say we just want one column from a dataframe to use for examination or manipulation. We can use the '$' character to clarify which one we want by name. You will see this all over R scripts, as it is very common to want to access a particular column or item in a list in its entirety.
+
+```{r, eval=F}
+# Accessing just the fifth column
+x$Five
+x$Five[6:8]
+```
+
+The first command gives us just the fifth column of the frame. The second command gives us the sixth to eighth row of the fifth column, using the same square bracket [] indexing as before. Typically, square brackets are reserved for indexing, and parentheses are used for functions. 
+
+One final method of subsetting is throuch exclusion. You can type '-' in front of a number if you want to access everything but a single column. For example, instead of typing c(1,2,3,5) to get all columns except for the fourth, we can write '-4'.
+
+```{r, eval=F}
+# These are equivalent statements
+x[,c(1,2,3,5)]
+x[,-4]
+```
+
+
+## Data types 
+
+One type of anomaly that we may encounter is the coercion of irrelevant data types to variables. This is very common for numerically coded variables, or variables that have distinct levels. First we read in our data by the method we practiced in the earlier chapter:
+
+```{r inspecting-data-1, echo=F, message=F}
+# Reading an SPSS sample data frame with the haven library
+library(haven)
+data <- read_sav('data/spss-sample.sav')
+```
+
+If we read in the same SPSS data from the Reading data section, we get the coded values instead of the labels.
+
+```{r data-types-2, message=FALSE, echo=FALSE}
+head(data)
+```
+
+It appears as though some of the categorical data was read in as integers. This is a quirk of R, that if left unchanged can drastically change the outcome of your analyses. To access the specific type of data of one column, we can use the class() function, then pass the name of the frame and column we are trying to access using the technique outlined above:
+
+```{r}
+class(data$Q6)
+```
+
+Q6 is meant to be categorical, not numeric. If we run `summary(data)`, we get this unintended result which affects several columns:
+
+```{r data-types-3, echo=FALSE}
+summary(as_factor(data, levels='values') %>% mutate_all(as.numeric))
+```
+
+`Q4` and `Q50` are the only variables that are supposed to be numeric, but here everything is treated as numeric, even when it was originally categorical data, which is incorrect. We might also want to treat `Zone` as a factor so that we can examine groups collectively based on this metric.
+
+We can easily convert data types into factors using either `dplyr::mutate_at()` and applying `as.factor` function to the variables or the as.[] series of commands in BaseR. Examples of both are given below:
+
+```{r data-types-4, message=FALSE}
+# Converting data types
+updated_data <- data %>% mutate_at(vars(-Q4, -Q6, -Q50), as_factor)
+
+# Alternately, for specific columns
+data$Q6 <- as.factor(data$Q6)
+```
+
+And now we can get the full summary statistics in the form that we want:
+
+```{r data-types-5, echo=FALSE}
+summary(updated_data)
+```
+
+As we can see from the summary, there might still be anomalies with the variables:
+
+* `Q4: Number of storms experienced`: The mean value is 2.5 but the max value is 20, which suggests heavily right skewed data. 
+* `Q50: Birth year`: Some respondent answered 19 which is incorrect. It's pretty clearly a typo, because nobody is 2,001 years old. We may also consider transforming this column into age instead of birth year, which makes it easier to interpret.
+
+Perpetually in data analysis, the issue of missing values and how to deal with them comes up. We can see here that this dataset is no different, with several NA values across the board. We will talk at length about missing data later on in the next chapter on Data Cleaning.
+
+## Inspecting the data
+
+In order to structure a dataset, we need to not only detect the anomalies within the data, but also decide what to do with them. Such anomalies can include values that are stored in the wrong format (ex: a number stored as a string), values that fall outside of the expected range (ex: outliers), values with inconsistent patterns (ex: dates stored as mm/dd/year vs dd/mm/year), trailing spaces in strings (ex: "data" vs "data "), or other logistical issues.
+
+With our data successfully read in above, we can examine both structure and summary statistics for numerical and categorical variables.
+
+```{r inspecting-data-2, message=F}
+# Structure of the data
+str(data[,1:3])
+
+# Summary for a numerical variable
+summary(data$Q4)
+
+# Summary for a categorical variable
+summary(as_factor(data$Q7))
+```
+
+Here we will look at the output of a few other key functions. Calling head() will by default show you the first six rows of a dataframe. If you want to see more or fewer rows, simply put a comma in after the dataframe's name and write the number of rows you want to display. Calling tail() will give you the exact opposite, displaying the last n rows of data, with the default again set to six.
+
+```{r inspecting-data-3, message=F}
+# First 10 rows
+head(data, 10)
+
+# Last 10 rows
+tail(data, 10)
+```
+
+To find the number of rows and columns your dataframe has, call dim(). To find just the rows, use nrow(). To find just the columns, use ncol(). Calling either names() or colnames() will give you the names of the columns. If your data has row names (which is not always the case), you can use rownames() to access those.
+
+```{r inspecing-data-3b, message=F}
+# Dataframe dimensions
+dim(data)
+
+# Total number of rows
+nrow(data)
+
+# Total number of columns
+ncol(data)
+
+# Column names
+names(data) # also colnames(data)
+```
+
+We can also plot the data to visualize the distribution of variables using the dplyr and magrittr
+
+```{r inspecting-data-4, echo=F, message=F}
+library(dplyr)
+library(magrittr) # for %>%
+data <- data %>% mutate_at(vars(-Q4, -Q6, -Q50), as.factor)
+```
+
+```{r inspecting-data-5, out.width='80%'}
+# Plotting the first 5 columns
+plot(data[,1:5])
+```
+
+If you use these techniques and see an outlier, whether it be an abnormally large or small number, you can use either the min() or max() function to get the specific value. Because we have missing values, we need to pass the argument 'na.rm = TRUE' to ignore all NA values when calculating these. For several numerical evaluations, R makes sure to explicitly highlight the presence of NA values, which are treated as unknowns. Because R does not know if the missing value could have been the minimum or maximum, it will tell you that this calculation is NA unless you explicitly give it permission to ignore these missing values.
+
+```{r}
+# Examine the problematic values we identified earlier
+max(data$Q4, na.rm = TRUE)
+min(data$Q50, na.rm = TRUE)
+```
+
+## Subsetting and Filtering
+
+We can remove incorrect or missing row values by using `dplyr::filter`:
+
+```{r filtering-1}
+# Removing rows where birth year is irrelevant
+# Here we decided that all birth year must be greater 1900
+updated_data <- data %>% filter(Q50 > 1900)
+
+# Now if we re-run its summary we get the following
+summary(updated_data$Q50)
+
+# Removing rows with birth year greater than 1900 and missing responses for Q4
+updated_data <- data %>% filter(Q50 > 1900, !is.na(Q4))
+summary(updated_data$Q50)
+summary(updated_data$Q4)
+```
+
+We can also select for only the variables that we are interested in using the function `dplyr::select`:
+
+```{r filtering-2, echo=FALSE}
+# Save Zone as a factor 
+data$Zone <- factor(data$Zone)
+
+# Mutate others as a factor as well
+data <- data %>% mutate_at(vars(-Q4, -Q6, -Q50), as_factor)
+```
+
+```{r filtering-3}
+# Creating a new dataframe with only zone, gender, and income columns
+updated_data <- data %>% select(Zone, Q59, Q51)
+head(updated_data, 10)
+plot(table(updated_data), las=1)
+```
+
+It is also possible to split the dataset into multiple dataframes by number of rows using `split()`:
+
+```{r filtering-4}
+# To split the dataset into multiple dataframes of 10 rows each
+max_number_of_rows_per_dataframe <- 10
+total_number_rows_in_the_current_dataset <- nrow(data)
+sets_of_10rows_dataframes <- split(data, 
+                                   rep(1:ceiling(total_number_rows_in_the_current_dataset/max_number_of_rows_per_dataframe), 
+                                       each=max_number_of_rows_per_dataframe, 
+                                       length.out=total_number_rows_in_the_current_dataset)
+                                   )
+# Here are the first 2 dataframes
+sets_of_10rows_dataframes[[1]] # or sets_of_10rows_dataframes$`1`
+sets_of_10rows_dataframes[[2]]
+```
+
+## Changing cell values
+
+As we mentioned earlier, it is best if Q50 is stored as an age variable instead of the default birth year. `Q50` is a numeric variable and we can simply change it by using `dplyr::mutate()`
+
+```{r cell-values-1, echo=F}
+data <- data %>% filter(Q50 > 1900)
+```
+
+With the filtered data, we can replace all of the values in Q50 with 2020 - Q50 like so:
+
+```{r cell-values-2}
+# Replacing Q50 values to their age in 2020
+updated_data <- data %>% mutate(Q50 = 2020 - Q50)
+head(updated_data, 10)
+
+# It is also possible to leave Q50 untouched and store the results into a new column
+updated_data <- data %>% mutate(age = 2020 - Q50)
+head(updated_data, 10)
+summary(updated_data$age)
+```
+
+For a categorical variable, we use a different function: `dplyr::recode_factor()` or `dplyr::recode()`. We will apply this to `Q5` as we have noticed in the previous section that not all of its values were labelled from SPSS. Here is its summary:
+
+```{r cell-values-3, echo=F}
+summary(as_factor(data$Q5))
+```
+
+Looking back at the questionnare, here is how it was phrased:
+
+![](images/q5.png)
+
+Because the survey itself does not have labels, the recoding will be up to the user. Here we chose to replace the extreme values with 1 and 7. As mentioned in the documentation: `dplyr::recode()` will preserve the existing order of levels while changing the values, and `dplyr::recode_factor()` will change the order of levels to match the order of replacements.
+
+```{r cell-values-4}
+# Recoding Q5
+recoded.with.recode <- recode(data$Q5, `Not Worried At All`="1", `Extremely Worried`="7")
+summary(recoded.with.recode)
+recoded.with.recode_factor <- recode_factor(data$Q5, `Not Worried At All`="1", `Extremely Worried`="7")
+summary(recoded.with.recode_factor)
+```
+
+We can also change cell values without external libraries like `dplyr` by running the following code:
+
+```{r cell-values-5}
+# Add column age where the values are 2020 - Q50
+data$age <- 2020 - data$Q50
+
+# Replace Q5 with value "Not Worried At All" to "1"
+data$Q5[data$Q5 == "Not Worried At All"] <- 1
+```
+
+Notice above that we used a conditional subset in the second command. Just like we used indexing earlier, we can also use a Boolean vector (True/False) to pick only rows where some condition is met. Within the [] brackets, we gave a statement: 'data$Q5 == "Not Worried At All' using '==' to indicate we want True/False for each row. This syntax will return only the entries of Q5 that are True within the condition. We then reassign the value for each of these to be '1' instead of 'Not Worried At All', effectively doing the same task as we did above. R is smart enough to work with vectors in this way, running the same evaluation on each entry without you specifying.
+
+One final set of functions that can be incredibly helpful with changing cell values are gsub() and grep(). If, for instance, you want to find all entries of a column that have a specific string pattern in them, you can use grep() to locate every instance. Simply type in the pattern, and the frame over which you want the function to look. For instance, if we wanted to find every entry of a column with the word "missing" in it, we could use grep() like so:
+
+```{r, eval=F}
+# Identify every row that contains the phrase "missing"
+grep("missing", x$example)
+```
+
+Now let's say that instead of simply locating every instance, we instead want to replace them with a substitute phrase. That is when we would use gsub(), which lets us substitute another phrase in. If we wanted to replace every part of every entry that says "CT" with "Connecticut", we could do so:
+
+```{r, eval=F}
+# Replace every instance of 'CT' with 'Connecticut'
+gsub("CT", "Connecticut", x$statesample)
+```
+
+## Pivoting the dataset
+
+In some cases, we may want to split a column based on values, or merge multiple columns into fewer columns. A classic example is with time-stamped data. Sometimes we want rows to be days, with individual responses recorded as columns, and sometimes we want each row to be an individual, with columns representing days. It just depends on what the data are modelling. This process can be done using the `tidyr` package. For example, to convert the dataframe into long-format with only `Zone`, `question`, and `value` as columns:
+
+```{r tidyr-pivot-1, message=F}
+# Read in the necessary package
+library(tidyr)
+
+# We have to pivot by variable type
+# Pivot longer for factor variables
+pivoted.longer <- data %>% 
+  select_if(is.factor) %>% 
+  pivot_longer(-Zone, names_to = "question", values_to = "value")
+pivoted.longer
+
+# Then we can reshape it back to the original
+pivoted.wider <- pivoted.longer %>%
+  group_by(question) %>% mutate(row = row_number()) %>% 
+  pivot_wider(names_from = question, values_from = value) %>% 
+  select(-row)
+pivoted.wider
+```
+
+`tidyr::spread()` and `tidyr::gather()` are the outdated equivalent of `tidyr::pivot_wider()` and `tidyr::pivot_longer()`.
+
+To merge or split columns, we can use `tidyr::unite()` or `tidyr::separate()`. For example, to merge `Q7` and `Q10`:
+
+```{r tidyr-pivot-2}
+# Creating a new column with responses from both Q7 and Q10
+merged <- data %>% unite("Q7_Q10", Q7:Q10, sep = "__", remove = TRUE, na.rm = FALSE)
+merged
+
+# To split it back
+merged %>% separate(Q7_Q10, c("Q7", "Q10"), sep = "__", remove = TRUE)
+```
+
+## Merging Two Dataframes
+
+If we want to combine two dataframes based on a shared column, we can do that with a 'merge' call. Let's say we have two separate dataframes that discuss the same individuals. Each participant was given an ID that was recorded over the two frames, and we want one dataframe with their responses joined.
+
+```{r}
+# Here we will create the simulated data described above
+survey1 <- cbind(1:10, data.frame(replicate(10,sample(0:1,1000,rep=TRUE))))
+survey2 <- cbind(1:10, data.frame(replicate(10,sample(0:1,1000,rep=TRUE))))
+
+# Name the columns of both frames
+names(survey1) <- c("ID", paste0("Q", 1:10))
+names(survey2) <- c("ID", paste0("Q", 11:20))
+```
+
+The first column of each dataframe represents the participant's ID, and the next 10 columns represent their responses to questions. We can use a 'merge' to execute this:
+
+```{r}
+# Merge the two by their 'ID' column
+surveytotal <- merge(survey1, survey2, by = "ID")
+```
+
+With the merge command, we can do one of four types: an inner join, a left join, a right join, or a full join. With an inner join, we only include data that have an identification match in both sets. A left join saves all information from the left dataset and puts NA values in if there is not a corresponding row in the right, a right join does the opposite, preserving all of the right frame's data, and a full join saves all rows from both of the original datasets. 
+
+The frame surveytotal now has all questions stored in the same place. If the "ID" column does not match up in format, this can give you issues, so make sure you only merge once your data is fully cleaned, which we will talk about in the next chapter.
+
+We can also do two simpler combines, known as cbind() or rbind(), if the data do not need to be merged on an ID entry. Say, for example, we had two sheets of an Excel file which were completed on different days and had the exact same set of columns> If we want them to be in the same frame, one after the other, we could use an rbind() call to bind the rows like so:
+
+```{r}
+# Generate the top dataframe
+top <- data.frame(replicate(10, sample(0:1,1000,rep=TRUE)))
+names(top) <- paste0("Row_", 1:10)
+
+# Generate the bottom dataframe
+bottom <- data.frame(replicate(10, sample(0:1,1000,rep=TRUE)))
+names(bottom) <- paste0("Row_", 1:10)
+
+# Use rbind() to bring them together
+combined <- rbind(top, bottom)
+```
+
+If there are two frames that have the same number of rows that describe in sequence the same observations, we can use a cbind() call to combine them:
+
+```{r}
+# Create the left data
+left <- data.frame(replicate(10, sample(0:1,1000,rep=TRUE)))
+names(left) <- paste0("Row_", 1:10)
+
+# Create the right data
+right <- data.frame(replicate(10, sample(0:1,1000,rep=TRUE)))
+names(right) <- paste0("Row_", 11:20)
+
+# Use cbind() to stick them together
+combined <- cbind(left, right)
+```
+
+Keep in mind that this is only a valid merge if the two frames are composed of rows that represent the same observations.

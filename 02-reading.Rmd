@@ -1,0 +1,159 @@
+# Reading {#reading}
+
+In this section, we learn how to read data from different file types. Data can come in many formats, but under the hood most file types operate very similarly. Whether it be a csv (comma separated value), an Excel sheet, a Google sheet, or an SPSS file, all are primarily constructed by rows and columns of entries. Data in each cell is stored as a distinct type of data, such as integer, character, or factor. Reading these files in allows you to explore, manipulate, and eventually return them in a different form using R.
+
+## Explaining Working Directories
+
+When you open a document from a folder, R automatically assumes that the folder is your 'Working Directory'. Think of this like your home base from which you can navigate to any file on your computer. If you want to access a file from the same folder as where you stored your R script (which is the easiest case), all you have to do to make the commands below run successfully is enter the name of the file in quotation marks. Navigating to another folder takes more work. If you have a folder with the file you want to read in nested within the current Working Directory folder, simply type 'NameofFolder + / + NameofFile". (e.g. "SubFolder/Datafile.csv"). If you want to back out of your current folder one level, you need to type '.. + / + NameofFile' to move back one layer (e.g. "../Datafile.csv"). Moving in two layers or out two layers follows the same pattern, just iterated We highly recommend never manually resetting your working directory, which can be an untraceable and confusing command. We additionally recommend keeping all necessary files stored in intuitive and easy locations to access. 
+
+## Loading from Package Library
+
+Packages are sets of functions that can be written and published by anybody who uses R. They are typically built around usage themes and can be an incredible resource for specific projects. Because R is a community-based language that has been used in dozens of diverse fields, hundreds of packages exist that are specifically tailored to simplify processes. Before using a new package and reading it from your library, you must first install it onto your computer. All packages are free and typically well documented, so that you can learn quickly what exactly their functions accomplish. An example of installing and loading 'tidyverse' can be seen here. You only need to make the 'install.packages' call once on your computer. Make sure you are connected to the internet when you do it, since R accesses online resources whenever it installs a new package. After that, all you need to do in a new R document is make a library() call and reference the package you'll be using.
+
+```{r, eval=F}
+install.packages('tidyverse')
+library(tidyverse)
+```
+
+## CSV
+
+CSV files are composed of a row with column headers followed by data entries, where each cell is separated by `,` and each row starts on a new line. To extract data from a file like this, use the below call, replacing '/path/to/csv' with the local path on your computer to access data using the syntax described above. These parameters written in the code below are also the default values for the `read.csv` function. The left side of the expression is what the new name of your data will be, and the arrow in the middle means we are assigning the results of the read call on the right to that name. All code lines within the parentheses are the arguments that we pass to the 'read.csv' call, which clarify specifically how we want the action to be carried out. Here are the default arguments we mentioned:
+
+```{r reading-csv-1, eval=F}
+data <- read.csv(file = '/path/to/csv', header = TRUE, sep = ',')
+```
+
+Now we will show how to use this call to get data stored somewhere on your computer. Below is an example of reading in a file called 'hurricane.csv' from the folder 'data'. Because all of the default arguments match with what we want, we do not need to write them out explicitly. 
+
+From now on, in code blocks, we will also be using comments to help the reader track what is happening. A comment is a line of code that we tell the computer not to process as logic but rather to just record. You can write a comment by putting a '#' character at the beginning of the line. All of the text after that on the same line will be treated as a comment. Writing in comments is a good habit, so that you or anybody else using your code can quickly understand what is happening.
+
+```{r reading-csv-2, tidy=F, out.width='80%'}
+# Any line of code starting with '#' is a comment and will not be read
+# Example
+data <- read.csv(file = 'data/hurricane.csv')
+```
+
+Some exceptions: if your file has entries separated by something other than a comma, you can set the 'sep' argument to something more specific. Say, for instance, someone has stored data separated by "/". All you need to do is write sep = '/' as an argument and R will take care of the rest. If you want to control the conversion of character variables to factors, you can pass the argument 'as.is = TRUE' to prevent this encoding. 
+
+## Excel
+
+The main advantage of Excel files is that they can store multiple sheets, while a csv file represents only a single table of data. As such, you must clarify which sheet you are reading from when you make this call. For this example, we're going to use the `readxl` package from the comprehensive `tidyverse` collection, a suite of tools in R. Please visit this [website](https://www.tidyverse.org/) to learn more about `tidyverse`.
+
+To read an excel file, you can use the `read_excel` function and specify the `path/to/the/file` and `sheet` you want to open. If you don't specify the `sheet`, `read_excel` will by default open the first sheet in the spreadsheet.
+
+In the 'eds.excel.sample.xlsx' file, there are 2 tables: heatwave and hurricane. Here's how we load both tables into R. Note that this will only work if you make sure that you have downloaded the readxl package using the process we described above:
+
+```{r reading-excel, eval=F}
+library(readxl)
+# Reading Sheet 1 and Sheet 2
+heatwave <-  read_excel(path='data/excel-sample.xlsx', sheet = 'heatwave')
+hurricane <-  read_excel(path='data/excel-sample.xlsx', sheet = 'hurricane')
+```
+
+Once the tables are stored in individual R variables, you can perform exploration and analysis on them.
+
+## Google Spreadsheets
+
+If the data is stored in a Google spreadsheet, we can read it using the `googledrive` and `googlesheet4` packages. We use the `googledrive` package to log into our Google Drive account and `googlesheets4` to read the speadsheets in our drive.
+
+In the example below, we used a spreadsheet named `eds.sample.googlesheets` which contains the same tables as in the previous Excel example (heatwave and hurricane). You can clone the spreadsheet via this [link](https://drive.google.com/open?id=1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc) if you'd like to follow along and repeat the steps below using your own Google account.
+
+Authenticate to your drive using `drive_auth()`. When prompted, log in, authorize GoogleDrive, and use the authorization code if provided. You only need to run `drive_auth()` once.
+
+```{r reading-google-1, eval=F}
+library(googledrive)
+# To authenticate and authorize googledrive package
+drive_auth()
+```
+
+The following scripts show how to explore a Google Drive folder. This is not recommended, as you might encounter performance issues. 
+
+```{r reading-google-2, eval=F}
+# NOT recommended
+# To view the list of files in a folder
+drive_ls("EDS") # where "EDS" is the folder name
+# To also get the files within the subfolders
+drive_ls("EDS", recursive = TRUE)
+# To view the list of spreadsheets within a folder
+drive_ls("EDS", type="spreadsheet")
+```
+
+Also, because of Google's authentification system, you may run into an error like we do below when running the previous code (using `drive_ls()`). Glitches like this are why it is not recommended.
+
+```{r reading-google-3}
+#> Error in add_id_path(nodes, root_id = root_id, leaf = leaf) : !anyDuplicated(nodes$id) is not TRUE
+```
+
+To avoid this, you can use the folder url instead of the folder name. The folder url can be obtained by right-clicking on the folder and selecting `Get shareable link`. Then run the following code:
+
+```{r reading-google-4, eval=FALSE}
+# If using the folder name doesn't work
+folder_url = 'https://drive.google.com/open?id=1e0uJ9dwFcL34JA61F0tGSoaiMZ_xio_4'
+drive_ls(folder_url, type="spreadsheet")
+```
+
+Then you can load the spreadsheet by using its `id`
+
+```{r reading-google-5, eval=FALSE}
+eds.sample.spreadsheet <- drive_get(id = '1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc')
+```
+
+It is also possible to read the spreadsheet right away by using its link/path (without using `drive_ls()`). We recommend using this to read any Google Drive files.
+
+```{r reading-google-6, eval=FALSE}
+eds.sample.spreadsheet <- drive_get(path = 'https://drive.google.com/open?id=1uIsgrcsevbm9voZU-rzqhTg2LE5SgEPlGabSXKTcQtc')
+```
+
+Once the spreadsheet is loaded, we run a similar code used for the Excel files to read tables within the spreadsheet. But for Google Sheets, this function is called `read_sheet`:
+
+```{r reading-google-7, eval=F}
+library(googlesheets4)
+# Authorizing the googlesheets4 package
+sheets_auth(token=drive_token())
+# Reading the tables
+heatwave <- read_sheet(eds.sample.spreadsheet, sheet = 'heatwave')
+hurricane <- read_sheet(eds.sample.spreadsheet, sheet = 'hurricane')
+```
+
+If this presents too much of a headache and you'd rather download the Google Spreadsheet as either a csv or Excel file, you can save it locally to your computer, put it in the same folder as your R scripts, and use one of the two methods described above to read the file into your R environment.
+
+## SPSS
+
+SPSS is a statistical software package that stores data in its own format. You will occasionally encounter these types of files if working on a project with somebody who prefers SPSS. This requires its own package called 'haven'.
+
+```{r reading-spss-1, message=F, tidy=T}
+library(haven)
+data <- read_sav('data/spss-sample.sav')
+```
+
+By default, the `read_sav()` will read the factor levels of non-numeric and non-character variables. If instead we want the labels, we can run the following code:
+
+```{r reading-spss-2, message=F, tidy=T}
+library(magrittr)
+library(dplyr)
+# Applying haven::as_factor() to labelled columns
+# Here, we already know that variables Zone, Q4 and Q50 are not factor variables.
+data %>% mutate_at(vars(-Zone, -Q4, -Q50), as_factor)
+```
+
+Because variables can be labelled in SPSS, we can use them as well to find what each column represents.
+
+```{r reading-spss-3, tidy=T}
+# To get the labels of the variables / columns
+as.vector(unlist(lapply(data, function(x) attributes(x)$label)))
+```
+
+To learn more about the `haven` package and how the variables are stored, please visit: https://haven.tidyverse.org/
+
+## RDA
+
+Other times you will encounter a native RDA file, which is a way of saving R data structures such as vectors, matrices, and data frames in an automatically compressed form. The benefit to an RDA file is that it loads or saves slightly quicker in R software than other file types, which can matter when you are dealing with massive files. Reading these files in is incredibly simple, using the following command:
+
+```{r, eval=F}
+load(file = "mydata.rda")
+
+# If you want to save your current work as an rda
+save(x, file = "myRDA.rda")
+```
+
+Just as you did for the last several procedures, replace 'mydata.rda' with the path to the file you are trying to read in. Because this is a native file type, no package is required.

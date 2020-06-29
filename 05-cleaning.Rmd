@@ -1,0 +1,159 @@
+# Cleaning {#cleaning}
+
+Data cleaning is the process of getting data ready for statistical analysis. In contrast to structuring the data, the target anomalies in this case are variable values such as missing values, outliers, skewed distributions, etc.
+
+## Fixing skewed distribution
+
+Data are skewed when their distribution is not symmetrical but rather favors either the left or right. Sometimes, to facilitate statistical analysis, we need to transform skewed data so that it becomes normally distributed instead. Several tests like PCA analysis require multivariate normality. First we will read in data to use for this part of our practice.
+
+```{r skewed-1, echo=F, message=F}
+# Read in data to work with
+library(haven)
+library(dplyr)
+data <- read.csv('data/hurricane.csv', header=T)
+data <- filter(data, !is.na(data$nstorm))
+hurricane <- data
+```
+
+We will then examine a plot.
+
+```{r skewed-2}
+# Example of skewed data
+{x <- data$nstorm
+h <- hist(x, breaks=20, col="grey")
+xfit <- seq(min(x), max(x), length=40)
+yfit <- dnorm(xfit, mean=mean(x), sd=sd(x))
+yfit <- yfit*diff(h$mids[1:2])*length(x)
+lines(xfit, yfit, col="red", lwd=2)}
+```
+
+The plot above shows a good example of skewed data. To deal with this type of data, a good first tool to try is some form of logarithmic transformation, which reduces the scale of the larger values more substantially. 
+
+```{r}
+# Log-transformation
+{log.x <- log(data$nstorm)
+h <- hist(log.x, breaks = 10, col = "grey")}
+```
+
+While the previous log-transformation seem to have worked, it is not entirely correct because the variable `nstorm` has `0` values which cannot be represented in logarithms. In this case, one of the commonly used methods is **square root**. 
+
+```{r skewed-3}
+# sqrt transformation
+{sqrt.x <- sqrt(data$nstorm)
+h <- hist(sqrt.x, breaks = 10, col = "grey")}
+```
+
+While these two are not the only types of transformation you can make, they are certainly two of the most frequently used. 
+
+## Treating outliers
+
+Outliers are extreme values in datasets. If not detected and handled appropriately, they can affect the accuracy of the predicitions and analysis. Non-resilient statistics are those that can be affected by severe outliers, like a mean calculation getting pulled in the direction of extreme values. Resilient statistics are those that can withstand a few outliers, like a median value.
+
+Treating outliers depends on a good knowledge of the data and it is up to the data analyst to decide on how to go about on fixing them. [Selva Prabhakaran](http://r-statistics.co/Outlier-Treatment-With-R.html) gave some ways of handling outliers that we are going to show below.
+
+You can detect outliers using a `boxplot` where they will show up as dots outside the whiskers:
+
+```{r outliers-1}
+# For continuous variable
+outlier_values <- unique(boxplot.stats(data$nstorm)$out)  # outlier values.
+boxplot(data$nstorm, main="How many storm have you experienced?", boxwex=0.1)
+mtext(paste("Outliers: ", paste(outlier_values, collapse=", ")), cex=0.6)
+```
+
+```{r outliers-2}
+# For categorical variable
+boxplot(nstorm ~ worry, data=data, main="Number of storms experienced across levels of worry")
+```
+
+It is worth noting that outliers should not always, if ever, be ignored or removed. While they are anomalies that make modelling difficult, quite often they represent a part of the data's narrative which should not be swept aside without consideration. The techniques we describe are for outliers which, for whatever reason, do not belong in the dataset, whether that be corrupted data, mislabelled points, or typos. If an outlier must be removed for a condition of normality to be met, it is in the hands of the statistician to explain why such steps were necessary in light of the procedures being run.
+
+Approaches for outlier treatment include imputation with `mean`, `median`, or `mode`. We can also cap the values, predict them, or delete the observations. Deletion should only be done in the case that there is clear, undisputable evidence that the data entry was recorded incorrectly. 
+
+## Fixing missing values
+
+Ways of detectng missing values (`NA`) include the `summary` and `anyNA()`.
+
+```{r missing-1, include=F}
+# Generate the data frame for usage
+x <- sample(1:nrow(data), 50, F)
+data[x,'nstorm'] <- NA
+data <- as_tibble(data)
+```
+
+```{r missing-2}
+# Check to see if there are missing values
+anyNA(data$nstorm)
+summary(data$nstorm)
+```
+
+Sometimes you want to access only the entries that are not missing within a specific column. For these cases, the is.na() function is incredibly useful. It returns a vector of True/False for entries which are missing or not missing. In R, if you want to flip a Boolean (T/F) value, simply use the '!' character. This comes in handy when, for instance, we want only the non-missing values
+
+```{r}
+# Test to show ! usage
+TRUE == !FALSE
+
+# Returns only the real values
+data$nstorm[!is.na(data.nstorm)]
+```
+
+The simplest way to handle missing values is by removing all of the corresponding observations using `tidyr::drop_na()` or, in some cases, removing a variable itself. The goal of treating NA values is to expereince as little data loss as possible while maintaining your overall data integrity. If, for example, a column has only 5 real values and 95 missing values, it's probably not worth keeping in your dataset. If a row has only 1 real value and 11 missing values, it also might not be worth keeping. The discretion of treatment is largely in the hands of the analyst. The command below is a sweeping way to remove rows with any missing values, which is effective when you have rare missing values and voluminous data to choose from.
+
+```{r missing-3}
+tidyr::drop_na(data)
+```
+
+However, if dropping all of the rows with missing values will affect the quality of the data or its breadth, then another option is to replace the missing values with the mean/median/mode of the variable, or to predict for them using an appropriate modelling algorithm. There are several packages out there that are solely dedicated to treating missing values including `VIM` and `MICE`.
+
+In this next example, we'll try to predict the 15 missing values in the variable `nstorm` (number of storms the survey respondents have experienced) using the variables that has no missing values: `zone`, `lat`, and `long`.
+
+```{r missing-4, message=F}
+# Imputation using MICE
+library(mice)
+
+# Building the mice model
+mice_model <- mice(select(data, zone, lat, long, nstorm), method="rf", printFlag=F)
+
+# Predicting the missing values
+# generate the completed data
+mice_prediction <- complete(mice_model)
+
+# checking for NAs
+anyNA(mice_prediction)
+```
+
+Then we can visualize the data to see how well the imputation has performed. However, the best way to assess the accuracy is to compare actual values with predicted values using measures such as: `MSE`, `MAE`, `MAPE`, etc.
+
+```{r missing-5, message=F}
+# Visualizing the prediction
+non_na_latitude <- data$lat[!is.na(data$nstorm)]
+non_na_nstorm <- data$nstorm[!is.na(data$nstorm)]
+na_latitude <- mice_prediction$lat[is.na(data$nstorm)]
+na_nstorm <- mice_prediction$nstorm[is.na(data$nstorm)]
+plot(non_na_nstorm, non_na_latitude, col="grey", pch="•", ylab="Latitude", xlab="Number of Storms Experienced")
+points(na_nstorm, na_latitude, col="red", pch="•", cex=2)
+legend("topright", c("Existing values", "Predicted missing values"), col=c("grey", "red"), pch="•", cex=1.5)
+```
+
+Other ways to impute the missing values are with `mean`, `median`, or `mode`.
+
+```{r missing-6}
+# Assign the data to prediction
+prediction <- data
+na.observations <- is.na(data$nstorm)
+prediction$nstorm[na.observations] <- median(prediction$nstorm[!na.observations])
+
+# Visualizing the prediction
+na_latitude <- prediction$lat[na.observations]
+na_nstorm <- prediction$nstorm[na.observations]
+plot(non_na_nstorm, non_na_latitude, col="grey", pch="•", ylab="Latitude", xlab="Number of Storms Experienced")
+points(na_nstorm, na_latitude, col="red", pch="•", cex=2)
+legend("topright", c("Existing values", "Predicted missing values"), col=c("grey", "red"), pch="•", cex=1.5)
+```
+
+For mode, there is no built-in function in R, but you can access one [here](https://www.tutorialspoint.com/r/r_mean_median_mode.htm):
+```{r missing-7}
+getmode <- function(v) {
+   uniqv <- unique(v)
+   uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+```
